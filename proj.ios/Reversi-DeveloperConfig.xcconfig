@@ -1,0 +1,4 @@
+
+CODE_SIGN_IDENTITY =
+CODE_SIGN_IDENTITY[sdk=iphoneos*] = iPhone Developer: Rafał Podolski
+PROVISIONING_PROFILE[sdk=iphoneos*] = A9CBB3B4-192F-4AC9-B47D-9ED7FC5E7DE6
