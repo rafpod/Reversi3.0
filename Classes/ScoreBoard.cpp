@@ -27,9 +27,7 @@ bool ScoreBoard::init(const char* normalBoardFileName, const char* selectedBoard
         selectedMark = selectedMarkFile;
         
         this->normalMarkAI = "pmark_AI_0.png";
-        this->selectedMarkAI = "pmark_AI_1.png";
-        
-        this->whoseMove = 1;
+        this->selectedMarkAI = "pmark_AI_1.png";        
         
     
         this->mark = CCSprite::create(normalMarkFileName);

@@ -128,12 +128,12 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STATS:          return ccs("STATS");
                 case STRING_MOREGAMES:      return ccs("MORE GAMES");
                     
-                case STRING_MODES:          return ccs("Game Mode:");
-                case STRING_DIFFICULTY:     return ccs("Difficulty:");
-                case STRING_START_FORM:     return ccs("Starting Formation:");
-                case STRING_COLORS:         return ccs("Colors of the Stones:");
-                case STRING_SHOW_MOVES:     return ccs("Show Possible Moves:");
-                case STRING_LIVE_SCORE:     return ccs("Live scores:");
+                case STRING_MODES:          return ccs("GAME MODE");
+                case STRING_DIFFICULTY:     return ccs("DIFFICULTY");
+                case STRING_START_FORM:     return ccs("STARTING FORMATION");
+                case STRING_COLORS:         return ccs("STONE SET");
+                case STRING_SHOW_MOVES:     return ccs("SHOW POSSIBLE MOVES");
+                case STRING_LIVE_SCORE:     return ccs("LIVE SCORES");
                     
                 case STRING_PVP:            return ccs("Player vs Player");
                 case STRING_PVC:            return ccs("Player vs Computer");

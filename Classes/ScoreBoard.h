@@ -28,10 +28,7 @@ private:
     const char* normalMarkAI;
     const char* selectedMarkAI;
     
-    int score;
-    
-    int whoseMove;
-    
+    int score;  
     
     bool init(const char* normalBoardFileName, const char* selectedBoardFilename, const char* normalMarkFileName, const char* selectedMarkFile, float fontSize, int btnType);
     

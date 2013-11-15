@@ -27,8 +27,11 @@ private:
     CCLabelTTF *difficultyLabel;
     CCLabelTTF *startFormLabel;
     CCLabelTTF *colorsLabel;
+    CCLabelTTF *boardLabel;
     CCLabelTTF *movesLabel;
     CCLabelTTF *liveScoreLabel;
+    
+    CCSprite *lineHeader[6];
     
     MenuButton *pvpButton;
     MenuButton *pvcButton;
@@ -43,26 +46,39 @@ private:
     MenuButton *straightButton;
     
     MenuButton *blackWhiteButton;
+    MenuButton *redGreenButton;
     MenuButton *redBlueButton;
     
-    MenuButton *movesOnButton;
-    MenuButton *movesOffButton;
+    MenuButton* boardButton;
     
-    MenuButton *liveScoreOnButton;
-    MenuButton *liveScoreOffButton;
+    MenuButton *movesButton;
+    
+    //MenuButton *movesOffButton;
+    
+    MenuButton *liveScoreButton;
+    
+    //MenuButton *liveScoreOffButton;
     
     CCMenu *modeMenu;
     CCMenu *difficultyMenu;
     CCMenu *startFormMenu;
     CCMenu *colorsMenu;
-    CCMenu *movesMenu;
-    CCMenu *liveScoreMenu;
+    CCMenu *boardMenu;
+    
+    CCMenu *movLiveMenu;
+    
+    //CCMenu *movesMenu;
+    //CCMenu *liveScoreMenu;
+    
+    int dist;
     
     bool init();
     
     void createItems();
     void setItemPositions();
     void addItemsToLayer();
+    
+    void createMarkerLine(CCLabelTTF* labelHeader);
     
     void modeBtnCallback(CCObject* pSender);
     void difficultyBtnCallback(CCObject* pSender);
