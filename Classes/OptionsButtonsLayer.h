@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "MenuButton.h"
 #include "LanguageManager.h"
+#include "ImageOptionButton.h"
 
 using namespace cocos2d;
 
@@ -20,6 +21,9 @@ private:
     
     CCSize visibleSize;
     CCPoint origin;
+    
+    CCString *btnFileNameNormal;
+    CCString *btnFileNameSelected;
     
     LanguageManager* langManager;
     
@@ -32,6 +36,9 @@ private:
     CCLabelTTF *liveScoreLabel;
     
     CCSprite *lineHeader[6];
+    
+    //ImageOptionButton* pvpButton;
+    //ImageOptionButton* pvcButton;
     
     MenuButton *pvpButton;
     MenuButton *pvcButton;
@@ -72,13 +79,32 @@ private:
     
     int dist;
     
+    
     bool init();
     
     void createItems();
     void setItemPositions();
     void addItemsToLayer();
     
-    void createMarkerLine(CCLabelTTF* labelHeader);
+    void createMarkerLine(CCLabelTTF* labelHeader, int index);
+    
+    void createGameModeItems();
+    void createDiffItems();
+    void createStartFormItems();
+    void createColorSetItems();
+    void createBoardItems();
+    void createMovesItems();
+    void createLiveScoreItems();
+    void createMenus();
+    
+    void setGameModeItemsPositions();
+    void setDiffItemsPositions();
+    void setStartFormItemsPositions();
+    void setColorSetItemsPositions();
+    void setBoardItemsPositions();
+    void setMovesItemsPositions();
+    void setLiveScoreItemsPositions();
+    void setMenusPositions();
     
     void modeBtnCallback(CCObject* pSender);
     void difficultyBtnCallback(CCObject* pSender);

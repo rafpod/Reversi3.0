@@ -232,6 +232,7 @@
 		379BB9D417F03F3700829B88 /* CCSSceneReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 379BB99317F03F3700829B88 /* CCSSceneReader.cpp */; };
 		7855E0E1153FEF240059DD9A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7855E0DF153FEF240059DD9A /* Default.png */; };
 		AB030D081832385500278E0D /* ScoreBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB030D061832385500278E0D /* ScoreBoard.cpp */; };
+		AB076C60183A0B32001EF8F2 /* ImageOptionButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB076C5E183A0B32001EF8F2 /* ImageOptionButton.cpp */; };
 		AB0B3A52181127ED000C5EB7 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB0B3A50181127ED000C5EB7 /* GameScene.cpp */; };
 		AB0B3A5518112810000C5EB7 /* BackgroundLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB0B3A5318112810000C5EB7 /* BackgroundLayer.cpp */; };
 		AB0B3A62181165B0000C5EB7 /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB0B3A60181165B0000C5EB7 /* VisibleRect.cpp */; };
@@ -743,6 +744,8 @@
 		7855E0DF153FEF240059DD9A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		AB030D061832385500278E0D /* ScoreBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScoreBoard.cpp; path = ../Classes/ScoreBoard.cpp; sourceTree = "<group>"; };
 		AB030D071832385500278E0D /* ScoreBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScoreBoard.h; path = ../Classes/ScoreBoard.h; sourceTree = "<group>"; };
+		AB076C5E183A0B32001EF8F2 /* ImageOptionButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageOptionButton.cpp; path = ../Classes/ImageOptionButton.cpp; sourceTree = "<group>"; };
+		AB076C5F183A0B32001EF8F2 /* ImageOptionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageOptionButton.h; path = ../Classes/ImageOptionButton.h; sourceTree = "<group>"; };
 		AB0B3A50181127ED000C5EB7 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameScene.cpp; path = ../Classes/GameScene.cpp; sourceTree = "<group>"; };
 		AB0B3A51181127ED000C5EB7 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = ../Classes/GameScene.h; sourceTree = "<group>"; };
 		AB0B3A5318112810000C5EB7 /* BackgroundLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BackgroundLayer.cpp; path = ../Classes/BackgroundLayer.cpp; sourceTree = "<group>"; };
@@ -1785,6 +1788,8 @@
 				ABFF3DD3182D26350030392C /* MenuButton.h */,
 				AB030D061832385500278E0D /* ScoreBoard.cpp */,
 				AB030D071832385500278E0D /* ScoreBoard.h */,
+				AB076C5E183A0B32001EF8F2 /* ImageOptionButton.cpp */,
+				AB076C5F183A0B32001EF8F2 /* ImageOptionButton.h */,
 			);
 			name = GUI;
 			sourceTree = "<group>";
@@ -2063,6 +2068,7 @@
 				ABF2E02A182928BF00E209AC /* LanguageManager.cpp in Sources */,
 				15A3DA331682F826002FB0C5 /* CCBKeyframe.cpp in Sources */,
 				15A3DA341682F826002FB0C5 /* CCBReader.cpp in Sources */,
+				AB076C60183A0B32001EF8F2 /* ImageOptionButton.cpp in Sources */,
 				15A3DA351682F826002FB0C5 /* CCBSequence.cpp in Sources */,
 				15A3DA361682F826002FB0C5 /* CCBSequenceProperty.cpp in Sources */,
 				ABFF3DC9182CE1280030392C /* MenuButtonsLayer.cpp in Sources */,
