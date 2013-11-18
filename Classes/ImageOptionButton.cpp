@@ -11,6 +11,7 @@
 #define MAIN_MENU_FONT_SIZE2  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 40)
 #define MAX_IMG_ON_BTN 5
 
+
 bool ImageOptionButton::init(const char *normalImage, const char *selectedImage, cocos2d::CCObject *target, SEL_MenuHandler selector, const char* textOnButton, float fontSize, const char* firstImg, const char* secondImg){
     
         
@@ -20,6 +21,9 @@ bool ImageOptionButton::init(const char *normalImage, const char *selectedImage,
     }
     else
     {
+        this->setOpacityModifyRGB(true);
+        this->selectedBtn = true;
+        
         tabSprite = CCArray::createWithCapacity(2);
         
         // this->label=CCLabelTTF::create(textOnButton, "Arial", fontSize, CCSizeMake(this->getContentSize().width - 80, 0), kCCTextAlignmentCenter);
@@ -91,6 +95,8 @@ bool ImageOptionButton::init(const char *normalImage, const char *selectedImage,
     }
     else
     {
+        this->setOpacityModifyRGB(true);
+        this->selectedBtn = true;
         
         if (numberOfSprites > 0 && numberOfSprites <6)
         {
@@ -300,3 +306,22 @@ ImageOptionButton* ImageOptionButton::create(const char *normalImage, const char
     return NULL;
     
 }
+
+void ImageOptionButton::setSelectedBtn(bool selected){
+ 
+    if (!selected) {
+        this->setOpacity(125);
+        this->selectedBtn = false;
+    }else{
+        this->setOpacity(255);
+        this->selectedBtn = true;
+    }
+    
+}
+
+bool ImageOptionButton::isBtnSelected(){
+    return selectedBtn;
+}
+
+
+

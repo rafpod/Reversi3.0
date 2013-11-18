@@ -19,6 +19,8 @@ private:
     const char* firstImage;
     const char* secondImage;
     
+    bool selectedBtn;
+    
     CCArray *tabSprite;    
     
     CCLabelTTF *label;
@@ -33,6 +35,9 @@ public:
     static ImageOptionButton* create(const char *normalImage, const char *selectedImage, cocos2d::CCObject *target, SEL_MenuHandler selector, const char* textOnButton, float fontSize, const char* firstImg, const char* secondImg);
     
     static ImageOptionButton* create(const char *normalImage, const char *selectedImage, cocos2d::CCObject *target, SEL_MenuHandler selector, const char* firstImg, const char* secondImg, int numberOfSprites);
+    
+    bool isBtnSelected();
+    void setSelectedBtn(bool isSelected);
     
 };
 

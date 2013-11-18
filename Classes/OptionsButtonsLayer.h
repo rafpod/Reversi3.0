@@ -25,6 +25,15 @@ private:
     CCString *btnFileNameNormal;
     CCString *btnFileNameSelected;
     
+    const char* humanMark;
+    const char* aiMark;
+    
+    const char* blackStone;
+    const char* whiteStone;
+    const char* blueStone;
+    const char* redStone;
+    const char* greenStone;
+    
     LanguageManager* langManager;
     
     CCLabelTTF *modeLabel;
@@ -37,34 +46,28 @@ private:
     
     CCSprite *lineHeader[6];
     
-    //ImageOptionButton* pvpButton;
-    //ImageOptionButton* pvcButton;
+    ImageOptionButton* pvpButton;
+    ImageOptionButton* pvcButton;
     
-    MenuButton *pvpButton;
-    MenuButton *pvcButton;
-    
-    MenuButton *easyButton;
-    MenuButton *mediumButton;
-    MenuButton *hardButton;
-    MenuButton *veryHardButton;
-    MenuButton *hardestButton;
+    ImageOptionButton *easyButton;
+    ImageOptionButton *mediumButton;
+    ImageOptionButton *hardButton;
+    ImageOptionButton *veryHardButton;
+    ImageOptionButton *hardestButton;
     
     MenuButton *crossButton;
     MenuButton *straightButton;
     
-    MenuButton *blackWhiteButton;
-    MenuButton *redGreenButton;
-    MenuButton *redBlueButton;
+    ImageOptionButton *blackWhiteButton;
+    ImageOptionButton *redGreenButton;
+    ImageOptionButton *redBlueButton;
     
     MenuButton* boardButton;
     
     MenuButton *movesButton;
     
-    //MenuButton *movesOffButton;
     
     MenuButton *liveScoreButton;
-    
-    //MenuButton *liveScoreOffButton;
     
     CCMenu *modeMenu;
     CCMenu *difficultyMenu;
@@ -74,8 +77,6 @@ private:
     
     CCMenu *movLiveMenu;
     
-    //CCMenu *movesMenu;
-    //CCMenu *liveScoreMenu;
     
     int dist;
     
@@ -85,6 +86,8 @@ private:
     void createItems();
     void setItemPositions();
     void addItemsToLayer();
+    
+    void initFileName();
     
     void createMarkerLine(CCLabelTTF* labelHeader, int index);
     
@@ -106,10 +109,15 @@ private:
     void setLiveScoreItemsPositions();
     void setMenusPositions();
     
+    void setBtnTags();
+    
+    void setActiveButtons();
+    
     void modeBtnCallback(CCObject* pSender);
     void difficultyBtnCallback(CCObject* pSender);
     void startFormBtnCallback(CCObject* pSender);
     void colorBtnCallback(CCObject* pSender);
+    void boardBtnCallback(CCObject* pSender);
     void movesBtnCallback(CCObject* pSender);
     void liveScoreBtnCallback(CCObject* pSender);
     

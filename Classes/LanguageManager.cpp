@@ -132,6 +132,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_DIFFICULTY:     return ccs("DIFFICULTY");
                 case STRING_START_FORM:     return ccs("STARTING FORMATION");
                 case STRING_COLORS:         return ccs("STONE SET");
+                case STRING_BOARD:          return ccs("BOARD");
                 case STRING_SHOW_MOVES:     return ccs("SHOW POSSIBLE MOVES");
                 case STRING_LIVE_SCORE:     return ccs("LIVE SCORES");
                     
@@ -146,8 +147,11 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STRAIGHT:       return ccs("STRAIGHT");
                 case STRING_BLACK_WHITE:    return ccs("BLACK/WHITE");
                 case STRING_RED_BLUE:       return ccs("RED/BLUE");
+                case STRING_WOOD:           return ccs("WOOD");
+                case STRING_OTHELLO:        return ccs("OTHELLO");
                 case STRING_ON:             return ccs("ON");
                 case STRING_OFF:            return ccs("OFF");
+                
                     
 			}
 			return ccs("UNTRANSLATEDenGB!");
@@ -193,6 +197,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_DIFFICULTY:     return ccs("Spielstärke:");
                 case STRING_START_FORM:     return ccs("Startaufstellung:");
                 case STRING_COLORS:         return ccs("Farben:");
+                case STRING_BOARD:          return ccs("BOARD");
                 case STRING_SHOW_MOVES:     return ccs("Zeigen mögliche Schritten:");
                 case STRING_LIVE_SCORE:     return ccs("Live scores:");
                     
@@ -207,6 +212,8 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STRAIGHT:       return ccs("WAAGERECHT");
                 case STRING_BLACK_WHITE:    return ccs("SCHWARZ/WEISS");
                 case STRING_RED_BLUE:       return ccs("ROT/BLAU");
+                case STRING_WOOD:           return ccs("HOLZ");
+                case STRING_OTHELLO:        return ccs("OTHELLO");
                 case STRING_ON:             return ccs("ON");
                 case STRING_OFF:            return ccs("OFF");
 
@@ -255,6 +262,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_DIFFICULTY:     return ccs("Dificultad:");
                 case STRING_START_FORM:     return ccs("Formación de apertura:");
                 case STRING_COLORS:         return ccs("Colores:");
+                case STRING_BOARD:          return ccs("TABLERO");
                 case STRING_SHOW_MOVES:     return ccs("Mostrar movimientos posibles:");
                 case STRING_LIVE_SCORE:     return ccs("Live scores:");
                     
@@ -269,6 +277,8 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STRAIGHT:       return ccs("RECTO");
                 case STRING_BLACK_WHITE:    return ccs("NEGRO/BLANCO");
                 case STRING_RED_BLUE:       return ccs("ROJO/AZUL");
+                case STRING_WOOD:           return ccs("MADERA");
+                case STRING_OTHELLO:        return ccs("OTHELLO");
                 case STRING_ON:             return ccs("ON");
                 case STRING_OFF:            return ccs("OFF");
 
@@ -317,6 +327,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_DIFFICULTY:     return ccs("Difficulté:");
                 case STRING_START_FORM:     return ccs("Position de départ:");
                 case STRING_COLORS:         return ccs("Couleurs:");
+                case STRING_BOARD:          return ccs("TABLEAU");
                 case STRING_SHOW_MOVES:     return ccs("Afficher Coups Possibles");
                 case STRING_LIVE_SCORE:     return ccs("Live scores:");
                     
@@ -331,6 +342,8 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STRAIGHT:       return ccs("PARALLELES");
                 case STRING_BLACK_WHITE:    return ccs("NOIR/BLANC");
                 case STRING_RED_BLUE:       return ccs("ROUGE/BLEU");
+                case STRING_WOOD:           return ccs("BOIS");
+                case STRING_OTHELLO:        return ccs("OTHELLO");
                 case STRING_ON:             return ccs("ON");
                 case STRING_OFF:            return ccs("OFF");
 
@@ -379,6 +392,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_DIFFICULTY:     return ccs("Difficoltà:");
                 case STRING_START_FORM:     return ccs("Configurazione iniziale:");
                 case STRING_COLORS:         return ccs("Colori:");
+                case STRING_BOARD:          return ccs("PENSIONE");
                 case STRING_SHOW_MOVES:     return ccs("Mostra possibili mosse:");
                 case STRING_LIVE_SCORE:     return ccs("Live scores:");
                     
@@ -393,6 +407,8 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STRAIGHT:       return ccs("PARALLELA");
                 case STRING_BLACK_WHITE:    return ccs("NERO/BIANCO");
                 case STRING_RED_BLUE:       return ccs("ROSSO/BLU");
+                case STRING_WOOD:           return ccs("LEGNO");
+                case STRING_OTHELLO:        return ccs("OTHELLO");
                 case STRING_ON:             return ccs("ON");
                 case STRING_OFF:            return ccs("OFF");
 
@@ -441,6 +457,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_DIFFICULTY:     return ccs("難易度:");
                 case STRING_START_FORM:     return ccs("開始時の位置:");
                 case STRING_COLORS:         return ccs("カラー:");
+                case STRING_BOARD:          return ccs("ボード");
                 case STRING_SHOW_MOVES:     return ccs("可能な動きを見せる");
                 case STRING_LIVE_SCORE:     return ccs("Live scores:");
                     
@@ -455,6 +472,8 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STRAIGHT:       return ccs("ストレート");
                 case STRING_BLACK_WHITE:    return ccs("黒／白");
                 case STRING_RED_BLUE:       return ccs("赤/青");
+                case STRING_WOOD:           return ccs("ウッド");
+                case STRING_OTHELLO:        return ccs("Othello");
                 case STRING_ON:             return ccs("ON");
                 case STRING_OFF:            return ccs("OFF");
 

@@ -16,6 +16,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/OptionsButtonsLayer.cpp \
                    ../../Classes/BackgroundLayer.cpp \
                    ../../Classes/MenuButton.cpp \
+                   ../../Classes/ImageOptionButton.cpp \
                    ../../Classes/ScoreBoard.cpp \
                    ../../Classes/VisibleRect.cpp \
                    ../../Classes/BoardLayer.cpp \

@@ -12,7 +12,7 @@
 
 using namespace cocos2d;
 
-#define OPTIONS_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 32) //32
+#define OPTIONS_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 30) //32
 #define MODE_FONT_SIZE     (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 32)
 #define OPTIONS_FONT_SIZE2  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 16) //26
 #define DIFFICULTY_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 20)
@@ -23,6 +23,24 @@ using namespace cocos2d;
 #define THREE_IMG_BTN   3
 #define FOUR_IMG_BTN    4
 #define FIVE_IMG_BTN    5
+
+#define PVP_BTN_TAG         0
+#define PVC_BTN_TAG         1
+
+#define EASY_BTN_TAG        2
+#define MEDIUM_BTN_TAG      3
+#define HARD_BTN_TAG        4
+#define VERY_HARD_BTN_TAG   5
+#define HARDEST_BTN_TAG     6
+
+#define CROSS_BTN_TAG       7
+#define STRAIGHT_BTN_TAG    8
+
+#define BL_WHITE_BTN_TAG    9
+#define GR_RED_BTN_TAG      10
+#define BLUE_RED_BTN_TAG    11
+
+
 
 
 bool OptionsButtonsLayer::init(){
@@ -36,30 +54,30 @@ bool OptionsButtonsLayer::init(){
         
         langManager = LanguageManager::create();
         
-        btnFileNameNormal = CCString::create("button_wide_0.png");
-        btnFileNameSelected = CCString::create("button_wide_1.png");
-        
+        this->initFileName();
         
         dist = 15;
         
-        createItems();
-        setItemPositions();
-        addItemsToLayer();
+        this->createItems();
+        this->setBtnTags();
+        this->setItemPositions();
+        this->setActiveButtons();
+        this->addItemsToLayer();
         
         this->setKeypadEnabled(true);
         
+        //pvpButton->setSelectedBtn(false);
+        //pvcButton->setSelectedBtn(true);
         
-        //testButton=ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::modeBtnCallback), "vs", DIFFICULTY_FONT_SIZE, "pmark_human_1.png", "pmark_AI_1.png");
+       // CCConfiguration *conf = CCConfiguration::sharedConfiguration();
         
-        //testButton->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y));
-        //this->addChild(testButton, 2);
+        // conf->setObject("this.is.an.int.value", CCInteger::create(10) );
+        //conf->setObject("AIMode", CCBool::create(true) );
+        // conf->setObject("this.is.a.string.value", CCString::create("hello world") );
         
-        
-       // testButton2=ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::modeBtnCallback), "stone_black.png", "stone_white.png",FOUR_IMG_BTN);
-        
-       // testButton2->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y + 100));
-        //this->addChild(testButton2, 2);
-       // testButton2->setScale(1.1);
+        //conf->dumpInfo();
+
+       
         
         return true;
     }
@@ -126,6 +144,19 @@ void OptionsButtonsLayer::addItemsToLayer(){
     //this->addChild(liveScoreMenu,0);
 }
 
+void OptionsButtonsLayer::initFileName(){
+    btnFileNameNormal = CCString::create("button_wide_0.png");
+    btnFileNameSelected = CCString::create("button_wide_1.png");
+    
+    this->humanMark = "pmark_human_1.png";
+    this->aiMark = "pmark_AI_1.png";
+    this->blackStone = "stone_black.png";
+    this->whiteStone = "stone_white.png";
+    this->blueStone = "stone_blue.png";
+    this->redStone = "stone_red.png";
+    this->greenStone = "stone_green.png";
+}
+
 void OptionsButtonsLayer::createMarkerLine(CCLabelTTF* labelHeader, int index){
     
     lineHeader[index] = CCSprite::create("marker_header.png");
@@ -144,13 +175,17 @@ void OptionsButtonsLayer::createGameModeItems(){
     //===========================
     //Create Buttons
     //===========================
-    pvpButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::modeBtnCallback), langManager->Translate(STRING_PVP)->getCString(), MODE_FONT_SIZE);
-    //pvpButton->setScale(0.65f);
-    pvpButton->setScale(1.1f);
     
-    pvcButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::modeBtnCallback), langManager->Translate(STRING_PVC)->getCString(), MODE_FONT_SIZE);
-    //pvcButton->setScale(0.65f);
-    pvcButton->setScale(1.1f);    
+    
+    pvpButton=ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::modeBtnCallback), "vs", DIFFICULTY_FONT_SIZE, humanMark, humanMark);
+    //pvpButton->setScale(1.1f);
+    
+    //pvpButton->setSelectedBtn(false);
+    
+    pvcButton=ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::modeBtnCallback), "vs", DIFFICULTY_FONT_SIZE, humanMark, aiMark);
+    //pvcButton->setScale(1.1f);
+    
+    //pvcButton->setSelectedBtn(true);
     
 }
 
@@ -164,11 +199,11 @@ void OptionsButtonsLayer::createDiffItems(){
     //===========================
     //Create Buttons
     //===========================
-    easyButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), langManager->Translate(STRING_EASY)->getCString(), DIFFICULTY_FONT_SIZE);
-    mediumButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), langManager->Translate(STRING_MEDIUM)->getCString(), DIFFICULTY_FONT_SIZE);
-    hardButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), langManager->Translate(STRING_HARD)->getCString(), DIFFICULTY_FONT_SIZE);
-    veryHardButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), langManager->Translate(STRING_VERY_HARD)->getCString(), DIFFICULTY_FONT_SIZE);
-    hardestButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), langManager->Translate(STRING_THE_HARDEST)->getCString(), DIFFICULTY_FONT_SIZE);
+    easyButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), blackStone, whiteStone,ONE_IMG_BTN);
+    mediumButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), blackStone, whiteStone,TWO_IMG_BTN);
+    hardButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), blackStone, whiteStone,THREE_IMG_BTN);
+    veryHardButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), blackStone, whiteStone,FOUR_IMG_BTN);
+    hardestButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), blackStone, whiteStone,FIVE_IMG_BTN);
     //hardestButton->setScale(1.1);
 }
 
@@ -202,13 +237,14 @@ void OptionsButtonsLayer::createColorSetItems(){
     //===========================
     //Create Buttons
     //===========================
-    blackWhiteButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::colorBtnCallback), langManager->Translate(STRING_BLACK_WHITE)->getCString(), OPTIONS_FONT_SIZE2);
-    //blackWhiteButton->setScale(0.65f);
     
-    redGreenButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::colorBtnCallback), langManager->Translate(STRING_RED_BLUE)->getCString(), OPTIONS_FONT_SIZE2);
+    blackWhiteButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::colorBtnCallback), blackStone, whiteStone,TWO_IMG_BTN);
     
-    redBlueButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::colorBtnCallback), langManager->Translate(STRING_RED_BLUE)->getCString(), OPTIONS_FONT_SIZE2);
-    //redBlueButton->setScale(0.65f);
+   
+    redGreenButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::colorBtnCallback), greenStone, redStone,TWO_IMG_BTN);
+    
+    
+    redBlueButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::colorBtnCallback), blueStone, redStone,TWO_IMG_BTN);
     
     blackWhiteButton->setScale(1.1);
     redGreenButton->setScale(1.1);
@@ -219,13 +255,13 @@ void OptionsButtonsLayer::createBoardItems(){
     //===========================
     //Create Label
     //===========================
-    boardLabel = CCLabelTTF::create(langManager->Translate(STRING_COLORS)->getCString(), "Georgia", OPTIONS_FONT_SIZE);
+    boardLabel = CCLabelTTF::create(langManager->Translate(STRING_BOARD)->getCString(), "Georgia", OPTIONS_FONT_SIZE);
     boardLabel->setColor(ccc3(0, 0, 0));
     
     //===========================
     //Create Button
     //===========================
-    boardButton =MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::colorBtnCallback), langManager->Translate(STRING_RED_BLUE)->getCString(), OPTIONS_FONT_SIZE2);
+    boardButton =MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_WOOD)->getCString(), OPTIONS_FONT_SIZE2);
 }
 
 void OptionsButtonsLayer::createMovesItems(){
@@ -233,11 +269,11 @@ void OptionsButtonsLayer::createMovesItems(){
     //Create Label
     //===========================
     //movesLabel = CCLabelTTF::create(langManager->Translate(STRING_SHOW_MOVES)->getCString(), "Georgia", OPTIONS_FONT_SIZE);
-    CCString *temp = ccs(langManager->Translate(STRING_SHOW_MOVES)->getCString());
+    //CCString *temp = ccs(langManager->Translate(STRING_SHOW_MOVES)->getCString());
     
-    CCLOG("lenght: %i", temp->length());
+    //CCLOG("lenght: %i", temp->length());
     
-    movesLabel = CCLabelTTF::create(langManager->Translate(STRING_SHOW_MOVES)->getCString(), "Georgia", OPTIONS_FONT_SIZE, CCSizeMake(250, 0), kCCTextAlignmentCenter);
+    movesLabel = CCLabelTTF::create(langManager->Translate(STRING_SHOW_MOVES)->getCString(), "Georgia", OPTIONS_FONT_SIZE, CCSizeMake(200, 0), kCCTextAlignmentCenter);
     movesLabel->setColor(ccc3(0, 0, 0));
     
     //===========================
@@ -386,7 +422,7 @@ void OptionsButtonsLayer::setMovesItemsPositions(){
     //==============================
     //Set Label position
     //==============================
-    movesLabel->setPosition(ccp(VisibleRect::center().x - movesLabel->getContentSize().width/2,boardButton->getPositionY() - movesLabel->getContentSize().height/1.6 - 30));
+    movesLabel->setPosition(ccp(VisibleRect::center().x - movesLabel->getContentSize().width/1.7,boardButton->getPositionY() - movesLabel->getContentSize().height/1.6 - 30));
     
     //==============================
     //Set Button position
@@ -423,19 +459,172 @@ void OptionsButtonsLayer::setMenusPositions(){
     movLiveMenu->setPosition(CCPointZero);
 }
 
+void OptionsButtonsLayer::setBtnTags(){
+    pvpButton->setTag(PVP_BTN_TAG);
+    pvcButton->setTag(PVC_BTN_TAG);
+    
+    easyButton->setTag(EASY_BTN_TAG);
+    mediumButton->setTag(MEDIUM_BTN_TAG);
+    hardButton->setTag(HARD_BTN_TAG);
+    veryHardButton->setTag(VERY_HARD_BTN_TAG);
+    hardestButton->setTag(HARDEST_BTN_TAG);
+    
+    crossButton->setTag(CROSS_BTN_TAG);
+    straightButton->setTag(STRAIGHT_BTN_TAG);
+    
+    blackWhiteButton->setTag(BL_WHITE_BTN_TAG);
+    redBlueButton->setTag(BLUE_RED_BTN_TAG);
+    redGreenButton->setTag(GR_RED_BTN_TAG);
+}
+
+void OptionsButtonsLayer::setActiveButtons(){
+    pvpButton->setSelectedBtn(false);
+    pvcButton->setSelectedBtn(true);
+    
+    easyButton->setSelectedBtn(true);
+    mediumButton->setSelectedBtn(false);
+    hardButton->setSelectedBtn(false);
+    veryHardButton->setSelectedBtn(false);
+    hardestButton->setSelectedBtn(false);
+    
+    crossButton->setSelectedBtn(false);
+    straightButton->setSelectedBtn(true);
+    
+    blackWhiteButton->setSelectedBtn(true);
+    redGreenButton->setSelectedBtn(false);
+    redBlueButton->setSelectedBtn(false);    
+    
+    
+}
+
 void OptionsButtonsLayer::modeBtnCallback(CCObject *pSender){
     
+    ImageOptionButton* pMenuItem = (ImageOptionButton *)(pSender);
+    int tag = (int)pMenuItem->getTag();
+    
+    
+    switch (tag) {
+        case PVP_BTN_TAG:
+            pvpButton->setSelectedBtn(true);
+            pvcButton->setSelectedBtn(false);
+            
+            break;
+        case PVC_BTN_TAG:
+            pvpButton->setSelectedBtn(false);
+            pvcButton->setSelectedBtn(true);
+            
+            break;
+        default:
+            break;
+    }
+    
+
 }
 
 void OptionsButtonsLayer::difficultyBtnCallback(cocos2d::CCObject *pSender){
+    ImageOptionButton* pMenuItem = (ImageOptionButton *)(pSender);
+    int tag = (int)pMenuItem->getTag();
     
+    
+    switch (tag) {
+        case EASY_BTN_TAG:
+            easyButton->setSelectedBtn(true);
+            mediumButton->setSelectedBtn(false);
+            hardButton->setSelectedBtn(false);
+            veryHardButton->setSelectedBtn(false);
+            hardestButton->setSelectedBtn(false);
+            
+            break;
+        case MEDIUM_BTN_TAG:
+            easyButton->setSelectedBtn(false);
+            mediumButton->setSelectedBtn(true);
+            hardButton->setSelectedBtn(false);
+            veryHardButton->setSelectedBtn(false);
+            hardestButton->setSelectedBtn(false);
+            
+            break;
+        case HARD_BTN_TAG:
+            easyButton->setSelectedBtn(false);
+            mediumButton->setSelectedBtn(false);
+            hardButton->setSelectedBtn(true);
+            veryHardButton->setSelectedBtn(false);
+            hardestButton->setSelectedBtn(false);
+            
+            break;
+        case VERY_HARD_BTN_TAG:
+            easyButton->setSelectedBtn(false);
+            mediumButton->setSelectedBtn(false);
+            hardButton->setSelectedBtn(false);
+            veryHardButton->setSelectedBtn(true);
+            hardestButton->setSelectedBtn(false);
+            break;
+        
+        case HARDEST_BTN_TAG:
+            easyButton->setSelectedBtn(false);
+            mediumButton->setSelectedBtn(false);
+            hardButton->setSelectedBtn(false);
+            veryHardButton->setSelectedBtn(false);
+            hardestButton->setSelectedBtn(true);
+            break;
+        default:
+            break;
+    }
+
 }
 
 void OptionsButtonsLayer::startFormBtnCallback(cocos2d::CCObject *pSender){
+    MenuButton* pMenuItem = (MenuButton *)(pSender);
+    int tag = (int)pMenuItem->getTag();
     
+    
+    switch (tag) {
+        case CROSS_BTN_TAG:
+            crossButton->setSelectedBtn(true);
+            straightButton->setSelectedBtn(false);
+            
+            break;
+        case STRAIGHT_BTN_TAG:
+            crossButton->setSelectedBtn(false);
+            straightButton->setSelectedBtn(true);
+            
+            break;
+        default:
+            break;
+    }
+
 }
 
 void OptionsButtonsLayer::colorBtnCallback(cocos2d::CCObject *pSender){
+    
+    ImageOptionButton* pMenuItem = (ImageOptionButton *)(pSender);
+    int tag = (int)pMenuItem->getTag();
+    
+    
+    switch (tag) {
+        case BL_WHITE_BTN_TAG:
+            blackWhiteButton->setSelectedBtn(true);
+            redGreenButton->setSelectedBtn(false);
+            redBlueButton->setSelectedBtn(false);
+            
+            break;
+        case GR_RED_BTN_TAG:
+            blackWhiteButton->setSelectedBtn(false);
+            redGreenButton->setSelectedBtn(true);
+            redBlueButton->setSelectedBtn(false);
+            
+            break;
+        case BLUE_RED_BTN_TAG:
+            blackWhiteButton->setSelectedBtn(false);
+            redGreenButton->setSelectedBtn(false);
+            redBlueButton->setSelectedBtn(true);
+            break;
+        default:
+            break;
+    }
+
+}
+
+void OptionsButtonsLayer::boardBtnCallback(cocos2d::CCObject *pSender){
     
 }
 

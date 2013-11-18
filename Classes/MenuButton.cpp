@@ -19,6 +19,8 @@ bool MenuButton::init(const char *normalImage, const char *selectedImage, cocos2
     }
     else
     {
+        this->setOpacityModifyRGB(true);
+        this->selectedBtn = true;
     
         // this->label=CCLabelTTF::create(textOnButton, "Arial", fontSize, CCSizeMake(this->getContentSize().width - 80, 0), kCCTextAlignmentCenter);
         
@@ -58,3 +60,20 @@ MenuButton* MenuButton::create(const char *normalImage, const char *selectedImag
     return NULL;
     
 }
+
+void MenuButton::setSelectedBtn(bool selected){
+    
+    if (!selected) {
+        this->setOpacity(125);
+        this->selectedBtn = false;
+    }else{
+        this->setOpacity(255);
+        this->selectedBtn = true;
+    }
+    
+}
+
+bool MenuButton::isBtnSelected(){
+    return selectedBtn;
+}
+

@@ -72,6 +72,10 @@
 #define STRING_COLORS       50
 #define STRING_SHOW_MOVES   51
 #define STRING_LIVE_SCORE   52
+#define STRING_BOARD        54
+
+#define STRING_WOOD         55
+#define STRING_OTHELLO      56
 
 
 

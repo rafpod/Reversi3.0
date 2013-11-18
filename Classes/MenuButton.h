@@ -15,11 +15,18 @@ using namespace cocos2d;
 
 class MenuButton: public cocos2d::CCMenuItemImage{
 private:
-    bool init (const char *normalImage, const char *selectedImage, cocos2d::CCObject *target, SEL_MenuHandler selector, const char* textOnButton, float fontSize);
+    
+    bool selectedBtn;
     
     CCLabelTTF *label;
+    
+    bool init (const char *normalImage, const char *selectedImage, cocos2d::CCObject *target, SEL_MenuHandler selector, const char* textOnButton, float fontSize);    
+    
 public:
-    static MenuButton* create(const char *normalImage, const char *selectedImage, cocos2d::CCObject *target, SEL_MenuHandler selector, const char* textOnButton, float fontSize);    
+    static MenuButton* create(const char *normalImage, const char *selectedImage, cocos2d::CCObject *target, SEL_MenuHandler selector, const char* textOnButton, float fontSize);
+    
+    bool isBtnSelected();
+    void setSelectedBtn(bool isSelected);
     
 };
 
