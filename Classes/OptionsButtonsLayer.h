@@ -121,7 +121,9 @@ private:
     void movesBtnCallback(CCObject* pSender);
     void liveScoreBtnCallback(CCObject* pSender);
     
-    void keyBackClicked();
+    void keyBackClicked();   
+    
+    
     
 public:
     CREATE_FUNC(OptionsButtonsLayer);

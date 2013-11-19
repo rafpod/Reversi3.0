@@ -195,12 +195,12 @@ void bestmove2(struct field *f,int diff)
     int returnVal;
 	
 	switch (diff) {
-		case 1:	maxdepth=0; randomize=500; break;
+		case 0:	maxdepth=0; randomize=500; break;
 		default:
-		case 2:	maxdepth=1; randomize=10; break;
-		case 3:	maxdepth=4; randomize=0; break;
+		case 1:	maxdepth=1; randomize=10; break;
+		case 2:	maxdepth=4; randomize=0; break;
+        case 3:	maxdepth=5; randomize=80; break;
         case 4:	maxdepth=5; randomize=0; break;
-        case 5:	maxdepth=6; randomize=0; break;
 	}
 	srand(time(NULL));
 	

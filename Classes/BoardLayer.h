@@ -115,6 +115,7 @@ private:
     //To do
     ~BoardLayer();
     int cpuTurn();
+    void setOptionsPreferences();
     
     
     

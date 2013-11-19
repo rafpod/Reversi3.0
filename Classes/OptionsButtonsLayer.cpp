@@ -9,6 +9,7 @@
 #include "OptionsButtonsLayer.h"
 #include "VisibleRect.h"
 #include "MenuScene.h"
+#include "OptionButtonDefinitions.h"
 
 using namespace cocos2d;
 
@@ -23,24 +24,6 @@ using namespace cocos2d;
 #define THREE_IMG_BTN   3
 #define FOUR_IMG_BTN    4
 #define FIVE_IMG_BTN    5
-
-#define PVP_BTN_TAG         0
-#define PVC_BTN_TAG         1
-
-#define EASY_BTN_TAG        2
-#define MEDIUM_BTN_TAG      3
-#define HARD_BTN_TAG        4
-#define VERY_HARD_BTN_TAG   5
-#define HARDEST_BTN_TAG     6
-
-#define CROSS_BTN_TAG       7
-#define STRAIGHT_BTN_TAG    8
-
-#define BL_WHITE_BTN_TAG    9
-#define GR_RED_BTN_TAG      10
-#define BLUE_RED_BTN_TAG    11
-
-
 
 
 bool OptionsButtonsLayer::init(){
@@ -69,15 +52,23 @@ bool OptionsButtonsLayer::init(){
         //pvpButton->setSelectedBtn(false);
         //pvcButton->setSelectedBtn(true);
         
-       // CCConfiguration *conf = CCConfiguration::sharedConfiguration();
+        /* //CONFIG TEST
+        CCConfiguration *conf = CCConfiguration::sharedConfiguration();
         
         // conf->setObject("this.is.an.int.value", CCInteger::create(10) );
-        //conf->setObject("AIMode", CCBool::create(true) );
+        conf->setObject("AIMode", CCBool::create(true) );
         // conf->setObject("this.is.a.string.value", CCString::create("hello world") );
         
-        //conf->dumpInfo();
+        conf->dumpInfo();
 
-       
+        bool b_value = CCConfiguration::sharedConfiguration()->getBool("AIMode", false);
+        CCLOG("%i", b_value);
+        */
+        
+        bool b_value = CCUserDefault::sharedUserDefault()->getBoolForKey("pvcIsEnabled");
+        CCLOG("%i", b_value);
+        int num = CCUserDefault::sharedUserDefault()->getIntegerForKey("difficulty");
+        CCLOG("Diff %i", num);
         
         return true;
     }
@@ -478,63 +469,20 @@ void OptionsButtonsLayer::setBtnTags(){
 }
 
 void OptionsButtonsLayer::setActiveButtons(){
-    pvpButton->setSelectedBtn(false);
-    pvcButton->setSelectedBtn(true);
     
-    easyButton->setSelectedBtn(true);
-    mediumButton->setSelectedBtn(false);
-    hardButton->setSelectedBtn(false);
-    veryHardButton->setSelectedBtn(false);
-    hardestButton->setSelectedBtn(false);
-    
-    crossButton->setSelectedBtn(false);
-    straightButton->setSelectedBtn(true);
-    
-    blackWhiteButton->setSelectedBtn(true);
-    redGreenButton->setSelectedBtn(false);
-    redBlueButton->setSelectedBtn(false);    
-    
-    
-}
-
-void OptionsButtonsLayer::modeBtnCallback(CCObject *pSender){
-    
-    ImageOptionButton* pMenuItem = (ImageOptionButton *)(pSender);
-    int tag = (int)pMenuItem->getTag();
-    
-    
-    switch (tag) {
-        case PVP_BTN_TAG:
-            pvpButton->setSelectedBtn(true);
-            pvcButton->setSelectedBtn(false);
-            
-            break;
-        case PVC_BTN_TAG:
-            pvpButton->setSelectedBtn(false);
-            pvcButton->setSelectedBtn(true);
-            
-            break;
-        default:
-            break;
+    bool pvcIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("pvcIsEnabled");
+    if (pvcIsEnabled) {        
+        pvpButton->setSelectedBtn(false);
+        pvcButton->setSelectedBtn(true);
+    }else{
+        pvpButton->setSelectedBtn(true);
+        pvcButton->setSelectedBtn(false);
     }
     
-
-}
-
-void OptionsButtonsLayer::difficultyBtnCallback(cocos2d::CCObject *pSender){
-    ImageOptionButton* pMenuItem = (ImageOptionButton *)(pSender);
-    int tag = (int)pMenuItem->getTag();
+    int diffLvl = CCUserDefault::sharedUserDefault()->getIntegerForKey("difficulty");
     
     
-    switch (tag) {
-        case EASY_BTN_TAG:
-            easyButton->setSelectedBtn(true);
-            mediumButton->setSelectedBtn(false);
-            hardButton->setSelectedBtn(false);
-            veryHardButton->setSelectedBtn(false);
-            hardestButton->setSelectedBtn(false);
-            
-            break;
+    switch (diffLvl) {
         case MEDIUM_BTN_TAG:
             easyButton->setSelectedBtn(false);
             mediumButton->setSelectedBtn(true);
@@ -557,6 +505,135 @@ void OptionsButtonsLayer::difficultyBtnCallback(cocos2d::CCObject *pSender){
             hardButton->setSelectedBtn(false);
             veryHardButton->setSelectedBtn(true);
             hardestButton->setSelectedBtn(false);
+            
+            break;
+        case HARDEST_BTN_TAG:
+            easyButton->setSelectedBtn(false);
+            mediumButton->setSelectedBtn(false);
+            hardButton->setSelectedBtn(false);
+            veryHardButton->setSelectedBtn(false);
+            hardestButton->setSelectedBtn(true);
+            
+            break;
+        default:
+            easyButton->setSelectedBtn(true);
+            mediumButton->setSelectedBtn(false);
+            hardButton->setSelectedBtn(false);
+            veryHardButton->setSelectedBtn(false);
+            hardestButton->setSelectedBtn(false);
+            break;
+    }
+    
+    bool straightFormIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("straightFormIsEnabled");
+    
+    if (straightFormIsEnabled) {
+        crossButton->setSelectedBtn(false);
+        straightButton->setSelectedBtn(true);
+    }else{
+        crossButton->setSelectedBtn(true);
+        straightButton->setSelectedBtn(false);
+    }
+    
+    int colorBtn = CCUserDefault::sharedUserDefault()->getIntegerForKey("colorBtn");
+    
+    switch (colorBtn) {
+        case GR_RED_BTN_TAG:
+            blackWhiteButton->setSelectedBtn(false);
+            redGreenButton->setSelectedBtn(true);
+            redBlueButton->setSelectedBtn(false);
+            
+            break;
+        case BLUE_RED_BTN_TAG:
+            blackWhiteButton->setSelectedBtn(false);
+            redGreenButton->setSelectedBtn(false);
+            redBlueButton->setSelectedBtn(true);
+            
+            break;
+        default:
+            blackWhiteButton->setSelectedBtn(true);
+            redGreenButton->setSelectedBtn(false);
+            redBlueButton->setSelectedBtn(false);
+            
+            break;
+    }
+    
+}
+
+void OptionsButtonsLayer::modeBtnCallback(CCObject *pSender){
+    
+    ImageOptionButton* pMenuItem = (ImageOptionButton *)(pSender);
+    int tag = (int)pMenuItem->getTag();
+    
+    
+    
+    
+    switch (tag) {
+        case PVP_BTN_TAG:
+            pvpButton->setSelectedBtn(true);
+            pvcButton->setSelectedBtn(false);
+            CCUserDefault::sharedUserDefault()->setBoolForKey("pvcIsEnabled", false);
+            
+            break;
+        case PVC_BTN_TAG:
+            pvpButton->setSelectedBtn(false);
+            pvcButton->setSelectedBtn(true);
+            CCUserDefault::sharedUserDefault()->setBoolForKey("pvcIsEnabled", true);
+            
+            break;
+        default:
+            break;
+            
+    }
+    
+    CCUserDefault::sharedUserDefault()->flush();
+
+}
+
+void OptionsButtonsLayer::difficultyBtnCallback(cocos2d::CCObject *pSender){
+    ImageOptionButton* pMenuItem = (ImageOptionButton *)(pSender);
+    int tag = (int)pMenuItem->getTag();
+    
+    
+    switch (tag) {
+        case EASY_BTN_TAG:
+            easyButton->setSelectedBtn(true);
+            mediumButton->setSelectedBtn(false);
+            hardButton->setSelectedBtn(false);
+            veryHardButton->setSelectedBtn(false);
+            hardestButton->setSelectedBtn(false);
+            
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("difficulty", EASY_BTN_TAG);
+            
+            break;
+        case MEDIUM_BTN_TAG:
+            easyButton->setSelectedBtn(false);
+            mediumButton->setSelectedBtn(true);
+            hardButton->setSelectedBtn(false);
+            veryHardButton->setSelectedBtn(false);
+            hardestButton->setSelectedBtn(false);
+            
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("difficulty", MEDIUM_BTN_TAG);
+            
+            break;
+        case HARD_BTN_TAG:
+            easyButton->setSelectedBtn(false);
+            mediumButton->setSelectedBtn(false);
+            hardButton->setSelectedBtn(true);
+            veryHardButton->setSelectedBtn(false);
+            hardestButton->setSelectedBtn(false);
+            
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("difficulty", HARD_BTN_TAG);
+            
+            break;
+        case VERY_HARD_BTN_TAG:
+            easyButton->setSelectedBtn(false);
+            mediumButton->setSelectedBtn(false);
+            hardButton->setSelectedBtn(false);
+            veryHardButton->setSelectedBtn(true);
+            hardestButton->setSelectedBtn(false);
+            
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("difficulty", VERY_HARD_BTN_TAG);
+            
             break;
         
         case HARDEST_BTN_TAG:
@@ -565,10 +642,16 @@ void OptionsButtonsLayer::difficultyBtnCallback(cocos2d::CCObject *pSender){
             hardButton->setSelectedBtn(false);
             veryHardButton->setSelectedBtn(false);
             hardestButton->setSelectedBtn(true);
+            
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("difficulty", HARDEST_BTN_TAG);
+            
             break;
         default:
             break;
+            
     }
+    
+    CCUserDefault::sharedUserDefault()->flush();
 
 }
 
@@ -582,15 +665,21 @@ void OptionsButtonsLayer::startFormBtnCallback(cocos2d::CCObject *pSender){
             crossButton->setSelectedBtn(true);
             straightButton->setSelectedBtn(false);
             
+            CCUserDefault::sharedUserDefault()->setBoolForKey("straightFormIsEnabled", false);
+            
             break;
         case STRAIGHT_BTN_TAG:
             crossButton->setSelectedBtn(false);
             straightButton->setSelectedBtn(true);
             
+            CCUserDefault::sharedUserDefault()->setBoolForKey("straightFormIsEnabled", true);
+            
             break;
         default:
             break;
     }
+    
+    CCUserDefault::sharedUserDefault()->flush();
 
 }
 
@@ -606,21 +695,30 @@ void OptionsButtonsLayer::colorBtnCallback(cocos2d::CCObject *pSender){
             redGreenButton->setSelectedBtn(false);
             redBlueButton->setSelectedBtn(false);
             
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("colorBtn", 0);
+            
             break;
         case GR_RED_BTN_TAG:
             blackWhiteButton->setSelectedBtn(false);
             redGreenButton->setSelectedBtn(true);
             redBlueButton->setSelectedBtn(false);
             
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("colorBtn", 1);
+            
             break;
         case BLUE_RED_BTN_TAG:
             blackWhiteButton->setSelectedBtn(false);
             redGreenButton->setSelectedBtn(false);
             redBlueButton->setSelectedBtn(true);
+            
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("colorBtn", 2);
+            
             break;
         default:
             break;
     }
+    
+    CCUserDefault::sharedUserDefault()->flush();
 
 }
 

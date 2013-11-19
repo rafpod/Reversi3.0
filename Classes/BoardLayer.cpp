@@ -11,6 +11,7 @@
 #include "CCAlertView.h"
 #include "MenuScene.h"
 #include "AI.h"
+#include "OptionButtonDefinitions.h"
 
 using namespace cocos2d;
 
@@ -65,79 +66,6 @@ struct field startpos[2]={
 };
 
 
-
-/*
-struct field startpos[2]={
-    {
-        {
-            {'.','.','.','.','.','.','.','.'},
-            {'.','.','.','.','.','.','.','.'},
-            {'.','.','.','.','.','.','.','.'},
-            {'.','.','.','X','O','.','.','.'},
-            {'.','.','.','O','X','.','.','.'},
-            {'.','.','.','.','.','.','.','.'},
-            {'.','.','.','.','.','.','.','.'},
-            {'.','.','.','.','.','.','.','.'}
-        },
-        0	// turn
-    },
-    {
-        {
-            {'.','.','.','.','.','.','.','.'},
-            {'.','.','.','.','.','.','.','.'},
-            {'.','.','.','.','.','.','.','.'},
-            {'.','.','.','X','X','.','.','.'},
-            {'.','.','.','O','O','.','.','.'},
-            {'.','.','.','.','.','.','.','.'},
-            {'.','.','.','.','.','.','.','.'},
-            {'.','.','.','.','.','.','.','.'}
-        },
-        0	// turn
-    }
-};
-
-struct field curpos;
-struct field history[100];
-struct field viewpos;
-struct field helperPos;
-
-int histpos;	// undo steps available
-int status;		// game running?
-int playeris = 0;	// human is player 0 or 1
-int lastx,lasty,dist;
-
-int xt=0,yt=0;
-int xl=0,yl=0;
-int thinking=0;
-int loaded_colors=0;
-int current_cross=0;
-int passing=0;
-
-int cross = 0;
-int mode = 1;
-
-CCSprite *uiv[8][8],*uivx,*uiback;
-//New variables
-CCSprite* helperUIV[8][8];
-float scaleSprite = 1.0f;
-float tileSize = 60;
-CCPoint anchorPointSprite = ccp(0.05,.01);
-CCPoint positionOfWhiteMark;
-CCSize visibleSize;
-CCPoint origin;
-LanguageManager* langManager;
-int counterBlack;
-int counterWhite;
-
-int diffXForFirstItem;
-int diffXForLastItem;
-
-int addDistBoardY;
-int dialogStatus;
-int updateStatus;
-*/
-
-
 //====================================================================================================
 //                                      METHODS
 //===================================================================================================
@@ -161,9 +89,10 @@ bool BoardLayer::init(){
         
         whoseMove = AI;
         
-        cross = 0;
-        mode = 2;
-        diff = 1;
+        
+        //cross = 0;
+       // mode = 2;
+       // diff = 1;
         
         //scaleSprite = 1.0f;
         //tileSize = 60;
@@ -233,6 +162,13 @@ bool BoardLayer::init(){
         
         return true;
     }
+}
+
+void BoardLayer::setOptionsPreferences(){    
+    
+    cross = 0;
+    mode = 2;
+    diff = CCUserDefault::sharedUserDefault()->getIntegerForKey("difficulty");
 }
 
 void BoardLayer::keyBackClicked(){

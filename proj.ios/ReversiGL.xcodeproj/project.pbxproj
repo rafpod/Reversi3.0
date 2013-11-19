@@ -236,7 +236,8 @@
 		AB0B3A52181127ED000C5EB7 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB0B3A50181127ED000C5EB7 /* GameScene.cpp */; };
 		AB0B3A5518112810000C5EB7 /* BackgroundLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB0B3A5318112810000C5EB7 /* BackgroundLayer.cpp */; };
 		AB0B3A62181165B0000C5EB7 /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB0B3A60181165B0000C5EB7 /* VisibleRect.cpp */; };
-		AB39A429183A465D00B9CB48 /* Test_Res in Resources */ = {isa = PBXBuildFile; fileRef = AB39A428183A465D00B9CB48 /* Test_Res */; };
+		AB5D26BB183B4F9900011B42 /* Test_Res in Resources */ = {isa = PBXBuildFile; fileRef = AB5D26BA183B4F9900011B42 /* Test_Res */; };
+		AB5D26BD183B4FE100011B42 /* Sorted_Res in Resources */ = {isa = PBXBuildFile; fileRef = AB5D26BC183B4FE100011B42 /* Sorted_Res */; };
 		ABD5B0931836314000D8EDD6 /* Reversi-DeveloperConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = ABD5B0921836314000D8EDD6 /* Reversi-DeveloperConfig.xcconfig */; };
 		ABED884118336C6D000952A6 /* OptionsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABED883F18336C6D000952A6 /* OptionsScene.cpp */; };
 		ABED8844183370FD000952A6 /* OptionsButtonsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABED8842183370FD000952A6 /* OptionsButtonsLayer.cpp */; };
@@ -246,7 +247,6 @@
 		ABF8DE291834C3CC0086E96E /* AI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABF8DE271834C3CC0086E96E /* AI.cpp */; };
 		ABFB1B2F1817CACB00DC5862 /* BoardLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABFB1B2D1817CACB00DC5862 /* BoardLayer.cpp */; };
 		ABFD0B93181A5A850039DB5C /* Othello.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABFD0B91181A5A850039DB5C /* Othello.cpp */; };
-		ABFD0BA0181A95B10039DB5C /* Sorted_Res in Resources */ = {isa = PBXBuildFile; fileRef = ABFD0B9F181A95B10039DB5C /* Sorted_Res */; };
 		ABFF3DC2182CC69C0030392C /* BgLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABFF3DC0182CC69C0030392C /* BgLayer.cpp */; };
 		ABFF3DC9182CE1280030392C /* MenuButtonsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABFF3DC7182CE1280030392C /* MenuButtonsLayer.cpp */; };
 		ABFF3DD4182D26350030392C /* MenuButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABFF3DD2182D26350030392C /* MenuButton.cpp */; };
@@ -752,7 +752,9 @@
 		AB0B3A5418112810000C5EB7 /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackgroundLayer.h; path = ../Classes/BackgroundLayer.h; sourceTree = "<group>"; };
 		AB0B3A60181165B0000C5EB7 /* VisibleRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VisibleRect.cpp; path = ../Classes/VisibleRect.cpp; sourceTree = "<group>"; };
 		AB0B3A61181165B0000C5EB7 /* VisibleRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VisibleRect.h; path = ../Classes/VisibleRect.h; sourceTree = "<group>"; };
-		AB39A428183A465D00B9CB48 /* Test_Res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Test_Res; path = ../Test_Res; sourceTree = "<group>"; };
+		AB5D26BA183B4F9900011B42 /* Test_Res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Test_Res; path = ../Test_Res; sourceTree = "<group>"; };
+		AB5D26BC183B4FE100011B42 /* Sorted_Res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sorted_Res; path = ../Sorted_Res; sourceTree = "<group>"; };
+		AB5D26BF183B69B000011B42 /* OptionButtonDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OptionButtonDefinitions.h; path = ../Classes/OptionButtonDefinitions.h; sourceTree = "<group>"; };
 		ABD5B0921836314000D8EDD6 /* Reversi-DeveloperConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Reversi-DeveloperConfig.xcconfig"; sourceTree = "<group>"; };
 		ABED883F18336C6D000952A6 /* OptionsScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OptionsScene.cpp; path = ../Classes/OptionsScene.cpp; sourceTree = "<group>"; };
 		ABED884018336C6D000952A6 /* OptionsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OptionsScene.h; path = ../Classes/OptionsScene.h; sourceTree = "<group>"; };
@@ -771,7 +773,6 @@
 		ABFB1B2E1817CACB00DC5862 /* BoardLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoardLayer.h; path = ../Classes/BoardLayer.h; sourceTree = "<group>"; };
 		ABFD0B91181A5A850039DB5C /* Othello.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Othello.cpp; path = ../Classes/Othello.cpp; sourceTree = "<group>"; };
 		ABFD0B92181A5A850039DB5C /* Othello.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Othello.h; path = ../Classes/Othello.h; sourceTree = "<group>"; };
-		ABFD0B9F181A95B10039DB5C /* Sorted_Res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sorted_Res; path = ../Sorted_Res; sourceTree = "<group>"; };
 		ABFF3DC0182CC69C0030392C /* BgLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BgLayer.cpp; path = ../Classes/BgLayer.cpp; sourceTree = "<group>"; };
 		ABFF3DC1182CC69C0030392C /* BgLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BgLayer.h; path = ../Classes/BgLayer.h; sourceTree = "<group>"; };
 		ABFF3DC7182CE1280030392C /* MenuButtonsLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MenuButtonsLayer.cpp; path = ../Classes/MenuButtonsLayer.cpp; sourceTree = "<group>"; };
@@ -1765,8 +1766,8 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AB39A428183A465D00B9CB48 /* Test_Res */,
-				ABFD0B9F181A95B10039DB5C /* Sorted_Res */,
+				AB5D26BC183B4FE100011B42 /* Sorted_Res */,
+				AB5D26BA183B4F9900011B42 /* Test_Res */,
 				D41A0AD0160F154A004552AE /* Default-568h@2x.png */,
 				7855E0DF153FEF240059DD9A /* Default.png */,
 				D446FD6D16102124000ADA7B /* Default@2x.png */,
@@ -1809,6 +1810,7 @@
 			children = (
 				ABED8842183370FD000952A6 /* OptionsButtonsLayer.cpp */,
 				ABED8843183370FD000952A6 /* OptionsButtonsLayer.h */,
+				AB5D26BF183B69B000011B42 /* OptionButtonDefinitions.h */,
 			);
 			name = OptionsLayers;
 			sourceTree = "<group>";
@@ -1961,16 +1963,16 @@
 				7855E0E1153FEF240059DD9A /* Default.png in Resources */,
 				D4EF949A15BD2D8B00D803EB /* Icon-57.png in Resources */,
 				D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */,
-				AB39A429183A465D00B9CB48 /* Test_Res in Resources */,
 				D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */,
 				D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */,
 				D41A0AD1160F154A004552AE /* Default-568h@2x.png in Resources */,
 				D446FD6E16102124000ADA7B /* Default@2x.png in Resources */,
+				AB5D26BD183B4FE100011B42 /* Sorted_Res in Resources */,
 				15A3D9961682F7F9002FB0C5 /* CMakeLists.txt in Resources */,
 				379BB9CC17F03F3700829B88 /* json_internalarray.inl in Resources */,
 				379BB9CD17F03F3700829B88 /* json_internalmap.inl in Resources */,
+				AB5D26BB183B4F9900011B42 /* Test_Res in Resources */,
 				379BB9D017F03F3700829B88 /* json_valueiterator.inl in Resources */,
-				ABFD0BA0181A95B10039DB5C /* Sorted_Res in Resources */,
 				379BB9D217F03F3700829B88 /* sconscript in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
