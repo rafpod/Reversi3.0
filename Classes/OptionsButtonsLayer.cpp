@@ -254,21 +254,20 @@ void OptionsButtonsLayer::createMovesItems(){
     //===========================
     //Create Label
     //===========================
-    //movesLabel = CCLabelTTF::create(langManager->Translate(STRING_SHOW_MOVES)->getCString(), "Georgia", OPTIONS_FONT_SIZE);
-    //CCString *temp = ccs(langManager->Translate(STRING_SHOW_MOVES)->getCString());
-    
-    //CCLOG("lenght: %i", temp->length());
-    
     movesLabel = CCLabelTTF::create(langManager->Translate(STRING_SHOW_MOVES)->getCString(), "Georgia", OPTIONS_FONT_SIZE, CCSizeMake(200, 0), kCCTextAlignmentCenter);
     movesLabel->setColor(ccc3(0, 0, 0));
     
     //===========================
     //Create Buttons
     //===========================
-    movesButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::movesBtnCallback), langManager->Translate(STRING_ON)->getCString(), OPTIONS_FONT_SIZE2);
+    
     //movesOnButton->setScale(0.65f);
-    /*
-     movesOffButton = MenuButton::create(btnFileNameNormal2->getCString(), btnFileNameSelected2->getCString(), this, menu_selector(OptionsButtonsLayer::movesBtnCallback), langManager->Translate(STRING_OFF)->getCString(), OPTIONS_FONT_SIZE2);*/
+    
+    movesOnButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_ON)->getCString(), OPTIONS_FONT_SIZE2);
+    movesOffButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_OFF)->getCString(), OPTIONS_FONT_SIZE2);
+    
+    showMovesButton = CCMenuItemToggle::createWithTarget(this, menu_selector(OptionsButtonsLayer::movesBtnCallback), movesOffButton, movesOnButton, NULL);    
+    
     //movesOffButton->setScale(0.65f);
 }
 
@@ -294,7 +293,7 @@ void OptionsButtonsLayer::createMenus(){
     //===========================
     //Create menus
     //===========================
-    mainMenu = CCMenu::create(pvpButton,pvcButton, easyButton,mediumButton,hardButton,veryHardButton, hardestButton,crossButton,straightButton, blackWhiteButton,redGreenButton,redBlueButton,boardButton,movesButton, liveScoreButton, NULL);
+    mainMenu = CCMenu::create(pvpButton,pvcButton, easyButton,mediumButton,hardButton,veryHardButton, hardestButton,crossButton,straightButton, blackWhiteButton,redGreenButton,redBlueButton,boardButton,showMovesButton, liveScoreButton, NULL);
     
     backBtnMenu = CCMenu::create(backButton, NULL);
     
@@ -411,7 +410,9 @@ void OptionsButtonsLayer::setMovesItemsPositions(){
     //==============================
     //Set Button position
     //==============================
-    movesButton->setPosition(ccp(movesLabel->boundingBox().origin.x + movesLabel->getContentSize().width/2, movesLabel->boundingBox().origin.y - movesButton->getContentSize().height/3.5 - dist));
+    //movesButton->setPosition(ccp(movesLabel->boundingBox().origin.x + movesLabel->getContentSize().width/2, movesLabel->boundingBox().origin.y - movesButton->getContentSize().height/3.5 - dist));
+    
+    showMovesButton->setPosition(ccp(movesLabel->boundingBox().origin.x + movesLabel->getContentSize().width/2, movesLabel->boundingBox().origin.y - showMovesButton->getContentSize().height/3.5 - dist));
     
     //============================================
     //Create Set Positions and Add Marker to Layer
@@ -429,7 +430,7 @@ void OptionsButtonsLayer::setLiveScoreItemsPositions(){
     //==============================
     //Set Buttons position
     //==============================
-    liveScoreButton->setPosition(ccp(liveScoreLabel->boundingBox().origin.x + liveScoreLabel->getContentSize().width/2, movesButton->getPositionY()));
+    liveScoreButton->setPosition(ccp(liveScoreLabel->boundingBox().origin.x + liveScoreLabel->getContentSize().width/2, showMovesButton->getPositionY()));
 
 }
 
@@ -457,6 +458,7 @@ void OptionsButtonsLayer::setBtnTags(){
     blackWhiteButton->setTag(BL_WHITE_BTN_TAG);
     redBlueButton->setTag(BLUE_RED_BTN_TAG);
     redGreenButton->setTag(GR_RED_BTN_TAG);
+   
 }
 
 void OptionsButtonsLayer::setActiveButtons(){
@@ -546,6 +548,14 @@ void OptionsButtonsLayer::setActiveButtons(){
             redBlueButton->setSelectedBtn(false);
             
             break;
+    }
+    
+    bool showMoveIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("showMoveIsEnabled");
+    
+    if(showMoveIsEnabled){
+        showMovesButton->setSelectedIndex(SHOW_MOVE_ON_BTN_TAG);
+    }else{
+        showMovesButton->setSelectedIndex(SHOW_MOVE_OFF_BTN_TAG);
     }
     
 }
@@ -718,7 +728,17 @@ void OptionsButtonsLayer::boardBtnCallback(cocos2d::CCObject *pSender){
 }
 
 void OptionsButtonsLayer::movesBtnCallback(cocos2d::CCObject *pSender){
+   
+    if(showMovesButton->getSelectedIndex()){
+        
+        CCUserDefault::sharedUserDefault()->setBoolForKey("showMoveIsEnabled", true);
+        //CCLOG("Move ON");
+    }else{
+        CCUserDefault::sharedUserDefault()->setBoolForKey("showMoveIsEnabled", false);
+        //CCLOG("Move OFF");
+    }
     
+    CCUserDefault::sharedUserDefault()->flush();
 }
 
 void OptionsButtonsLayer::liveScoreBtnCallback(cocos2d::CCObject *pSender){

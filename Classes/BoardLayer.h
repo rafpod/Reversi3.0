@@ -41,6 +41,8 @@ private:
     int cross;
     int mode;
     int diff;
+    int stoneColor;
+    bool showMoves;
     
     int whoseMove;
     
@@ -69,8 +71,12 @@ private:
     const char* colorFileNameFirst;
     const char* colorFileNameSecond;
     const char* postfixColor;
-    int stoneColor;
-
+    
+    const char* colorScBrdLeftNorm;
+    const char* colorScBrdRightNorm;
+    
+    const char* colorScBrdLeftSel;
+    const char* colorScBrdRightSel;
 
     
     CCSprite *shadowSprite;

@@ -232,12 +232,14 @@ bool AppDelegate::applicationDidFinishLaunching() {
         resourceSize = CCSizeMake(640, 960);
         //resDirOrders.push_back("Group_D/640x960-iphonehd");
         //resDirOrders.push_back("Group_D");
+        resDirOrders.push_back("640x960-iphonehd/wood");
         resDirOrders.push_back("640x960-iphonehd");
     }
     else
     {
         //resDirOrders.push_back("Group_B/320x480-iphone");
         //resDirOrders.push_back("Group_B");
+        resDirOrders.push_back("320x480-iphone/wood");
         resDirOrders.push_back("320x480-iphone");
     }
     

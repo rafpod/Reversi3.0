@@ -174,12 +174,19 @@ void BoardLayer::setOptionsPreferences(){
     mode = CCUserDefault::sharedUserDefault()->getBoolForKey("pvcIsEnabled",PVC_BTN_TAG);
     diff = CCUserDefault::sharedUserDefault()->getIntegerForKey("difficulty",EASY_BTN_TAG);
     stoneColor = CCUserDefault::sharedUserDefault()->getIntegerForKey("colorBtn",BL_WHITE_BTN_TAG);
+    showMoves = CCUserDefault::sharedUserDefault()->getBoolForKey("showMoveIsEnabled",SHOW_MOVE_OFF_BTN_TAG);
     
     switch (stoneColor) {
         case GR_RED_BTN_TAG:
-            colorFileNameFirst = "stone_green.png";
+            colorFileNameFirst = "stone_green.png";            
             colorFileNameSecond = "stone_red.png";
             postfixColor = "gr";
+            
+            colorScBrdLeftNorm = "button_red_0.png";
+            colorScBrdLeftSel = "button_red_1.png";
+            
+            colorScBrdRightNorm = "button_green_0.png";
+            colorScBrdRightSel = "button_green_1.png";
             
             break;
         case BLUE_RED_BTN_TAG:
@@ -187,11 +194,23 @@ void BoardLayer::setOptionsPreferences(){
             colorFileNameSecond = "stone_red.png";
             postfixColor = "br";
             
+            colorScBrdLeftNorm = "button_red_0.png";
+            colorScBrdLeftSel = "button_red_1.png";
+            
+            colorScBrdRightNorm = "button_blue_0.png";
+            colorScBrdRightSel = "button_blue_1.png";
+            
             break;
         default:
             colorFileNameFirst = "stone_white.png";
             colorFileNameSecond = "stone_black.png";
             postfixColor = "wb";
+            
+            colorScBrdLeftNorm = "button_black_0.png";
+            colorScBrdLeftSel = "button_black_1.png";
+            
+            colorScBrdRightNorm = "button_white_0.png";
+            colorScBrdRightSel = "button_white_1.png";
             
             break;
     }
@@ -220,9 +239,9 @@ void BoardLayer::createItems(){
     CCString markNormal;
     CCString markSelected;
     
-    leftScoreBoard = ScoreBoard::create("button_black_0.png","button_black_1.png", "pmark_human_0.png","pmark_human_1.png", SCORE_FONT_SIZE, BTN_LEFT);
+    leftScoreBoard = ScoreBoard::create(colorScBrdLeftNorm, colorScBrdLeftSel, "pmark_human_0.png","pmark_human_1.png", SCORE_FONT_SIZE, BTN_LEFT);
     
-    rightScoreBoard = ScoreBoard::create("button_white_0.png","button_white_1.png", "pmark_human_0.png", "pmark_human_1.png", SCORE_FONT_SIZE, BTN_RIGHT);
+    rightScoreBoard = ScoreBoard::create(colorScBrdRightNorm,colorScBrdRightSel, "pmark_human_0.png", "pmark_human_1.png", SCORE_FONT_SIZE, BTN_RIGHT);
     
     //===========================
     //Create Menu Buttons
@@ -321,6 +340,15 @@ void BoardLayer::newBtnCallback(CCObject *pSender){
 
 void BoardLayer::menuBtnCallback(CCObject *pSender){
     
+    /*
+    for (int x=7; x>=0; x--) {
+        for (int y=0; y<8; y++) {
+            uiv[x][y]->stopAllActions();
+        }
+    }
+    */
+    this->stopAllActions();
+    
     CCScene *menuScene = MenuScene::create();
     
     CCDirector::sharedDirector()->setDepthTest(true);
@@ -345,7 +373,11 @@ void BoardLayer::dialogMustPassButton(CCObject *pSender) {
     curpos.turn++;
     histpos++;
     updateActiveMark();
-    showMovements();
+    
+    if (showMoves) {
+        showMovements();
+    }
+    
 }
 
 void BoardLayer::updateActiveMark(){
@@ -613,7 +645,9 @@ void BoardLayer:: newGame() {
     createBeginningPawnsPosition();
     updateActiveMark();
     
-    showMovements();
+    if (showMoves) {
+        showMovements();
+    }
     
     CCLOG("Playeris: %i, TURA: %i", playeris, curpos.turn);
     
@@ -651,7 +685,11 @@ void BoardLayer::undoUpdatePositions(){
     
     updateResults();
     updateActiveMark();
-    showMovements();
+    
+    if (showMoves) {
+        showMovements();
+    }
+    
 }
 
 
@@ -919,7 +957,11 @@ void BoardLayer:: updateWithAnimations(){
                 updateActiveMark();
                 gameOverTest();
                 mustPassTest();
-                showMovements();
+                
+                if (showMoves) {
+                    showMovements();
+                }
+                
 			} else
             {
                 updateStatus = UPDATE_ON;
@@ -966,7 +1008,7 @@ void BoardLayer:: updateWithAnimations(){
 
 void BoardLayer::showMovements(){
     
-    //warunek na pokazanie
+    //Hide direction of movement
     if(mode == PVC_BTN_TAG && whoseMove == AI){
         
         for (int x=7; x>=0; x--){

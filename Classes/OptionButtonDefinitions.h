@@ -25,4 +25,8 @@
 #define GR_RED_BTN_TAG      1
 #define BLUE_RED_BTN_TAG    2
 
+#define SHOW_MOVE_OFF_BTN_TAG   0
+#define SHOW_MOVE_ON_BTN_TAG    1
+
+
 #endif

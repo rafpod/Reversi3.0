@@ -65,6 +65,9 @@ private:
     MenuButton* boardButton;
     
     MenuButton *movesButton;
+    CCMenuItemToggle* showMovesButton;
+    MenuButton *movesOnButton;
+    MenuButton *movesOffButton;
     
     MenuButton *liveScoreButton;
     
