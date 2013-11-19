@@ -44,6 +44,7 @@ private:
     
     int whoseMove;
     
+    
     CCSprite *uiv[8][8],*uivx,*uiback;
     //New variables
     CCSprite* helperUIV[8][8];
@@ -63,6 +64,12 @@ private:
     int addDistBoardY;
     int dialogStatus;
     int updateStatus;
+    
+    
+    const char* colorFileNameFirst;
+    const char* colorFileNameSecond;
+    const char* postfixColor;
+    int stoneColor;
 
 
     
@@ -116,6 +123,7 @@ private:
     ~BoardLayer();
     int cpuTurn();
     void setOptionsPreferences();
+    void initVariables();
     
     
     

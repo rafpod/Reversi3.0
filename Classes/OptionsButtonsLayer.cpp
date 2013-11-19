@@ -124,15 +124,9 @@ void OptionsButtonsLayer::addItemsToLayer(){
     this->addChild(movesLabel,1);
     this->addChild(liveScoreLabel,1);
     
-    this->addChild(modeMenu,0);
-    this->addChild(difficultyMenu,0);
-    this->addChild(startFormMenu,0);
-    this->addChild(colorsMenu,0);
-    this->addChild(boardMenu,0);
-    this->addChild(movLiveMenu,0);
+    this->addChild(mainMenu,0);
+    this->addChild(backBtnMenu,1);
     
-    //this->addChild(movesMenu,0);
-    //this->addChild(liveScoreMenu,0);
 }
 
 void OptionsButtonsLayer::initFileName(){
@@ -178,6 +172,7 @@ void OptionsButtonsLayer::createGameModeItems(){
     
     //pvcButton->setSelectedBtn(true);
     
+    backButton = CCMenuItemImage::create("button_back_0.png", "button_back_1.png", "button_back_0.png", this, menu_selector(OptionsButtonsLayer::backBtnCallback));
 }
 
 void OptionsButtonsLayer::createDiffItems(){
@@ -299,14 +294,10 @@ void OptionsButtonsLayer::createMenus(){
     //===========================
     //Create menus
     //===========================
-    modeMenu = CCMenu::create(pvpButton,pvcButton, NULL);
-    difficultyMenu = CCMenu::create(easyButton,mediumButton,hardButton,veryHardButton, hardestButton, NULL);
-    startFormMenu = CCMenu::create(crossButton,straightButton, NULL);
-    colorsMenu = CCMenu::create(blackWhiteButton,redGreenButton,redBlueButton, NULL);
-    boardMenu = CCMenu::create(boardButton, NULL);
-    movLiveMenu = CCMenu::create(movesButton, liveScoreButton, NULL);
-    //movesMenu = CCMenu::create(movesOnButton, movesOffButton, NULL);
-    //liveScoreMenu = CCMenu::create(liveScoreOnButton, liveScoreOffButton, NULL);
+    mainMenu = CCMenu::create(pvpButton,pvcButton, easyButton,mediumButton,hardButton,veryHardButton, hardestButton,crossButton,straightButton, blackWhiteButton,redGreenButton,redBlueButton,boardButton,movesButton, liveScoreButton, NULL);
+    
+    backBtnMenu = CCMenu::create(backButton, NULL);
+    
 }
 
 //===========================
@@ -332,6 +323,8 @@ void OptionsButtonsLayer::setGameModeItemsPositions(){
     //Create Set Positions and Add Marker to Layer
     //============================================
     createMarkerLine(modeLabel,0);
+    
+    backButton->setPosition(ccp(lineHeader[0]->boundingBox().origin.x, lineHeader[0]->getPositionY()));
 }
 
 void OptionsButtonsLayer::setDiffItemsPositions(){
@@ -442,12 +435,10 @@ void OptionsButtonsLayer::setLiveScoreItemsPositions(){
 
 void OptionsButtonsLayer::setMenusPositions(){
     
-    modeMenu->setPosition(CCPointZero);
-    difficultyMenu->setPosition(CCPointZero);
-    startFormMenu->setPosition(CCPointZero);
-    colorsMenu->setPosition(CCPointZero);
-    boardMenu->setPosition(CCPointZero);
-    movLiveMenu->setPosition(CCPointZero);
+    mainMenu->setPosition(CCPointZero);
+    
+    backBtnMenu->setPosition(CCPointZero);
+
 }
 
 void OptionsButtonsLayer::setBtnTags(){
@@ -571,12 +562,14 @@ void OptionsButtonsLayer::modeBtnCallback(CCObject *pSender){
         case PVP_BTN_TAG:
             pvpButton->setSelectedBtn(true);
             pvcButton->setSelectedBtn(false);
+            
             CCUserDefault::sharedUserDefault()->setBoolForKey("pvcIsEnabled", false);
             
             break;
         case PVC_BTN_TAG:
             pvpButton->setSelectedBtn(false);
             pvcButton->setSelectedBtn(true);
+            
             CCUserDefault::sharedUserDefault()->setBoolForKey("pvcIsEnabled", true);
             
             break;
@@ -690,14 +683,6 @@ void OptionsButtonsLayer::colorBtnCallback(cocos2d::CCObject *pSender){
     
     
     switch (tag) {
-        case BL_WHITE_BTN_TAG:
-            blackWhiteButton->setSelectedBtn(true);
-            redGreenButton->setSelectedBtn(false);
-            redBlueButton->setSelectedBtn(false);
-            
-            CCUserDefault::sharedUserDefault()->setIntegerForKey("colorBtn", 0);
-            
-            break;
         case GR_RED_BTN_TAG:
             blackWhiteButton->setSelectedBtn(false);
             redGreenButton->setSelectedBtn(true);
@@ -715,6 +700,12 @@ void OptionsButtonsLayer::colorBtnCallback(cocos2d::CCObject *pSender){
             
             break;
         default:
+            blackWhiteButton->setSelectedBtn(true);
+            redGreenButton->setSelectedBtn(false);
+            redBlueButton->setSelectedBtn(false);
+            
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("colorBtn", 0);
+            
             break;
     }
     
@@ -741,4 +732,8 @@ void OptionsButtonsLayer::keyBackClicked(){
     
     CCDirector::sharedDirector()->setDepthTest(true);
     CCDirector::sharedDirector()->replaceScene(CCTransitionPageTurn::create(0.5f, backScene,true));
+}
+
+void OptionsButtonsLayer::backBtnCallback(cocos2d::CCObject *pSender){
+    this->keyBackClicked();
 }

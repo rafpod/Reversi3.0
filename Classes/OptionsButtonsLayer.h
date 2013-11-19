@@ -66,16 +66,14 @@ private:
     
     MenuButton *movesButton;
     
-    
     MenuButton *liveScoreButton;
     
-    CCMenu *modeMenu;
-    CCMenu *difficultyMenu;
-    CCMenu *startFormMenu;
-    CCMenu *colorsMenu;
-    CCMenu *boardMenu;
+    CCMenuItemImage *backButton;
     
-    CCMenu *movLiveMenu;
+    CCMenu *mainMenu;
+    
+    CCMenu *backBtnMenu;
+    
     
     
     int dist;
@@ -97,7 +95,7 @@ private:
     void createColorSetItems();
     void createBoardItems();
     void createMovesItems();
-    void createLiveScoreItems();
+    void createLiveScoreItems();    
     void createMenus();
     
     void setGameModeItemsPositions();
@@ -120,6 +118,7 @@ private:
     void boardBtnCallback(CCObject* pSender);
     void movesBtnCallback(CCObject* pSender);
     void liveScoreBtnCallback(CCObject* pSender);
+    void backBtnCallback(CCObject* pSender);
     
     void keyBackClicked();   
     

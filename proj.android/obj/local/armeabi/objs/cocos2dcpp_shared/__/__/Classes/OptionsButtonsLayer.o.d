@@ -207,7 +207,8 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/OptionsButtonsLayer.o: \
  jni/../../Classes/MenuButton.h jni/../../Classes/LanguageManager.h \
  jni/../../Classes/LangDefinitions.h \
  jni/../../Classes/ImageOptionButton.h jni/../../Classes/VisibleRect.h \
- jni/../../Classes/MenuScene.h
+ jni/../../Classes/MenuScene.h \
+ jni/../../Classes/OptionButtonDefinitions.h
 
 jni/../../Classes/OptionsButtonsLayer.h:
 
@@ -628,3 +629,5 @@ jni/../../Classes/ImageOptionButton.h:
 jni/../../Classes/VisibleRect.h:
 
 jni/../../Classes/MenuScene.h:
+
+jni/../../Classes/OptionButtonDefinitions.h:

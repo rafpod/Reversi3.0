@@ -207,7 +207,7 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/BoardLayer.o: \
  jni/../../Classes/Othello.h jni/../../Classes/LanguageManager.h \
  jni/../../Classes/LangDefinitions.h jni/../../Classes/VisibleRect.h \
  jni/../../Classes/CCAlertView.h jni/../../Classes/MenuScene.h \
- jni/../../Classes/AI.h
+ jni/../../Classes/AI.h jni/../../Classes/OptionButtonDefinitions.h
 
 jni/../../Classes/BoardLayer.h:
 
@@ -634,3 +634,5 @@ jni/../../Classes/CCAlertView.h:
 jni/../../Classes/MenuScene.h:
 
 jni/../../Classes/AI.h:
+
+jni/../../Classes/OptionButtonDefinitions.h:

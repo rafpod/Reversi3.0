@@ -77,22 +77,12 @@ bool BoardLayer::init(){
         return false;
     }else{
         
-        playeris = 1;
-        xt=0;
-        yt=0;
-        xl=0;
-        yl=0;
-        thinking=0;
-        loaded_colors=0;
-        current_cross=0;
-        passing=0;
-        
-        whoseMove = AI;
-        
+        this->initVariables();
         
         //cross = 0;
        // mode = 2;
        // diff = 1;
+        this->setOptionsPreferences();
         
         //scaleSprite = 1.0f;
         //tileSize = 60;
@@ -164,11 +154,47 @@ bool BoardLayer::init(){
     }
 }
 
-void BoardLayer::setOptionsPreferences(){    
+void BoardLayer::initVariables(){
+    playeris = 1;
+    xt=0;
+    yt=0;
+    xl=0;
+    yl=0;
+    thinking=0;
+    loaded_colors=0;
+    current_cross=0;
+    passing=0;
     
-    cross = 0;
-    mode = 2;
-    diff = CCUserDefault::sharedUserDefault()->getIntegerForKey("difficulty");
+    whoseMove = AI;
+}
+
+void BoardLayer::setOptionsPreferences(){
+    
+    cross = CCUserDefault::sharedUserDefault()->getBoolForKey("straightFormIsEnabled",STRAIGHT_BTN_TAG);
+    mode = CCUserDefault::sharedUserDefault()->getBoolForKey("pvcIsEnabled",PVC_BTN_TAG);
+    diff = CCUserDefault::sharedUserDefault()->getIntegerForKey("difficulty",EASY_BTN_TAG);
+    stoneColor = CCUserDefault::sharedUserDefault()->getIntegerForKey("colorBtn",BL_WHITE_BTN_TAG);
+    
+    switch (stoneColor) {
+        case GR_RED_BTN_TAG:
+            colorFileNameFirst = "stone_green.png";
+            colorFileNameSecond = "stone_red.png";
+            postfixColor = "gr";
+            
+            break;
+        case BLUE_RED_BTN_TAG:
+            colorFileNameFirst = "stone_blue.png";
+            colorFileNameSecond = "stone_red.png";
+            postfixColor = "br";
+            
+            break;
+        default:
+            colorFileNameFirst = "stone_white.png";
+            colorFileNameSecond = "stone_black.png";
+            postfixColor = "wb";
+            
+            break;
+    }
 }
 
 void BoardLayer::keyBackClicked(){
@@ -324,7 +350,7 @@ void BoardLayer::dialogMustPassButton(CCObject *pSender) {
 
 void BoardLayer::updateActiveMark(){
     
-    if (mode == 1) {
+    if (mode == PVP_BTN_TAG) {
     
         whoseMove = HUMAN;
         
@@ -443,7 +469,7 @@ void BoardLayer::mustPassTest(){
             // CCMessageBox("Text", "Title");
             
             CCString *announce;
-            if (mode == 2 && whoseMove == AI) {
+            if (mode == PVC_BTN_TAG && whoseMove == AI) {
                 announce = langManager->Translate(STRING_AI_MUSTPASS);
             }else{
                 announce = langManager->Translate(STRING_MUSTPASS);
@@ -509,19 +535,19 @@ void BoardLayer::createBeginningPawnsPosition(){
 			if (curpos.pos[x][y]=='X')
             {
                 //in original should be white
-                uiv[x][y] = CCSprite::create("stone_white.png");
+                uiv[x][y] = CCSprite::create(colorFileNameFirst);
                 //CCLOG("White: uiv[x][y] uiv:[%i] [%i]",x,y);
                 //counterWhite++;
             }
 			else if (curpos.pos[x][y]=='O')
             {
                 //in original should be black
-                uiv[x][y] = CCSprite::create("stone_black.png");
+                uiv[x][y] = CCSprite::create(colorFileNameSecond);
                 //CCLOG("Black: uiv[x][y] uiv:[%i] [%i]",x,y);
                 //counterBlack++;
             }
 			else {
-                uiv[x][y] = CCSprite::create("stone_white.png");
+                uiv[x][y] = CCSprite::create(colorFileNameFirst);
                 uiv[x][y]->setVisible(false);
                  
                 //uiv[x][y] = NULL;
@@ -564,7 +590,7 @@ void BoardLayer::createBeginningPawnsPosition(){
 void BoardLayer:: newGame() {    
     
 	current_cross=cross; //cross=option which concerns to starting formation; int = int
-	curpos=viewpos=(cross==1) ? startpos[0] : startpos[1]; //curpos = struct field, startpost=table of struct with position
+	curpos=viewpos=(cross==CROSS_BTN_TAG) ? startpos[0] : startpos[1]; //curpos = struct field, startpost=table of struct with position
     
 	histpos=0;
 	status=ST_RUNNING; //status==1
@@ -574,7 +600,7 @@ void BoardLayer:: newGame() {
     updateStatus = UPDATE_OFF;
     
   //  int mode=[defaults integerForKey:@"mode"]; //get mode/type of game pvp(1) or player vs computer(2)
-    if(mode==1)
+    if(mode==PVP_BTN_TAG)
     {
         curpos.turn = playeris;
         whoseMove = HUMAN;
@@ -605,13 +631,13 @@ void BoardLayer::undoUpdatePositions(){
             if (curpos.pos[x][y]=='X')
             {
                 //uiv[x][y] = CCSprite::create("stone_white.png");
-                uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage("stone_white.png"));
+                uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameFirst));
                 uiv[x][y]->setVisible(true);
             }
             else if (curpos.pos[x][y]=='O')
             {
                 //uiv[x][y] = CCSprite::create("stone_black.png");
-                uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage("stone_black.png"));
+                uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameSecond));
                 uiv[x][y]->setVisible(true);
             }
             else
@@ -809,13 +835,13 @@ void BoardLayer::update_pos(int x,int y) {
 	if (curpos.pos[x][y]=='X')
     {
         //uiv[x][y] = CCSprite::create("stone_white.png");
-        uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage("stone_white.png"));
+        uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameFirst));
         uiv[x][y]->setVisible(true);
     }
 	else if (curpos.pos[x][y]=='O')
     {
         //uiv[x][y] = CCSprite::create("stone_black.png");
-        uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage("stone_black.png"));
+        uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameSecond));
         uiv[x][y]->setVisible(true);
     }
     else
@@ -825,10 +851,11 @@ void BoardLayer::update_pos(int x,int y) {
     }
     
     
+    
     CCAnimation* animationOfChangingPawn = CCAnimation::create();
     CCString *name;
     for (int i=1; i<=9; i++) {
-        name = CCString::createWithFormat("anim_stone_%s%i.png","wb",i);
+        name = CCString::createWithFormat("anim_stone_%s%i.png",postfixColor,i);
         animationOfChangingPawn->addSpriteFrameWithFileName(name->getCString());
     }
     
@@ -940,7 +967,7 @@ void BoardLayer:: updateWithAnimations(){
 void BoardLayer::showMovements(){
     
     //warunek na pokazanie
-    if(mode == 2 && whoseMove == AI){
+    if(mode == PVC_BTN_TAG && whoseMove == AI){
         
         for (int x=7; x>=0; x--){
             for(int y=0; y<8; y++){
@@ -984,7 +1011,7 @@ int BoardLayer::cpuTurn(){
     
     //int mode=[defaults integerForKey:@"mode"];
     
-    if (mode == 1) {
+    if (mode == PVP_BTN_TAG) {
        
         {
             return 0;
