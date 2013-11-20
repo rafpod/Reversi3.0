@@ -15,12 +15,15 @@
 #include "ImageOptionButton.h"
 
 using namespace cocos2d;
+using namespace std;
 
 class OptionsButtonsLayer:public cocos2d::CCLayer{
 private:
     
     CCSize visibleSize;
     CCPoint origin;
+    
+    vector<string> resDirOrders;
     
     CCString *btnFileNameNormal;
     CCString *btnFileNameSelected;
@@ -85,9 +88,7 @@ private:
     CCMenu *mainMenu;
     CCMenu *menu2;
     CCMenu *backBtnMenu;
-    
-    
-    
+        
     int dist;
     
     

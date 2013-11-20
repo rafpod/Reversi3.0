@@ -131,7 +131,7 @@ int move2(struct field *f,int x,int y, bool useHelper)
    // my='X';
    // his='O';
     
-    //CCLOG("Pos: %c",f->pos[x][y]);
+    
     if (f->pos[x][y]!=empty) return 0; //field on the board is not empty, then return 0, if is, check 8 direction of move
     cnt+=turner2(f,x,y, 1, 0,my,his);
     cnt+=turner2(f,x,y,-1, 0,my,his);
@@ -142,7 +142,6 @@ int move2(struct field *f,int x,int y, bool useHelper)
     cnt+=turner2(f,x,y, 1,-1,my,his);
     cnt+=turner2(f,x,y,-1,-1,my,his);
     
-    //CCLOG("CNT: %i", cnt);
     
     if (!cnt) return 0; // no movement, no one pawn will be turning to other one, so return 0*/
     
@@ -154,7 +153,7 @@ int move2(struct field *f,int x,int y, bool useHelper)
         f->pos[x][y]=my; //refresh data board with new positions of pawns
         f->turn++;
     }
-    //CCLOG("NewPos: %c",f->pos[x][y]);
+    
     
     return cnt;
 }
@@ -220,11 +219,11 @@ int moveHelper(struct field *f)
             tmp[counter]=*f;
             move2(&tmp[counter], x, y, true); //move3(&tmp[counter], x, y);
             counter++;
-            //CCLOG("Tablica: [%i] [%i]",x,y);
+            
             
         }
     }
-    //CCLOG("NewPos: %c",f->pos[x][y]);
+    
     
     counter =0;
     while(counter<64){
@@ -233,25 +232,13 @@ int moveHelper(struct field *f)
                 
                 if(tmp[counter].pos[x][y] == 'Z'){
                     f->pos[x][y] = 'Z';
-                    CCLOG("Temp[%i] [%i] -> %c",x,y, tmp[counter].pos[x][y]);
+                    //CCLOG("Temp[%i] [%i] -> %c",x,y, tmp[counter].pos[x][y]);
                 }
-                //CCLOG("Temp[%i] [%i] -> %c",x,y, tmp[counter].pos[x][y]);
-                
-                
+                              
             }
         }
         counter++;
     }
-    
-    /*
-    for (int x=7; x>=0; x--) {
-        for (int y = 0; y<8; y++) {
-            
-            CCLOG("Temp[%i] [%i] -> %c",x,y, tmp[0].pos[x][y]);
-            
-            
-        }
-    }*/
     
     return cnt;
 }

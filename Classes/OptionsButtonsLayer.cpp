@@ -10,6 +10,8 @@
 #include "VisibleRect.h"
 #include "MenuScene.h"
 #include "OptionButtonDefinitions.h"
+#include "OptionsScene.h"
+#include "ResourcesDef.h"
 
 using namespace cocos2d;
 
@@ -31,12 +33,12 @@ bool OptionsButtonsLayer::init(){
     if(!CCLayer::init()){
         return false;
     }else{
-        CCLOG("START OPTIONS");
+        
         visibleSize = CCDirector::sharedDirector()->getVisibleSize();
         origin = CCDirector::sharedDirector()->getVisibleOrigin();        
         
         langManager = LanguageManager::create();
-        
+                
         this->initFileName();
         
         dist = 15;
@@ -49,26 +51,6 @@ bool OptionsButtonsLayer::init(){
         
         this->setKeypadEnabled(true);
         
-        //pvpButton->setSelectedBtn(false);
-        //pvcButton->setSelectedBtn(true);
-        
-        /* //CONFIG TEST
-        CCConfiguration *conf = CCConfiguration::sharedConfiguration();
-        
-        // conf->setObject("this.is.an.int.value", CCInteger::create(10) );
-        conf->setObject("AIMode", CCBool::create(true) );
-        // conf->setObject("this.is.a.string.value", CCString::create("hello world") );
-        
-        conf->dumpInfo();
-
-        bool b_value = CCConfiguration::sharedConfiguration()->getBool("AIMode", false);
-        CCLOG("%i", b_value);
-        */
-        
-        bool b_value = CCUserDefault::sharedUserDefault()->getBoolForKey("pvcIsEnabled");
-        CCLOG("%i", b_value);
-        int num = CCUserDefault::sharedUserDefault()->getIntegerForKey("difficulty");
-        CCLOG("Diff %i", num);
         
         return true;
     }
@@ -586,10 +568,22 @@ void OptionsButtonsLayer::setActiveButtons(){
     
     if (othelloIsEnabled) {
         boardButton->setSelectedIndex(OTHELLO_SKIN_BTN_TAG);
+        
+        //resDirOrders.push_back("640x960-iphonehd/othello");
+        //resDirOrders.push_back("640x960-iphonehd/wood");
     }else{
         boardButton->setSelectedIndex(WOOD_SKIN_BTN_TAG);
+        
+        //resDirOrders.push_back("640x960-iphonehd/wood");
+        //resDirOrders.push_back("640x960-iphonehd/othello");
     }
     
+    //resDirOrders.push_back("640x960-iphonehd");
+    CCLOG("SKIN: %i", othelloIsEnabled);
+    
+    
+    //CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+
 }
 
 void OptionsButtonsLayer::modeBtnCallback(CCObject *pSender){
@@ -756,11 +750,36 @@ void OptionsButtonsLayer::colorBtnCallback(cocos2d::CCObject *pSender){
 }
 
 void OptionsButtonsLayer::boardBtnCallback(cocos2d::CCObject *pSender){
+    
+    std::vector<std::string> searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
+    searchPaths.insert(searchPaths.begin(), "Test_Res");
+    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+    
     if (boardButton->getSelectedIndex()) {
-        CCLOG("OTHELLO ON");
+        CCLOG("OTHELLO ON %i", boardButton->getSelectedIndex());
+        CCUserDefault::sharedUserDefault()->setBoolForKey("othelloIsEnabled", true);
+        
+        resDirOrders.push_back("640x960-iphonehd/othello");
+        
+        
     }else{
-        CCLOG("WOOD ON");
+        CCUserDefault::sharedUserDefault()->setBoolForKey("othelloIsEnabled", false);
+        CCLOG("WOOD ON %i", boardButton->getSelectedIndex());
+        
+        resDirOrders.push_back("640x960-iphonehd/wood");
     }
+    
+    CCUserDefault::sharedUserDefault()->flush();
+    
+    resDirOrders.push_back("640x960-iphonehd");
+    
+    
+    CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+    
+    CCScene *optionsScene = OptionsScene::create();
+    CCDirector::sharedDirector()->setDepthTest(true);
+    CCDirector::sharedDirector()->replaceScene(CCTransitionPageTurn::create(0.1f, optionsScene,false));
+    
 }
 
 void OptionsButtonsLayer::movesBtnCallback(cocos2d::CCObject *pSender){

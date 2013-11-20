@@ -116,6 +116,8 @@ void BoardLayer::initVariables(){
     current_cross=0;
     passing=0;
     
+    scaleSprite = 1.0f;
+    
     whoseMove = AI;
     
     visibleSize = CCDirector::sharedDirector()->getVisibleSize();
@@ -217,7 +219,7 @@ void BoardLayer::setCoordToResolution(){
         shadowSprite->setScaleX(0.8);
         
         scaleSprite = 0.841f;
-        tileSize = 53.35; //boardSprite->getContentSize().width*0.8/8;
+        tileSize = 53.35; //boardSprite->getContentSize().width*0.8/8 =54,4;
         anchorPointSprite = ccp(0.09, 0.1);
         
         diffXForFirstItem = 10;
@@ -235,7 +237,10 @@ void BoardLayer::setCoordToResolution(){
         shadowSprite->setScaleX(0.9);
         
         scaleSprite = 0.9f;
-        tileSize = 60; //boardSprite->getContentSize().width*0.9/8;
+        //tileSize = 60; //boardSprite->getContentSize().width*0.9/8 =61,2;
+        tileSize = floorf((boardSprite->getContentSize().width * scaleSprite)/8);
+        tileSize -= 1;        
+        CCLOG("TILESIZE FLOOR %f", tileSize);
         anchorPointSprite = ccp(0.05, 0.09);
         
         diffXForFirstItem = 10;
@@ -484,15 +489,15 @@ void BoardLayer::createBeginningPawnsPosition(){
         }
     }
     
-    float xx = 0; //distance from origin of boardSprite
-    float yy = 0;
+    float distFromOriginOnX = 0; //distance from origin of boardSprite, move on columns
+    float distFromOriginOnY = 0; // move on rows
     
     //counterBlack = 0;
     //counterWhite = 0;
     
     for (int x=7; x>=0; x--)
     {
-        xx = 0;
+        distFromOriginOnX = 0;
 		for (int y=0; y<8; y++)
         {
 			//[uiv[y][x] stopAnimating];
@@ -519,14 +524,14 @@ void BoardLayer::createBeginningPawnsPosition(){
             }
             
             
-                uiv[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + xx,boardSprite->boundingBox().origin.y +yy));
+                uiv[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + distFromOriginOnX,boardSprite->boundingBox().origin.y +distFromOriginOnY));
                 uiv[x][y]->setAnchorPoint(anchorPointSprite);
                 uiv[x][y]->setScale(scaleSprite);
                 this->addChild(uiv[x][y]);
             
             //HELPER SPRITE
             helperUIV[x][y] = CCSprite::create("stone_select.png");
-            helperUIV[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + xx,boardSprite->boundingBox().origin.y +yy));
+            helperUIV[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + distFromOriginOnX,boardSprite->boundingBox().origin.y +distFromOriginOnY));
             helperUIV[x][y]->setAnchorPoint(anchorPointSprite);
             helperUIV[x][y]->setScale(scaleSprite);
             helperUIV[x][y]->setVisible(false);
@@ -535,12 +540,12 @@ void BoardLayer::createBeginningPawnsPosition(){
 
             
             
-            xx+=tileSize;
+            distFromOriginOnX+=tileSize;
             // xx+=TILE_SIZE;
             
 		}
         
-        yy+=tileSize;
+        distFromOriginOnY+=tileSize;
         // yy+=TILE_SIZE;
         
 	}

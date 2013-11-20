@@ -2,6 +2,8 @@
 #include "HelloWorldScene.h"
 #include "GameScene.h"
 #include "AppMacros.h"
+#include "OptionButtonDefinitions.h"
+#include "ResourcesDef.h"
 
 USING_NS_CC;
 
@@ -225,6 +227,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
     */
     
+    bool othelloIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("othelloIsEnabled",WOOD_SKIN_BTN_TAG);
+    //ResourceHelper * resHelper = ResourceHelper::create();
     
     //SECOND OPTION PORTRAIT
     if (screenSize.height > 480)
@@ -232,24 +236,43 @@ bool AppDelegate::applicationDidFinishLaunching() {
         //resourceSize = CCSizeMake(960, 640);
         resourceSize = CCSizeMake(640, 960);
         //resDirOrders.push_back("Group_D/640x960-iphonehd");
-        //resDirOrders.push_back("Group_D");
-        resDirOrders.push_back("640x960-iphonehd/wood");
-        resDirOrders.push_back("640x960-iphonehd/othello");
-        resDirOrders.push_back("640x960-iphonehd");
+        //resDirOrders.push_back("Group_D");        
+        
+        if (othelloIsEnabled) {
+            resDirOrders.push_back(NORMAL_RES_OTHELLO);
+            resDirOrders.push_back(NORMAL_RES_WOOD);
+        }else{
+            resDirOrders.push_back(NORMAL_RES_WOOD);
+            resDirOrders.push_back(NORMAL_RES_OTHELLO);
+        }
+        
+        resDirOrders.push_back(NORMAL_RES_MAIN);
+        
+        /*resHelper->setResWood(NORMAL_RES_WOOD);
+        resHelper->setResOthello(NORMAL_RES_OTHELLO);
+        resHelper->setResMain(NORMAL_RES_MAIN);*/
     }
     else
     {
         //resDirOrders.push_back("Group_B/320x480-iphone");
         //resDirOrders.push_back("Group_B");
-        resDirOrders.push_back("320x480-iphone/wood");
-        resDirOrders.push_back("320x480-iphonehd/othello");
-        resDirOrders.push_back("320x480-iphone");
+        
+        if (othelloIsEnabled) {
+            resDirOrders.push_back(SMALL_RES_OTHELLO);
+            resDirOrders.push_back(SMALL_RES_WOOD);
+        }else{
+            resDirOrders.push_back(SMALL_RES_WOOD);
+            resDirOrders.push_back(SMALL_RES_OTHELLO);
+        }
+        
+        resDirOrders.push_back(SMALL_RES_MAIN);
+        
+        /*resHelper->setResWood(SMALL_RES_WOOD);
+        resHelper->setResOthello(SMALL_RES_OTHELLO);
+        resHelper->setResMain(SMALL_RES_MAIN);*/
     }
-    
-     
-    
-    CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
-   
+    CCLOG("SKIN1: %i", othelloIsEnabled);
+    CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);   
     
     
     //pDirector->setContentScaleFactor(MIN(resourceSize.width/designSize.width,resourceSize.height/designSize.height));
