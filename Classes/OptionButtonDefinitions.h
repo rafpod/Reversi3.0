@@ -28,5 +28,11 @@
 #define SHOW_MOVE_OFF_BTN_TAG   0
 #define SHOW_MOVE_ON_BTN_TAG    1
 
+#define LIVE_SCORE_OFF_BTN_TAG  0
+#define LIVE_SCORE_ON_BTN_TAG   1
+
+#define WOOD_SKIN_BTN_TAG       0
+#define OTHELLO_SKIN_BTN_TAG    1
+
 
 #endif

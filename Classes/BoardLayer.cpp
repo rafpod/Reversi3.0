@@ -78,73 +78,24 @@ bool BoardLayer::init(){
     }else{
         
         this->initVariables();
-        
-        //cross = 0;
-       // mode = 2;
-       // diff = 1;
+       
         this->setOptionsPreferences();
         
-        //scaleSprite = 1.0f;
-        //tileSize = 60;
-        //anchorPointSprite = ccp(0.05,.01);
-        
-        visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-        //bottom left
-        origin = CCDirector::sharedDirector()->getVisibleOrigin();
-       
-        langManager = LanguageManager::create();
-        
-        createItems();
+        this->createItems();
         
         CCLOG("(ContentSizeBoard)X is: %f and Y is: %f", boardSprite->getContentSize().width, boardSprite->getContentSize().height);        
         
+        this->setCoordToResolution();
         
-        if (visibleSize.width <= boardSprite->getContentSize().width + 10)
-        {
-            //iphone 1136
-            boardSprite->setScaleX(0.8);
-            boardSprite->setScaleY(0.8);
-            
-            shadowSprite->setScaleY(0.79);
-            shadowSprite->setScaleX(0.8);
-            
-            scaleSprite = 0.841f;
-            tileSize = 53.35; //boardSprite->getContentSize().width*0.8/8;
-            anchorPointSprite = ccp(0.09, 0.1);
-            
-            diffXForFirstItem = 10;
-            diffXForLastItem = -15;
-            
-            addDistBoardY = 100;
-        }
-        else
-        {
-            //Scale 0.9
-            boardSprite->setScaleX(0.9);
-            boardSprite->setScaleY(0.9);
-            
-            shadowSprite->setScaleY(0.89);
-            shadowSprite->setScaleX(0.9);
-            
-            scaleSprite = 0.9f;
-            tileSize = 60; //boardSprite->getContentSize().width*0.9/8;
-            anchorPointSprite = ccp(0.05, 0.09);
-            
-            diffXForFirstItem = 10;
-            diffXForLastItem = 10;
-            
-            addDistBoardY = 100;
-        }
+        this->setItemsPositions();
         
-        setItemsPositions();
-        
-        addItemsToBoard();
+        this->addItemsToBoard();
         
         this->setTouchEnabled(true);
         
         //CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
         
-        newGame();
+        this->newGame();
         
         this->schedule(schedule_selector(BoardLayer::updateBoard), 0.1);
         
@@ -166,6 +117,12 @@ void BoardLayer::initVariables(){
     passing=0;
     
     whoseMove = AI;
+    
+    visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    //bottom left
+    origin = CCDirector::sharedDirector()->getVisibleOrigin();
+    
+    langManager = LanguageManager::create();
 }
 
 void BoardLayer::setOptionsPreferences(){
@@ -175,6 +132,7 @@ void BoardLayer::setOptionsPreferences(){
     diff = CCUserDefault::sharedUserDefault()->getIntegerForKey("difficulty",EASY_BTN_TAG);
     stoneColor = CCUserDefault::sharedUserDefault()->getIntegerForKey("colorBtn",BL_WHITE_BTN_TAG);
     showMoves = CCUserDefault::sharedUserDefault()->getBoolForKey("showMoveIsEnabled",SHOW_MOVE_OFF_BTN_TAG);
+    liveScore = CCUserDefault::sharedUserDefault()->getBoolForKey("liveScoreIsEnabled", LIVE_SCORE_OFF_BTN_TAG);
     
     switch (stoneColor) {
         case GR_RED_BTN_TAG:
@@ -216,101 +174,75 @@ void BoardLayer::setOptionsPreferences(){
     }
 }
 
-void BoardLayer::keyBackClicked(){
-    CCLOG("BACK");
-    CCScene *backScene = MenuScene::create();
-    
-    CCDirector::sharedDirector()->setDepthTest(true);
-    CCDirector::sharedDirector()->replaceScene(CCTransitionPageTurn::create(0.5f, backScene,true));
-}
 
 void BoardLayer::createItems(){
     
-    //===========================
-    //Create Board
-    //===========================
-    shadowSprite = CCSprite::create("test_shadow.png");
-    boardSprite = CCSprite::create("test_board.png");
+    this->createBoard();
     
-    //==========================
-    //Create ScoreBoard
-    //==========================
+    this->createScoreBoards();
     
-    CCString markNormal;
-    CCString markSelected;
-    
-    leftScoreBoard = ScoreBoard::create(colorScBrdLeftNorm, colorScBrdLeftSel, "pmark_human_0.png","pmark_human_1.png", SCORE_FONT_SIZE, BTN_LEFT);
-    
-    rightScoreBoard = ScoreBoard::create(colorScBrdRightNorm,colorScBrdRightSel, "pmark_human_0.png", "pmark_human_1.png", SCORE_FONT_SIZE, BTN_RIGHT);
-    
-    //===========================
-    //Create Menu Buttons
-    //===========================
-    CCString *btnFileNameNormal = CCString::create("button_wide_0.png");
-    CCString *btnFileNameSelected = CCString::create("button_wide_1.png");
-    
-    undoButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(BoardLayer::undobBtnCallback), langManager->Translate(STRING_UNDO_BTN)->getCString(), BOARD_MENU_FONT_SIZE);
-    newButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(BoardLayer::newBtnCallback), langManager->Translate(STRING_NEW_BTN)->getCString(), BOARD_MENU_FONT_SIZE);
-    menuButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(BoardLayer::menuBtnCallback), langManager->Translate(STRING_MENU_BTN)->getCString(), BOARD_MENU_FONT_SIZE);
-    
-    //===========================
-    //Create MenuBoard
-    //===========================
-    menuBoardButtons = CCMenu::create(undoButton,newButton,menuButton,NULL);
+    this->createMenuButtons();
 
 }
 
 void BoardLayer::setItemsPositions(){
+        
+    this->setBoardPosition();
     
-    //===========================
-    //Set Board Position
-    //===========================
-    shadowSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height + origin.y - shadowSprite->getContentSize().height/2- 60));
-    boardSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height + origin.y - boardSprite->getContentSize().height/2- addDistBoardY));
+    this->setScoreBoardPosition();
     
-    //===========================
-    //Set ScoreBoard position
-    //===========================
-    leftScoreBoard->setPosition(ccp(boardSprite->boundingBox().origin.x + leftScoreBoard->getContentSize().width/3 + diffXForFirstItem, visibleSize.height + origin.y - 80));
-    rightScoreBoard->setPosition(ccp(boardSprite->getContentSize().width - rightScoreBoard->getContentSize().width/3 + diffXForLastItem, visibleSize.height + origin.y -80));
-    
-    //===========================
-    //Set Menu Buttons position
-    //===========================
-    undoButton->setPosition(ccp(boardSprite->boundingBox().origin.x + undoButton->getContentSize().width/3 + diffXForFirstItem,boardSprite->boundingBox().origin.y - 40));
-    
-    newButton->setPosition(ccp(VisibleRect::center().x,boardSprite->boundingBox().origin.y - 40));
-    
-    menuButton->setPosition(ccp(boardSprite->getContentSize().width - menuButton->getContentSize().width/3 +diffXForLastItem,boardSprite->boundingBox().origin.y - 40));
-    
-    
-    //===========================
-    //Set MenuBoard position
-    //===========================
-    menuBoardButtons->setPosition(CCPointZero);
-    
+    this->setMenuButtonPosition();
 
 }
 
 void BoardLayer::addItemsToBoard(){
     
-    //===========================
-    //Add Board To Layer
-    //===========================
-    this->addChild(shadowSprite,-1);
-    this->addChild(boardSprite,0);
+    this->addBoardToLayer();
     
-    //===========================
-    //Add ScoreBoard To Layer
-    //===========================
-    this->addChild(leftScoreBoard,1);
-    this->addChild(rightScoreBoard,1);
+    this->addScoreBoardToLayer();
     
-    //===========================
-    //Add MenuBoard with Buttons To Layer
-    //===========================
-    this->addChild(menuBoardButtons, 2);   
+    this->addMenuToLayer();
     
+}
+
+void BoardLayer::setCoordToResolution(){
+    
+    if (visibleSize.width <= boardSprite->getContentSize().width + 10)
+    {
+        //iphone 1136
+        boardSprite->setScaleX(0.8);
+        boardSprite->setScaleY(0.8);
+        
+        shadowSprite->setScaleY(0.79);
+        shadowSprite->setScaleX(0.8);
+        
+        scaleSprite = 0.841f;
+        tileSize = 53.35; //boardSprite->getContentSize().width*0.8/8;
+        anchorPointSprite = ccp(0.09, 0.1);
+        
+        diffXForFirstItem = 10;
+        diffXForLastItem = -15;
+        
+        addDistBoardY = 100;
+    }
+    else
+    {
+        //Scale 0.9
+        boardSprite->setScaleX(0.9);
+        boardSprite->setScaleY(0.9);
+        
+        shadowSprite->setScaleY(0.89);
+        shadowSprite->setScaleX(0.9);
+        
+        scaleSprite = 0.9f;
+        tileSize = 60; //boardSprite->getContentSize().width*0.9/8;
+        anchorPointSprite = ccp(0.05, 0.09);
+        
+        diffXForFirstItem = 10;
+        diffXForLastItem = 10;
+        
+        addDistBoardY = 100;
+    }
 }
 
 //=======================================
@@ -455,6 +387,7 @@ void BoardLayer::updateResults(){
     
     leftScoreBoard->setScore(counterBlack);
     rightScoreBoard->setScore(counterWhite);
+    
 }
 
 
@@ -1063,4 +996,104 @@ int BoardLayer::cpuTurn(){
     if (!playeris) return curpos.turn&1;
 	else return !(curpos.turn&1);
 }
+
+void BoardLayer::createBoard(){
+    
+    shadowSprite = CCSprite::create("test_shadow.png");
+    boardSprite = CCSprite::create("test_board.png");
+}
+
+void BoardLayer::createScoreBoards(){
+    
+    CCString markNormal;
+    CCString markSelected;
+    
+    leftScoreBoard = ScoreBoard::create(colorScBrdLeftNorm, colorScBrdLeftSel, "pmark_human_0.png","pmark_human_1.png", SCORE_FONT_SIZE, BTN_LEFT);
+    
+    rightScoreBoard = ScoreBoard::create(colorScBrdRightNorm,colorScBrdRightSel, "pmark_human_0.png", "pmark_human_1.png", SCORE_FONT_SIZE, BTN_RIGHT);
+    
+    if(liveScore){
+        leftScoreBoard->setVisibleScore(true);
+        rightScoreBoard->setVisibleScore(true);
+    }else{
+        leftScoreBoard->setVisibleScore(false);
+        rightScoreBoard->setVisibleScore(false);
+    }
+    
+}
+
+void BoardLayer::createMenuButtons(){
+    //===========================
+    //Create Menu Buttons
+    //===========================
+    CCString *btnFileNameNormal = CCString::create("button_wide_0.png");
+    CCString *btnFileNameSelected = CCString::create("button_wide_1.png");
+    
+    undoButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(BoardLayer::undobBtnCallback), langManager->Translate(STRING_UNDO_BTN)->getCString(), BOARD_MENU_FONT_SIZE);
+    newButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(BoardLayer::newBtnCallback), langManager->Translate(STRING_NEW_BTN)->getCString(), BOARD_MENU_FONT_SIZE);
+    menuButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(BoardLayer::menuBtnCallback), langManager->Translate(STRING_MENU_BTN)->getCString(), BOARD_MENU_FONT_SIZE);
+    
+    //===========================
+    //Create MenuBoard
+    //===========================
+    menuBoardButtons = CCMenu::create(undoButton,newButton,menuButton,NULL);
+}
+
+void BoardLayer::setBoardPosition(){
+    
+    shadowSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height + origin.y - shadowSprite->getContentSize().height/2- 60));
+    boardSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height + origin.y - boardSprite->getContentSize().height/2- addDistBoardY));
+    
+}
+
+void BoardLayer::setScoreBoardPosition(){
+    
+    leftScoreBoard->setPosition(ccp(boardSprite->boundingBox().origin.x + leftScoreBoard->getContentSize().width/3 + diffXForFirstItem, visibleSize.height + origin.y - 80));
+    rightScoreBoard->setPosition(ccp(boardSprite->getContentSize().width - rightScoreBoard->getContentSize().width/3 + diffXForLastItem, visibleSize.height + origin.y -80));
+}
+
+void BoardLayer::setMenuButtonPosition(){
+    
+    //===========================
+    //Set Menu Buttons position
+    //===========================
+    undoButton->setPosition(ccp(boardSprite->boundingBox().origin.x + undoButton->getContentSize().width/3 + diffXForFirstItem,boardSprite->boundingBox().origin.y - 40));
+    
+    newButton->setPosition(ccp(VisibleRect::center().x,boardSprite->boundingBox().origin.y - 40));
+    
+    menuButton->setPosition(ccp(boardSprite->getContentSize().width - menuButton->getContentSize().width/3 +diffXForLastItem,boardSprite->boundingBox().origin.y - 40));
+    
+    
+    //===========================
+    //Set MenuBoard position
+    //===========================
+    menuBoardButtons->setPosition(CCPointZero);
+}
+
+void BoardLayer::addBoardToLayer(){
+    
+    this->addChild(shadowSprite,-1);
+    this->addChild(boardSprite,0);
+}
+
+void BoardLayer::addScoreBoardToLayer(){
+    
+    this->addChild(leftScoreBoard,1);
+    this->addChild(rightScoreBoard,1);
+    
+}
+
+void BoardLayer::addMenuToLayer(){
+    
+    this->addChild(menuBoardButtons, 2);
+}
+
+void BoardLayer::keyBackClicked(){
+    CCLOG("BACK");
+    CCScene *backScene = MenuScene::create();
+    
+    CCDirector::sharedDirector()->setDepthTest(true);
+    CCDirector::sharedDirector()->replaceScene(CCTransitionPageTurn::create(0.5f, backScene,true));
+}
+
 

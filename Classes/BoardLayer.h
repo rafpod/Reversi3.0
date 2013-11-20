@@ -43,6 +43,7 @@ private:
     int diff;
     int stoneColor;
     bool showMoves;
+    bool liveScore;
     
     int whoseMove;
     
@@ -96,8 +97,24 @@ private:
     bool init();
     
     void createItems();
-    void setItemsPositions();
+    void setItemsPositions();    
     void addItemsToBoard();
+    
+    void createBoard();
+    void createScoreBoards();
+    void createMenuButtons();
+    
+    void setBoardPosition();
+    void setScoreBoardPosition();
+    void setMenuButtonPosition();
+    
+    void addBoardToLayer();
+    void addScoreBoardToLayer();
+    void addMenuToLayer();
+    
+    void setOptionsPreferences();
+    void initVariables();
+
     
     void updateBoard(float dt);    
     
@@ -124,13 +141,12 @@ private:
     
     void showMovements();
     void keyBackClicked();
+    int cpuTurn();
     
     //To do
     ~BoardLayer();
-    int cpuTurn();
-    void setOptionsPreferences();
-    void initVariables();
     
+    void setCoordToResolution();
     
     
 public:

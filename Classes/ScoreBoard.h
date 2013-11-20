@@ -39,6 +39,7 @@ public:
     void setSelectedBoard(int isSelected, int isHuman=1);
     void setScore(int currentScore);
     int getResult();
+    void setVisibleScore(bool isVisible);
 };
 
 #endif /* defined(__ReversiGL__ScoreBoard__) */

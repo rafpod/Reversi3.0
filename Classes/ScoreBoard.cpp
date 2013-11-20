@@ -136,3 +136,7 @@ int ScoreBoard::getResult(){
     return score;
 }
 
+void ScoreBoard::setVisibleScore(bool isVisible){
+    this->resultLabel->setVisible(isVisible);
+}
+

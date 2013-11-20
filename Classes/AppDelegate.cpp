@@ -224,7 +224,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
         resDirOrders.push_back("320x480-iphone");
     }
     */
-   
+    
+    
     //SECOND OPTION PORTRAIT
     if (screenSize.height > 480)
     {
@@ -233,6 +234,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         //resDirOrders.push_back("Group_D/640x960-iphonehd");
         //resDirOrders.push_back("Group_D");
         resDirOrders.push_back("640x960-iphonehd/wood");
+        resDirOrders.push_back("640x960-iphonehd/othello");
         resDirOrders.push_back("640x960-iphonehd");
     }
     else
@@ -240,6 +242,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         //resDirOrders.push_back("Group_B/320x480-iphone");
         //resDirOrders.push_back("Group_B");
         resDirOrders.push_back("320x480-iphone/wood");
+        resDirOrders.push_back("320x480-iphonehd/othello");
         resDirOrders.push_back("320x480-iphone");
     }
     

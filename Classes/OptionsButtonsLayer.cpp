@@ -125,6 +125,7 @@ void OptionsButtonsLayer::addItemsToLayer(){
     this->addChild(liveScoreLabel,1);
     
     this->addChild(mainMenu,0);
+    //this->addChild(menu2,0);
     this->addChild(backBtnMenu,1);
     
 }
@@ -247,7 +248,15 @@ void OptionsButtonsLayer::createBoardItems(){
     //===========================
     //Create Button
     //===========================
-    boardButton =MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_WOOD)->getCString(), OPTIONS_FONT_SIZE2);
+    //boardButton =MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_WOOD)->getCString(), OPTIONS_FONT_SIZE2);
+    
+    
+    woodButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_WOOD)->getCString(), OPTIONS_FONT_SIZE2);
+    othelloButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_OTHELLO)->getCString(), OPTIONS_FONT_SIZE2);
+    
+    boardButton = CCMenuItemToggle::createWithTarget(this, menu_selector(OptionsButtonsLayer::boardBtnCallback), woodButton, othelloButton, NULL);
+
+    
 }
 
 void OptionsButtonsLayer::createMovesItems(){
@@ -282,10 +291,13 @@ void OptionsButtonsLayer::createLiveScoreItems(){
     //===========================
     //Create Buttons
     //===========================
-    liveScoreButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::liveScoreBtnCallback), langManager->Translate(STRING_ON)->getCString(), OPTIONS_FONT_SIZE2);
+    //liveScoreButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::liveScoreBtnCallback), langManager->Translate(STRING_ON)->getCString(), OPTIONS_FONT_SIZE2);
     //liveScoreOnButton->setScale(0.65f);
-    /*
-     liveScoreOffButton = MenuButton::create(btnFileNameNormal2->getCString(), btnFileNameSelected2->getCString(), this, menu_selector(OptionsButtonsLayer::liveScoreBtnCallback), langManager->Translate(STRING_OFF)->getCString(), OPTIONS_FONT_SIZE2);*/
+    
+    liveScoreOnButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_ON)->getCString(), OPTIONS_FONT_SIZE2);
+    liveScoreOffButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_OFF)->getCString(), OPTIONS_FONT_SIZE2);
+    
+    liveScoreButton = CCMenuItemToggle::createWithTarget(this, menu_selector(OptionsButtonsLayer::liveScoreBtnCallback), liveScoreOffButton, liveScoreOnButton, NULL);
     //liveScoreOffButton->setScale(0.65f);
 }
 
@@ -294,6 +306,8 @@ void OptionsButtonsLayer::createMenus(){
     //Create menus
     //===========================
     mainMenu = CCMenu::create(pvpButton,pvcButton, easyButton,mediumButton,hardButton,veryHardButton, hardestButton,crossButton,straightButton, blackWhiteButton,redGreenButton,redBlueButton,boardButton,showMovesButton, liveScoreButton, NULL);
+    
+    //menu2 = CCMenu::create(skinButton, NULL);
     
     backBtnMenu = CCMenu::create(backButton, NULL);
     
@@ -395,6 +409,8 @@ void OptionsButtonsLayer::setBoardItemsPositions(){
     //==============================
     boardButton->setPosition(ccp(VisibleRect::center().x, boardLabel->getPositionY()- boardButton->getContentSize().height/2 - dist));
     
+    //skinButton->setPosition(ccp(VisibleRect::center().x, boardLabel->getPositionY()- skinButton->getContentSize().height/2 - dist));
+    
     //============================================
     //Create Set Positions and Add Marker to Layer
     //============================================
@@ -437,7 +453,7 @@ void OptionsButtonsLayer::setLiveScoreItemsPositions(){
 void OptionsButtonsLayer::setMenusPositions(){
     
     mainMenu->setPosition(CCPointZero);
-    
+    //menu2->setPosition(CCPointZero);
     backBtnMenu->setPosition(CCPointZero);
 
 }
@@ -556,6 +572,22 @@ void OptionsButtonsLayer::setActiveButtons(){
         showMovesButton->setSelectedIndex(SHOW_MOVE_ON_BTN_TAG);
     }else{
         showMovesButton->setSelectedIndex(SHOW_MOVE_OFF_BTN_TAG);
+    }
+    
+    bool liveScoreIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("liveScoreIsEnabled");
+    
+    if (liveScoreIsEnabled) {
+        liveScoreButton->setSelectedIndex(LIVE_SCORE_ON_BTN_TAG);
+    }else{
+        liveScoreButton->setSelectedIndex(LIVE_SCORE_OFF_BTN_TAG);
+    }
+    
+    bool othelloIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("othelloIsEnabled",WOOD_SKIN_BTN_TAG);
+    
+    if (othelloIsEnabled) {
+        boardButton->setSelectedIndex(OTHELLO_SKIN_BTN_TAG);
+    }else{
+        boardButton->setSelectedIndex(WOOD_SKIN_BTN_TAG);
     }
     
 }
@@ -724,7 +756,11 @@ void OptionsButtonsLayer::colorBtnCallback(cocos2d::CCObject *pSender){
 }
 
 void OptionsButtonsLayer::boardBtnCallback(cocos2d::CCObject *pSender){
-    
+    if (boardButton->getSelectedIndex()) {
+        CCLOG("OTHELLO ON");
+    }else{
+        CCLOG("WOOD ON");
+    }
 }
 
 void OptionsButtonsLayer::movesBtnCallback(cocos2d::CCObject *pSender){
@@ -743,6 +779,17 @@ void OptionsButtonsLayer::movesBtnCallback(cocos2d::CCObject *pSender){
 
 void OptionsButtonsLayer::liveScoreBtnCallback(cocos2d::CCObject *pSender){
     
+    if (liveScoreButton->getSelectedIndex()) {
+       
+        CCUserDefault::sharedUserDefault()->setBoolForKey("liveScoreIsEnabled", true);
+        //CCLOG("Live ON");
+    }else{
+        
+        CCUserDefault::sharedUserDefault()->setBoolForKey("liveScoreIsEnabled", false);
+        //CCLOG("Live OFF");
+    }
+    
+    CCUserDefault::sharedUserDefault()->flush();
 }
 
 void OptionsButtonsLayer::keyBackClicked(){

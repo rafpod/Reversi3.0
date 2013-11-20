@@ -62,19 +62,28 @@ private:
     ImageOptionButton *redGreenButton;
     ImageOptionButton *redBlueButton;
     
-    MenuButton* boardButton;
+    //CCMenuItemToggle* skinButton;
+    CCMenuItemToggle* boardButton;
+    MenuButton *woodButton;
+    MenuButton *othelloButton;
     
-    MenuButton *movesButton;
+    //MenuButton* boardButton;
+    
+    
     CCMenuItemToggle* showMovesButton;
     MenuButton *movesOnButton;
     MenuButton *movesOffButton;
     
-    MenuButton *liveScoreButton;
+    CCMenuItemToggle* liveScoreButton;
+    MenuButton *liveScoreOnButton;
+    MenuButton *liveScoreOffButton;
+    
+    //MenuButton *liveScoreButton;
     
     CCMenuItemImage *backButton;
     
     CCMenu *mainMenu;
-    
+    CCMenu *menu2;
     CCMenu *backBtnMenu;
     
     
