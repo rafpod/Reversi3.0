@@ -206,7 +206,9 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/OptionsScene.o: \
  jni/../../Classes/BackgroundLayer.h \
  jni/../../Classes/OptionsButtonsLayer.h jni/../../Classes/MenuButton.h \
  jni/../../Classes/LanguageManager.h jni/../../Classes/LangDefinitions.h \
- jni/../../Classes/ImageOptionButton.h
+ jni/../../Classes/ImageOptionButton.h \
+ /Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../extensions/GUI/CCScrollView/CCScrollView.h \
+ /Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../extensions/ExtensionMacros.h
 
 jni/../../Classes/OptionsScene.h:
 
@@ -627,3 +629,7 @@ jni/../../Classes/LanguageManager.h:
 jni/../../Classes/LangDefinitions.h:
 
 jni/../../Classes/ImageOptionButton.h:
+
+/Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../extensions/GUI/CCScrollView/CCScrollView.h:
+
+/Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../extensions/ExtensionMacros.h:

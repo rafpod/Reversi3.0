@@ -10,6 +10,7 @@
 #include "VisibleRect.h"
 #include "GameScene.h"
 #include "OptionsScene.h"
+#include "StatsScene.h"
 
 
 #define MAIN_MENU_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 44)
@@ -181,6 +182,10 @@ void MenuButtonsLayer::menuBtnCallback(cocos2d::CCObject *pSender){
             
             break;
         case STATS_BTN_TAG:
+            nextScene = StatsScene::create();
+            
+            CCDirector::sharedDirector()->setDepthTest(true);
+            CCDirector::sharedDirector()->replaceScene(CCTransitionPageTurn::create(0.5f, nextScene,false));
             
             break;
         case MORE_GAMES_BTN_TAG:

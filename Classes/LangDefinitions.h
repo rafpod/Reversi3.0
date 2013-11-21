@@ -77,6 +77,12 @@
 #define STRING_WOOD         55
 #define STRING_OTHELLO      56
 
+#define STRING_STATS_GAMES  57
+#define STRING_STATS_WON    58
+#define STRING_STATS_LOST   59
+#define STRING_STATS_TIED   60
+#define STRING_STATS_RESET  61
+
 
 
 #endif

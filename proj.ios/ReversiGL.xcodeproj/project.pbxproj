@@ -238,6 +238,8 @@
 		AB0B3A62181165B0000C5EB7 /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB0B3A60181165B0000C5EB7 /* VisibleRect.cpp */; };
 		AB5D26BD183B4FE100011B42 /* Sorted_Res in Resources */ = {isa = PBXBuildFile; fileRef = AB5D26BC183B4FE100011B42 /* Sorted_Res */; };
 		ABD5B0931836314000D8EDD6 /* Reversi-DeveloperConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = ABD5B0921836314000D8EDD6 /* Reversi-DeveloperConfig.xcconfig */; };
+		ABE935BD183E019E00746416 /* StatsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE935BB183E019E00746416 /* StatsScene.cpp */; };
+		ABE935C3183E020400746416 /* StatsResultsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE935C1183E020400746416 /* StatsResultsLayer.cpp */; };
 		ABED884118336C6D000952A6 /* OptionsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABED883F18336C6D000952A6 /* OptionsScene.cpp */; };
 		ABED8844183370FD000952A6 /* OptionsButtonsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABED8842183370FD000952A6 /* OptionsButtonsLayer.cpp */; };
 		ABF10502182BDF13006F5BE2 /* MenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABF10500182BDF13006F5BE2 /* MenuScene.cpp */; };
@@ -755,6 +757,10 @@
 		AB5D26BC183B4FE100011B42 /* Sorted_Res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sorted_Res; path = ../Sorted_Res; sourceTree = "<group>"; };
 		AB5D26BF183B69B000011B42 /* OptionButtonDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OptionButtonDefinitions.h; path = ../Classes/OptionButtonDefinitions.h; sourceTree = "<group>"; };
 		ABD5B0921836314000D8EDD6 /* Reversi-DeveloperConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Reversi-DeveloperConfig.xcconfig"; sourceTree = "<group>"; };
+		ABE935BB183E019E00746416 /* StatsScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StatsScene.cpp; path = ../Classes/StatsScene.cpp; sourceTree = "<group>"; };
+		ABE935BC183E019E00746416 /* StatsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatsScene.h; path = ../Classes/StatsScene.h; sourceTree = "<group>"; };
+		ABE935C1183E020400746416 /* StatsResultsLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StatsResultsLayer.cpp; path = ../Classes/StatsResultsLayer.cpp; sourceTree = "<group>"; };
+		ABE935C2183E020400746416 /* StatsResultsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatsResultsLayer.h; path = ../Classes/StatsResultsLayer.h; sourceTree = "<group>"; };
 		ABED883F18336C6D000952A6 /* OptionsScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OptionsScene.cpp; path = ../Classes/OptionsScene.cpp; sourceTree = "<group>"; };
 		ABED884018336C6D000952A6 /* OptionsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OptionsScene.h; path = ../Classes/OptionsScene.h; sourceTree = "<group>"; };
 		ABED8842183370FD000952A6 /* OptionsButtonsLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OptionsButtonsLayer.cpp; path = ../Classes/OptionsButtonsLayer.cpp; sourceTree = "<group>"; };
@@ -1313,6 +1319,7 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				ABE935BE183E01B000746416 /* StatsScene */,
 				ABED883E18336C48000952A6 /* OptionsScene */,
 				ABF104FF182BDEB7006F5BE2 /* MainMenuScene */,
 				ABFD0B90181A5A4E0039DB5C /* GameLogic */,
@@ -1796,6 +1803,25 @@
 			name = GUI;
 			sourceTree = "<group>";
 		};
+		ABE935BE183E01B000746416 /* StatsScene */ = {
+			isa = PBXGroup;
+			children = (
+				ABE935BB183E019E00746416 /* StatsScene.cpp */,
+				ABE935BC183E019E00746416 /* StatsScene.h */,
+				ABE935C4183E020A00746416 /* StatsLayers */,
+			);
+			name = StatsScene;
+			sourceTree = "<group>";
+		};
+		ABE935C4183E020A00746416 /* StatsLayers */ = {
+			isa = PBXGroup;
+			children = (
+				ABE935C1183E020400746416 /* StatsResultsLayer.cpp */,
+				ABE935C2183E020400746416 /* StatsResultsLayer.h */,
+			);
+			name = StatsLayers;
+			sourceTree = "<group>";
+		};
 		ABED883E18336C48000952A6 /* OptionsScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -2051,6 +2077,7 @@
 				15A3D9A01682F7F9002FB0C5 /* cpSimpleMotor.c in Sources */,
 				15A3D9A11682F7F9002FB0C5 /* cpSlideJoint.c in Sources */,
 				15A3D9A21682F7F9002FB0C5 /* cpArbiter.c in Sources */,
+				ABE935BD183E019E00746416 /* StatsScene.cpp in Sources */,
 				15A3D9A31682F7F9002FB0C5 /* cpArray.c in Sources */,
 				15A3D9A41682F7F9002FB0C5 /* cpBB.c in Sources */,
 				15A3D9A51682F7F9002FB0C5 /* cpBBTree.c in Sources */,
@@ -2095,6 +2122,7 @@
 				15A3DA471682F826002FB0C5 /* CCScrollViewLoader.cpp in Sources */,
 				15A3DA481682F826002FB0C5 /* CCSpriteLoader.cpp in Sources */,
 				15A3DA491682F826002FB0C5 /* CCControl.cpp in Sources */,
+				ABE935C3183E020400746416 /* StatsResultsLayer.cpp in Sources */,
 				15A3DA4A1682F826002FB0C5 /* CCControlButton.cpp in Sources */,
 				15A3DA4B1682F826002FB0C5 /* CCControlColourPicker.cpp in Sources */,
 				15A3DA4C1682F826002FB0C5 /* CCControlHuePicker.cpp in Sources */,

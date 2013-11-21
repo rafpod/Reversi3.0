@@ -151,6 +151,12 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_OTHELLO:        return ccs("OTHELLO");
                 case STRING_ON:             return ccs("ON");
                 case STRING_OFF:            return ccs("OFF");
+                    
+                case STRING_STATS_GAMES:    return ccs("Total Games:");
+                case STRING_STATS_WON:      return ccs("Won:");
+                case STRING_STATS_LOST:     return ccs("Lost:");
+                case STRING_STATS_TIED:     return ccs("Tied:");
+                case STRING_STATS_RESET:    return ccs("RESET");
                 
                     
 			}
@@ -216,6 +222,12 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_OTHELLO:        return ccs("OTHELLO");
                 case STRING_ON:             return ccs("ON");
                 case STRING_OFF:            return ccs("OFF");
+                    
+                case STRING_STATS_GAMES:    return ccs("Spiele gesamt:");
+                case STRING_STATS_WON:      return ccs("Gewonnen:");
+                case STRING_STATS_LOST:     return ccs("Verloren:");
+                case STRING_STATS_TIED:     return ccs("Unentschieden:");
+                case STRING_STATS_RESET:    return ccs("LÖSCHEN");
 
                     
 			}
@@ -281,6 +293,12 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_OTHELLO:        return ccs("OTHELLO");
                 case STRING_ON:             return ccs("ON");
                 case STRING_OFF:            return ccs("OFF");
+                    
+                case STRING_STATS_GAMES:    return ccs("Total de partidos:");
+                case STRING_STATS_WON:      return ccs("Ganados:");
+                case STRING_STATS_LOST:     return ccs("Perdidos:");
+                case STRING_STATS_TIED:     return ccs("Empate:");
+                case STRING_STATS_RESET:    return ccs("BORAR");
 
                     
 			}
@@ -346,6 +364,12 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_OTHELLO:        return ccs("OTHELLO");
                 case STRING_ON:             return ccs("ON");
                 case STRING_OFF:            return ccs("OFF");
+                    
+                case STRING_STATS_GAMES:    return ccs("Nombre de jeux:");
+                case STRING_STATS_WON:      return ccs("Gagnés:");
+                case STRING_STATS_LOST:     return ccs("Perdus:");
+                case STRING_STATS_TIED:     return ccs("Nul:");
+                case STRING_STATS_RESET:    return ccs("EFFACER");
 
                     
 			}
@@ -411,6 +435,12 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_OTHELLO:        return ccs("OTHELLO");
                 case STRING_ON:             return ccs("ON");
                 case STRING_OFF:            return ccs("OFF");
+                    
+                case STRING_STATS_GAMES:    return ccs("Partite in totale:");
+                case STRING_STATS_WON:      return ccs("Vinte:");
+                case STRING_STATS_LOST:     return ccs("Perse:");
+                case STRING_STATS_TIED:     return ccs("Legate:");
+                case STRING_STATS_RESET:    return ccs("CANCELLARE");
 
                     
 			}
@@ -476,6 +506,12 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_OTHELLO:        return ccs("Othello");
                 case STRING_ON:             return ccs("ON");
                 case STRING_OFF:            return ccs("OFF");
+                    
+                case STRING_STATS_GAMES:    return ccs("総ゲーム数:");
+                case STRING_STATS_WON:      return ccs("勝ち:");
+                case STRING_STATS_LOST:     return ccs("負け:");
+                case STRING_STATS_TIED:     return ccs("同点:");
+                case STRING_STATS_RESET:    return ccs("リセット");
 
                     
 			}
