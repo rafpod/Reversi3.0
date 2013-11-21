@@ -33,14 +33,14 @@ bool MenuButton::init(const char *normalImage, const char *selectedImage, cocos2
         float percentLabelOnBtn = label->getContentSize().width/this->getContentSize().width * 100;
         //float scale = label->getContentSize().width/this->getContentSize().width;
         
-        CCLOG("Button width: %f Label width: %f percent: %f", this->getContentSize().width, label->getContentSize().width, percentLabelOnBtn);
+        //CCLOG("Button width: %f Label width: %f percent: %f", this->getContentSize().width, label->getContentSize().width, percentLabelOnBtn);
         //70
         while(percentLabelOnBtn > 68){
             fontSize-=1;
             this->label->setFontSize(fontSize);
                 //this->setScale(1.25);
             percentLabelOnBtn = label->getContentSize().width/this->getContentSize().width * 100;
-            CCLOG("Button width2: %f Label width2: %f percent2: %f", this->getContentSize().width, label->getContentSize().width, percentLabelOnBtn);
+           // CCLOG("Button width2: %f Label width2: %f percent2: %f", this->getContentSize().width, label->getContentSize().width, percentLabelOnBtn);
             
         }        
         this->addChild(label,1);

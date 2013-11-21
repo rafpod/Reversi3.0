@@ -35,7 +35,8 @@ bool OptionsButtonsLayer::init(){
     }else{
         
         visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-        origin = CCDirector::sharedDirector()->getVisibleOrigin();        
+        origin = CCDirector::sharedDirector()->getVisibleOrigin();
+        screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
         
         langManager = LanguageManager::create();
                 
@@ -156,6 +157,11 @@ void OptionsButtonsLayer::createGameModeItems(){
     //pvcButton->setSelectedBtn(true);
     
     backButton = CCMenuItemImage::create("button_back_0.png", "button_back_1.png", "button_back_0.png", this, menu_selector(OptionsButtonsLayer::backBtnCallback));
+    
+    float buttonPercent = pvpButton->getContentSize().height/this->getContentSize().height*100;
+    
+    CCLOG("MODE_BUTTON: %f", buttonPercent);
+    
 }
 
 void OptionsButtonsLayer::createDiffItems(){
@@ -313,6 +319,10 @@ void OptionsButtonsLayer::setGameModeItemsPositions(){
      */
     pvpButton->setPosition(ccp(VisibleRect::center().x - pvpButton->getContentSize().width/2, modeLabel->getPositionY() - pvpButton->getContentSize().height/2 - dist));
     pvcButton->setPosition(ccp(VisibleRect::center().x + pvcButton->getContentSize().width/2, modeLabel->getPositionY() - pvcButton->getContentSize().height/2 - dist));
+    
+    float percentDistanceOnX = pvpButton->getContentSize().width/2 / this->getContentSize().width*100;
+    
+    CCLOG("BUTTON_DISTANCE_ON_X: %f", percentDistanceOnX);
     
     //============================================
     //Create Set Positions and Add Marker to Layer
@@ -756,22 +766,22 @@ void OptionsButtonsLayer::boardBtnCallback(cocos2d::CCObject *pSender){
     CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
     
     if (boardButton->getSelectedIndex()) {
-        CCLOG("OTHELLO ON %i", boardButton->getSelectedIndex());
+        //CCLOG("OTHELLO ON %i", boardButton->getSelectedIndex());
         CCUserDefault::sharedUserDefault()->setBoolForKey("othelloIsEnabled", true);
         
-        resDirOrders.push_back("640x960-iphonehd/othello");
+        this->setResources(NORMAL_RES_OTHELLO, SMALL_RES_OTHELLO);
         
         
     }else{
         CCUserDefault::sharedUserDefault()->setBoolForKey("othelloIsEnabled", false);
-        CCLOG("WOOD ON %i", boardButton->getSelectedIndex());
+        //CCLOG("WOOD ON %i", boardButton->getSelectedIndex());
         
-        resDirOrders.push_back("640x960-iphonehd/wood");
+        this->setResources(NORMAL_RES_WOOD, SMALL_RES_WOOD);
     }
     
     CCUserDefault::sharedUserDefault()->flush();
     
-    resDirOrders.push_back("640x960-iphonehd");
+    this->setResources(NORMAL_RES_MAIN, SMALL_RES_MAIN);
     
     
     CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
@@ -787,10 +797,10 @@ void OptionsButtonsLayer::movesBtnCallback(cocos2d::CCObject *pSender){
     if(showMovesButton->getSelectedIndex()){
         
         CCUserDefault::sharedUserDefault()->setBoolForKey("showMoveIsEnabled", true);
-        //CCLOG("Move ON");
+        
     }else{
         CCUserDefault::sharedUserDefault()->setBoolForKey("showMoveIsEnabled", false);
-        //CCLOG("Move OFF");
+        
     }
     
     CCUserDefault::sharedUserDefault()->flush();
@@ -801,18 +811,25 @@ void OptionsButtonsLayer::liveScoreBtnCallback(cocos2d::CCObject *pSender){
     if (liveScoreButton->getSelectedIndex()) {
        
         CCUserDefault::sharedUserDefault()->setBoolForKey("liveScoreIsEnabled", true);
-        //CCLOG("Live ON");
+        
     }else{
         
         CCUserDefault::sharedUserDefault()->setBoolForKey("liveScoreIsEnabled", false);
-        //CCLOG("Live OFF");
+        
     }
     
     CCUserDefault::sharedUserDefault()->flush();
 }
 
+void OptionsButtonsLayer::setResources(const char *resNormal, const char* resSmall){
+    if(screenSize.height > 480){
+        resDirOrders.push_back(resNormal);
+    }else{
+        resDirOrders.push_back(resSmall);
+    }
+}
+
 void OptionsButtonsLayer::keyBackClicked(){
-    CCLOG("BACK");
     
     CCScene *backScene = MenuScene::create();
     

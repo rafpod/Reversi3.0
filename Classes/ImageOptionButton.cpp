@@ -34,19 +34,23 @@ bool ImageOptionButton::init(const char *normalImage, const char *selectedImage,
         //this->setAnchorPoint(ccp(0, 0));
         
         this->label->setPosition(ccp(this->boundingBox().origin.x + this->getContentSize().width, this->boundingBox().origin.y + this->getContentSize().height));
-        //this->label->setPosition(ccp(this->boundingBox().origin.x + this->getContentSize().width - this->getContentSize().width/2 , this->boundingBox().origin.y + this->getContentSize().height));
+        
         
         float percentLabelOnBtn = label->getContentSize().width/this->getContentSize().width * 100;
-        //float scale = label->getContentSize().width/this->getContentSize().width;
         
-        CCLOG("Button width: %f Label width: %f percent: %f", this->getContentSize().width, label->getContentSize().width, percentLabelOnBtn);
+        //float percentBtnOnBtn = this->getContentSize().height/CCEGLView::sharedOpenGLView()->getVisibleSize().height * 100;
+        
+        //CCLOG("Button width: %f Label width: %f percent: %f", this->getContentSize().width, label->getContentSize().width, percentLabelOnBtn);
+        
+        //CCLOG("Button Percent width: %f", percentBtnOnBtn);
+        
         //70
         while(percentLabelOnBtn > 68){
             fontSize-=1;
             this->label->setFontSize(fontSize);
             //this->setScale(1.25);
             percentLabelOnBtn = label->getContentSize().width/this->getContentSize().width * 100;
-            CCLOG("Button width2: %f Label width2: %f percent2: %f", this->getContentSize().width, label->getContentSize().width, percentLabelOnBtn);
+            //CCLOG("Button width2: %f Label width2: %f percent2: %f", this->getContentSize().width, label->getContentSize().width, percentLabelOnBtn);
             
         }
         

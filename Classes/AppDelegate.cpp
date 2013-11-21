@@ -228,7 +228,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     */
     
     bool othelloIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("othelloIsEnabled",WOOD_SKIN_BTN_TAG);
-    //ResourceHelper * resHelper = ResourceHelper::create();
+    
     
     //SECOND OPTION PORTRAIT
     if (screenSize.height > 480)
@@ -241,6 +241,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         if (othelloIsEnabled) {
             resDirOrders.push_back(NORMAL_RES_OTHELLO);
             resDirOrders.push_back(NORMAL_RES_WOOD);
+            
         }else{
             resDirOrders.push_back(NORMAL_RES_WOOD);
             resDirOrders.push_back(NORMAL_RES_OTHELLO);
@@ -248,9 +249,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
         
         resDirOrders.push_back(NORMAL_RES_MAIN);
         
-        /*resHelper->setResWood(NORMAL_RES_WOOD);
-        resHelper->setResOthello(NORMAL_RES_OTHELLO);
-        resHelper->setResMain(NORMAL_RES_MAIN);*/
     }
     else
     {
@@ -267,11 +265,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
         
         resDirOrders.push_back(SMALL_RES_MAIN);
         
-        /*resHelper->setResWood(SMALL_RES_WOOD);
-        resHelper->setResOthello(SMALL_RES_OTHELLO);
-        resHelper->setResMain(SMALL_RES_MAIN);*/
     }
-    CCLOG("SKIN1: %i", othelloIsEnabled);
+    //CCLOG("SKIN1: %i", othelloIsEnabled);
     CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);   
     
     

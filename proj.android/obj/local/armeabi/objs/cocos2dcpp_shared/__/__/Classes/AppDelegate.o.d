@@ -204,7 +204,9 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/AppDelegate.o: \
  /Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../cocos2dx/support/component/CCComponent.h \
  /Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../cocos2dx/support/component/CCComponentContainer.h \
  jni/../../Classes/HelloWorldScene.h jni/../../Classes/GameScene.h \
- jni/../../Classes/AppMacros.h
+ jni/../../Classes/AppMacros.h \
+ jni/../../Classes/OptionButtonDefinitions.h \
+ jni/../../Classes/ResourcesDef.h
 
 jni/../../Classes/AppDelegate.h:
 
@@ -619,3 +621,7 @@ jni/../../Classes/HelloWorldScene.h:
 jni/../../Classes/GameScene.h:
 
 jni/../../Classes/AppMacros.h:
+
+jni/../../Classes/OptionButtonDefinitions.h:
+
+jni/../../Classes/ResourcesDef.h:

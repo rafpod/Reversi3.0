@@ -21,6 +21,7 @@ class OptionsButtonsLayer:public cocos2d::CCLayer{
 private:
     
     CCSize visibleSize;
+    CCSize screenSize;
     CCPoint origin;
     
     vector<string> resDirOrders;
@@ -132,6 +133,8 @@ private:
     void movesBtnCallback(CCObject* pSender);
     void liveScoreBtnCallback(CCObject* pSender);
     void backBtnCallback(CCObject* pSender);
+    
+    void setResources(const char* resNormal, const char* resSmall);
     
     void keyBackClicked();   
     

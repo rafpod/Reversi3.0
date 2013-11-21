@@ -77,6 +77,7 @@ void MenuButtonsLayer::createItems(){
     //Set adequate scale to buttons
     //=========================
     float currRatioBtnVisSizeY = playButton->getContentSize().height/visibleSize.height * 100;
+    CCLOG("MenuBtn percent height: %f", currRatioBtnVisSizeY);
     
     float heightBtn, scaleBtn;
     
