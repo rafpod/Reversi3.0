@@ -210,44 +210,92 @@ void BoardLayer::addItemsToBoard(){
 
 void BoardLayer::setCoordToResolution(){
     
-    if (visibleSize.width <= boardSprite->getContentSize().width + 10)
-    {
-        //iphone 1136
-        boardSprite->setScaleX(0.8);
-        boardSprite->setScaleY(0.8);
-        
-        shadowSprite->setScaleY(0.79);
-        shadowSprite->setScaleX(0.8);
-        
-        scaleSprite = 0.841f;
-        tileSize = 53.35; //boardSprite->getContentSize().width*0.8/8 =54,4;
-        anchorPointSprite = ccp(0.09, 0.1);
-        
-        diffXForFirstItem = 10;
-        diffXForLastItem = -15;
-        
-        addDistBoardY = 100;
-    }
-    else
-    {
-        //Scale 0.9
-        boardSprite->setScaleX(0.9);
-        boardSprite->setScaleY(0.9);
-        
-        shadowSprite->setScaleY(0.89);
-        shadowSprite->setScaleX(0.9);
-        
-        scaleSprite = 0.9f;
-        //tileSize = 60; //boardSprite->getContentSize().width*0.9/8 =61,2;
-        tileSize = floorf((boardSprite->getContentSize().width * scaleSprite)/8);
-        tileSize -= 1;        
-        CCLOG("TILESIZE FLOOR %f", tileSize);
-        anchorPointSprite = ccp(0.05, 0.09);
-        
-        diffXForFirstItem = 10;
-        diffXForLastItem = 10;
-        
-        addDistBoardY = 100;
+    if (othelloIsEnabled) {
+        if (visibleSize.width <= boardSprite->getContentSize().width + 10)
+        {
+            //iphone 1136
+            boardSprite->setScaleX(0.8);
+            boardSprite->setScaleY(0.8);
+            
+            shadowSprite->setScaleY(0.79);
+            shadowSprite->setScaleX(0.8);
+            
+            scaleSprite = 0.841f;
+            tileSize = 53.35; //boardSprite->getContentSize().width*0.8/8 =54,4;
+            anchorPointSprite = ccp(0.09, 0.1);
+            
+            diffXForFirstItem = 10;
+            diffXForLastItem = -15;
+            
+            addDistBoardY = 100;
+        }
+        else
+        {
+            //Scale 0.9
+            boardSprite->setScaleX(0.9);
+            boardSprite->setScaleY(0.9);
+            
+            shadowSprite->setScaleY(0.89);
+            shadowSprite->setScaleX(0.9);
+            
+            scaleSprite = 0.9f;
+            //tileSize = 60; //boardSprite->getContentSize().width*0.9/8 =61,2;
+            tileSize = floorf((boardSprite->getContentSize().width * scaleSprite)/8);
+            tileSize -= 1;
+            //CCLOG("TILESIZE FLOOR %f, anchX: %f,anchX: %f", tileSize);
+            CCLOG("TILESIZE FLOOR %f", tileSize);
+            anchorPointSprite = ccp(0.05, 0.09);
+            //float anchX = tileSize/2 *0.1;
+            //float result =
+            //anchorPointSprite = ccp(0.005, 0.005);
+            
+            diffXForFirstItem = 10;
+            diffXForLastItem = 10;
+            
+            addDistBoardY = 100;
+        }
+
+    }else{
+        if (visibleSize.width <= boardSprite->getContentSize().width + 10)
+        {
+            //iphone 1136
+            boardSprite->setScaleX(0.8);
+            boardSprite->setScaleY(0.8);
+            
+            shadowSprite->setScaleY(0.79);
+            shadowSprite->setScaleX(0.8);
+            
+            scaleSprite = 0.841f;
+            tileSize = 53.35; //boardSprite->getContentSize().width*0.8/8 =54,4;
+            anchorPointSprite = ccp(0.09, 0.1);
+            
+            diffXForFirstItem = 10;
+            diffXForLastItem = -15;
+            
+            addDistBoardY = 100;
+        }
+        else
+        {
+            //Scale 0.9
+            boardSprite->setScaleX(0.9);
+            boardSprite->setScaleY(0.9);
+            
+            shadowSprite->setScaleY(0.89);
+            shadowSprite->setScaleX(0.9);
+            
+            scaleSprite = 0.9f;
+            //tileSize = 60; //boardSprite->getContentSize().width*0.9/8 =61,2;
+            tileSize = floorf((boardSprite->getContentSize().width * scaleSprite)/8);
+            tileSize -= 1;
+            CCLOG("TILESIZE FLOOR %f", tileSize);
+            anchorPointSprite = ccp(0.05, 0.09);
+            
+            diffXForFirstItem = 10;
+            diffXForLastItem = 10;
+            
+            addDistBoardY = 100;
+        }
+
     }
 }
 
