@@ -114,6 +114,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_GREEN_WON:      return ccs("Green won");
                 case STRING_WHITE_WON:      return ccs("White won");
                 case STRING_BLACK_WON:      return ccs("Black won");
+                case STRING_BLUE_WON:       return ccs("Blue won");
                 
                 case STRING_UNDO_BTN:       return ccs("UNDO");
                 case STRING_NEW_BTN:        return ccs("NEW");
@@ -185,6 +186,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_GREEN_WON:      return ccs("Grün hat gewonnen");
                 case STRING_WHITE_WON:      return ccs("Weiß hat gewonnen");
                 case STRING_BLACK_WON:      return ccs("Schwarz hat gewonnen");
+                case STRING_BLUE_WON:       return ccs("Blau hat gewonnen");
                     
                 case STRING_UNDO_BTN:       return ccs("UNDO");
                 case STRING_NEW_BTN:        return ccs("NEU");
@@ -256,6 +258,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_GREEN_WON:      return ccs("El verde ha ganado");
                 case STRING_WHITE_WON:      return ccs("El blanco ha ganado");
                 case STRING_BLACK_WON:      return ccs("El negro ha ganado");
+                case STRING_BLUE_WON:       return ccs("El azul ha ganado");
                     
                 case STRING_UNDO_BTN:       return ccs("ANULA");
                 case STRING_NEW_BTN:        return ccs("NUEVO");
@@ -327,6 +330,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_GREEN_WON:      return ccs("Le vert a gagné");
                 case STRING_WHITE_WON:      return ccs("Le blanc a gagné");
                 case STRING_BLACK_WON:      return ccs("Le noir a gagné");
+                case STRING_BLUE_WON:       return ccs("Le bleu a gagné");
                     
                 case STRING_UNDO_BTN:       return ccs("ANNU.");
                 case STRING_NEW_BTN:        return ccs("NOUV.");
@@ -398,6 +402,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_GREEN_WON:      return ccs("Ha vinto il verde");
                 case STRING_WHITE_WON:      return ccs("Ha vinto il bianco");
                 case STRING_BLACK_WON:      return ccs("Ha vinto il nero");
+                case STRING_BLUE_WON:       return ccs("Ha vinto il blu");
                 
                 case STRING_UNDO_BTN:       return ccs("DIS.");
                 case STRING_NEW_BTN:        return ccs("NEW");
@@ -469,6 +474,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_GREEN_WON:      return ccs("緑の勝ち");
                 case STRING_WHITE_WON:      return ccs("白の勝ち");
                 case STRING_BLACK_WON:      return ccs("黒の勝ち");
+                case STRING_BLUE_WON:       return ccs("青の勝ち");
                     
                 case STRING_UNDO_BTN:       return ccs("取り消し");
                 case STRING_NEW_BTN:        return ccs("新");

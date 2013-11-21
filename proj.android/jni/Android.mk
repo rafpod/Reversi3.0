@@ -12,8 +12,10 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/GameScene.cpp \
                    ../../Classes/MenuScene.cpp \
                    ../../Classes/OptionsScene.cpp \
+                   ../../Classes/StatsScene.cpp \
                    ../../Classes/MenuButtonsLayer.cpp \
                    ../../Classes/OptionsButtonsLayer.cpp \
+                   ../../Classes/StatsResultsLayer.cpp \
                    ../../Classes/BackgroundLayer.cpp \
                    ../../Classes/MenuButton.cpp \
                    ../../Classes/ImageOptionButton.cpp \

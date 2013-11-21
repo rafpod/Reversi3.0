@@ -65,7 +65,6 @@ struct field startpos[2]={
     }
 };
 
-
 //====================================================================================================
 //                                      METHODS
 //===================================================================================================
@@ -135,6 +134,7 @@ void BoardLayer::setOptionsPreferences(){
     stoneColor = CCUserDefault::sharedUserDefault()->getIntegerForKey("colorBtn",BL_WHITE_BTN_TAG);
     showMoves = CCUserDefault::sharedUserDefault()->getBoolForKey("showMoveIsEnabled",SHOW_MOVE_OFF_BTN_TAG);
     liveScore = CCUserDefault::sharedUserDefault()->getBoolForKey("liveScoreIsEnabled", LIVE_SCORE_OFF_BTN_TAG);
+    othelloIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("othelloIsEnabled",WOOD_SKIN_BTN_TAG);
     
     switch (stoneColor) {
         case GR_RED_BTN_TAG:
@@ -159,6 +159,7 @@ void BoardLayer::setOptionsPreferences(){
             
             colorScBrdRightNorm = "button_blue_0.png";
             colorScBrdRightSel = "button_blue_1.png";
+            
             
             break;
         default:
@@ -402,27 +403,113 @@ void BoardLayer::gameOverTest(){
         
         CCString *results;
         
-        if(counterBlack == counterWhite)
+        if (mode == PVP_BTN_TAG)
         {
-            results = CCString::createWithFormat("%s \n Black: %i White: %i", langManager->Translate(STRING_DRAW)->getCString(), leftScoreBoard->getResult(), rightScoreBoard->getResult());
-        }
-        else
-        {
-            if(counterBlack > counterWhite)
+            
+            
+            if(counterBlack == counterWhite)
             {
-                results = CCString::createWithFormat("%s \n %i : %i", langManager->Translate(STRING_BLACK_WON)->getCString(), leftScoreBoard->getResult(), rightScoreBoard->getResult());
+                results = CCString::createWithFormat("%s \n %i : %i", langManager->Translate(STRING_DRAW)->getCString(), leftScoreBoard->getResult(), rightScoreBoard->getResult());
             }
             else
             {
-                results = CCString::createWithFormat("%s \n %i : %i", langManager->Translate(STRING_WHITE_WON)->getCString(), rightScoreBoard->getResult(), leftScoreBoard->getResult());
+                if(counterBlack > counterWhite)
+                {
+                    if(stoneColor == BL_WHITE_BTN_TAG){
+                        results = CCString::createWithFormat("%s \n %i : %i", langManager->Translate(STRING_BLACK_WON)->getCString(), leftScoreBoard->getResult(), rightScoreBoard->getResult());
+                    }else{
+                        results = CCString::createWithFormat("%s \n %i : %i", langManager->Translate(STRING_RED_WON)->getCString(), leftScoreBoard->getResult(), rightScoreBoard->getResult());
+                    }
+                    
+                }
+                else
+                {
+                    switch (stoneColor) {
+                        case GR_RED_BTN_TAG:
+                            results = CCString::createWithFormat("%s \n %i : %i", langManager->Translate(STRING_GREEN_WON)->getCString(), rightScoreBoard->getResult(), leftScoreBoard->getResult());
+                            break;
+                        case BLUE_RED_BTN_TAG:
+                            results = CCString::createWithFormat("%s \n %i : %i", langManager->Translate(STRING_BLUE_WON)->getCString(), rightScoreBoard->getResult(), leftScoreBoard->getResult());
+                        default:
+                            results = CCString::createWithFormat("%s \n %i : %i", langManager->Translate(STRING_WHITE_WON)->getCString(), rightScoreBoard->getResult(),leftScoreBoard->getResult());
+                            break;
+                    }
+                    
+                }
             }
+           
+            
         }
-        
-        
+        else
+        {
+            
+            int games = CCUserDefault::sharedUserDefault()->getIntegerForKey("total_games");
+            games +=1;
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("total_games", games);
+            
+            
+            if(counterBlack == counterWhite)
+            {
+                results = CCString::createWithFormat("%s \n %i : %i", langManager->Translate(STRING_DRAW)->getCString(), leftScoreBoard->getResult(), rightScoreBoard->getResult());
+                
+                int draw = CCUserDefault::sharedUserDefault()->getIntegerForKey("draw_games");
+                draw+=1;
+                CCUserDefault::sharedUserDefault()->setIntegerForKey("draw_games", draw);
+                
+            }
+            else
+            {
+                
+                if(!playeris) //if black is human
+                {
+                    if(counterBlack > counterWhite){
+                        results = CCString::createWithFormat("%s \n %i : %i", langManager->Translate(STRING_WON)->getCString(), leftScoreBoard->getResult(), rightScoreBoard->getResult());
+                        
+                        int won = CCUserDefault::sharedUserDefault()->getIntegerForKey("won_games");
+                        won +=1;
+                        CCUserDefault::sharedUserDefault()->setIntegerForKey("won_games", won);
+                        
+                        
+                    }else{
+                        results = CCString::createWithFormat("%s \n %i : %i", langManager->Translate(STRING_LOST)->getCString(), leftScoreBoard->getResult(), rightScoreBoard->getResult());
+                        
+                        int lost = CCUserDefault::sharedUserDefault()->getIntegerForKey("lost_games");
+                        lost +=1;
+                        CCUserDefault::sharedUserDefault()->setIntegerForKey("lost_games", lost);
+                        
+                    }
+                    
+                }else{
+                    
+                    if(counterBlack > counterWhite){
+                        results = CCString::createWithFormat("%s \n %i : %i", langManager->Translate(STRING_LOST)->getCString(), leftScoreBoard->getResult(), rightScoreBoard->getResult());
+                        
+                        int lost = CCUserDefault::sharedUserDefault()->getIntegerForKey("lost_games");
+                        lost +=1;
+                        CCUserDefault::sharedUserDefault()->setIntegerForKey("lost_games", lost);
+                        
+                    }else{
+                        results = CCString::createWithFormat("%s \n %i : %i", langManager->Translate(STRING_WON)->getCString(), leftScoreBoard->getResult(), rightScoreBoard->getResult());
+                        
+                        int won = CCUserDefault::sharedUserDefault()->getIntegerForKey("won_games");
+                        won +=1;
+                        CCUserDefault::sharedUserDefault()->setIntegerForKey("won_games", won);
+                        
+                    }
+                    
+                }
+
+                
+            }
+            
+            CCUserDefault::sharedUserDefault()->flush();
+            
+        }
         
         CCAlertView *alertEnding = CCAlertView::create(langManager->Translate(STRING_END)->getCString(), results->getCString(), langManager->Translate(STRING_BACK)->getCString(), langManager->Translate(STRING_NEW)->getCString(), this, callfuncO_selector(BoardLayer::dialogBackButton), callfuncO_selector(BoardLayer::newGame));
         this->addChild(alertEnding, 100);
         dialogStatus = DIALOG_ON;
+        
     }
 
 }

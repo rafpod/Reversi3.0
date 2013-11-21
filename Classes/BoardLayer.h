@@ -44,6 +44,7 @@ private:
     int stoneColor;
     bool showMoves;
     bool liveScore;
+    bool othelloIsEnabled;
     
     int whoseMove;
     
@@ -78,7 +79,7 @@ private:
     
     const char* colorScBrdLeftSel;
     const char* colorScBrdRightSel;
-
+    
     
     CCSprite *shadowSprite;
     CCSprite *boardSprite;

@@ -145,6 +145,12 @@ void StatsResultsLayer::resetBtnCallback(cocos2d::CCObject *pSender){
     CCUserDefault::sharedUserDefault()->setIntegerForKey("lost_games", lost);
     CCUserDefault::sharedUserDefault()->setIntegerForKey("draw_games", draw);
     
+    CCUserDefault::sharedUserDefault()->flush();
+    
+    gamesResultLabel->setString("0");
+    wonResultLabel->setString("0");
+    lostResultLabel->setString("0");
+    drawResultLabel->setString("0");
     
 }
 

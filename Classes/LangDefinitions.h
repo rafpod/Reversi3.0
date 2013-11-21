@@ -38,6 +38,7 @@
 #define STRING_WHITE_WON    21
 #define STRING_RED_WON      22
 #define STRING_GREEN_WON    23
+#define STRING_BLUE_WON     62
 
 #define STRING_UNDO_BTN     24
 #define STRING_NEW_BTN      25

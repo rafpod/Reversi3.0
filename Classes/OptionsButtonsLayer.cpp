@@ -471,7 +471,7 @@ void OptionsButtonsLayer::setBtnTags(){
 
 void OptionsButtonsLayer::setActiveButtons(){
     
-    bool pvcIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("pvcIsEnabled");
+    bool pvcIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("pvcIsEnabled",PVC_BTN_TAG);
     if (pvcIsEnabled) {        
         pvpButton->setSelectedBtn(false);
         pvcButton->setSelectedBtn(true);
@@ -525,7 +525,7 @@ void OptionsButtonsLayer::setActiveButtons(){
             break;
     }
     
-    bool straightFormIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("straightFormIsEnabled");
+    bool straightFormIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("straightFormIsEnabled",STRAIGHT_BTN_TAG);
     
     if (straightFormIsEnabled) {
         crossButton->setSelectedBtn(false);
