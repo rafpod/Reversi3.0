@@ -157,15 +157,16 @@ private:
     
 public:
     CREATE_FUNC(BoardLayer);
-    void ccTouchesBegan(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
-    void ccTouchesMoved(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
-    void ccTouchesEnded(cocos2d::CCSet* touches , cocos2d::CCEvent* event);
+    //void ccTouchesBegan(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
+    //void ccTouchesMoved(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
+    //void ccTouchesEnded(cocos2d::CCSet* touches , cocos2d::CCEvent* event);
     
     
-    /*
-    bool ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
+    
+    bool ccTouchBegan(cocos2d::CCTouch *touch, cocos2d::CCEvent *event);
+    void ccTouchMoved(cocos2d::CCTouch *touch, cocos2d::CCEvent *event);
     void ccTouchEnded(cocos2d::CCTouch * touch, cocos2d::CCEvent *event);
-    */ 
+    
 };
 
 #endif /* defined(__ReversiGL__BoardLayer__) */

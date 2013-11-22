@@ -107,7 +107,7 @@ bool BoardLayer::init(){
         
         this->setTouchEnabled(true);
         
-        //CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
+        CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
         
         this->newGame();
         
@@ -234,9 +234,13 @@ void BoardLayer::setCoordToResolution(){
             shadowSprite->setScaleY(0.79);
             shadowSprite->setScaleX(0.8);
             
-            scaleSprite = 0.841f;
-            tileSize = 53.35; //boardSprite->getContentSize().width*0.8/8 =54,4;
-            anchorPointSprite = ccp(0.09, 0.1);
+            //scaleSprite = 0.841f;
+        scaleSprite = 0.8f;
+           // tileSize = 53.35; //boardSprite->getContentSize().width*0.8/8 =54,4;
+        tileSize = boardSprite->getContentSize().width*0.8/8;
+        tileSize-=1.7f;
+            //anchorPointSprite = ccp(0.09, 0.1);
+        anchorPointSprite = ccp(0.03, 0.06);
             
             diffXForFirstItem = 10;
             diffXForLastItem = -15;
@@ -835,7 +839,7 @@ void updateSomething() {
 	}
     */
 }
-
+/*
 void BoardLayer::ccTouchesBegan(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
     
     CCTouch *touch = (CCTouch*)  (touches->anyObject());
@@ -867,10 +871,10 @@ void BoardLayer::ccTouchesEnded(cocos2d::CCSet* touches , cocos2d::CCEvent* even
     
     CCLOG("(BoardBonds)X is: %f and Y is: %f", boardSprite->boundingBox().origin.x, boardSprite->boundingBox().origin.y);
    
-       /* float EndX = originBoardX + widthBoard;
-        float EndY = originBoardY + widthBoard;
-        if (location.x > originBoardX && location.x < EndX && location.y > originBoardY && location.y < EndY)
-            */
+        //float EndX = originBoardX + widthBoard;
+        //float EndY = originBoardY + widthBoard;
+        //if (location.x > originBoardX && location.x < EndX && location.y > originBoardY && location.y < EndY)
+            
         
      //x,y to indeksy tablicy gry, ktory kafelek inaczej mowiac
     if(boardSprite->boundingBox().containsPoint(location)){
@@ -940,7 +944,7 @@ void BoardLayer::ccTouchesEnded(cocos2d::CCSet* touches , cocos2d::CCEvent* even
     
     }
 }
-
+*/
 //======================================================
 //TO DO METHODS
 //======================================================
@@ -1287,4 +1291,109 @@ void BoardLayer::keyBackClicked(){
     CCDirector::sharedDirector()->replaceScene(CCTransitionPageTurn::create(0.5f, backScene,true));
 }
 
+bool BoardLayer::ccTouchBegan(cocos2d::CCTouch *touch, cocos2d::CCEvent *event){
+    CCPoint location =  touch->getLocation();
+    
+    if(boardSprite->boundingBox().containsPoint(location)){
+        xl=xt = location.x;
+        yl=yt = location.y;
+        
+        //updateSomething();
+    }
+    
+    return true;
+
+}
+
+void BoardLayer::ccTouchMoved(cocos2d::CCTouch *touch, cocos2d::CCEvent *event){
+    
+}
+
+void BoardLayer::ccTouchEnded(cocos2d::CCTouch *touch, cocos2d::CCEvent *event){
+    if (dialogStatus == DIALOG_OFF && updateStatus==UPDATE_OFF) {
+        
+        
+        // Choose one of the touches to work with
+        //CCTouch* touch = (CCTouch*)( touches->anyObject() );
+        CCPoint location = touch->getLocation();
+        //location = CCDirector::sharedDirector()->convertToGL(location);
+        
+        CCLOG("(location)X is: %f and Y is: %f", location.x, location.y);
+        
+        CCLOG("(BoardBonds)X is: %f and Y is: %f", boardSprite->boundingBox().origin.x, boardSprite->boundingBox().origin.y);
+        
+        //float EndX = originBoardX + widthBoard;
+        //float EndY = originBoardY + widthBoard;
+        //if (location.x > originBoardX && location.x < EndX && location.y > originBoardY && location.y < EndY)
+        
+        
+        //x,y to indeksy tablicy gry, ktory kafelek inaczej mowiac
+        if(boardSprite->boundingBox().containsPoint(location)){
+            
+            float pawnX, pawnY;
+            int Xx, Yy;
+            float currentStartingPoint  = boardSprite->boundingBox().origin.x;
+            //float currentStartingPoint = originBoardX;
+            
+            //float currentEndingPoint = currentStartingPoint + TILE_SIZE;
+            float currentEndingPoint = currentStartingPoint + tileSize;
+            
+            
+            float currentStartingPointY = boardSprite->boundingBox().origin.y;
+            //float currentStartingPointY = originBoardY;
+            
+            //float currentEndingPointY = currentStartingPointY + TILE_SIZE;
+            float currentEndingPointY = currentStartingPointY + tileSize;
+            
+            for (int x=7; x>=0; x--)
+            {
+                
+                for (int y=0; y<8; y++)
+                {
+                    //============================================
+                    //  Check which tile on gameboard, was tapped by user's finger. If we know it, we can set our pawn on center position of this tile.
+                    //===========================================
+                    if ((location.x > currentStartingPoint && location.x < currentEndingPoint) && (location.y >currentStartingPointY && location.y < currentEndingPointY)) {
+                        //warun
+                        //CCLOG("JESTEM pomiędzy punktami %f i %f w poziomie oraz punktami %f i %f w pionie, dokaldnie w punkcie X: %f Y: %f", currentStartingPoint,currentEndingPoint,currentStartingPointY, currentEndingPointY, location.x, location.y);
+                        
+                        Xx = x;
+                        Yy = y;
+                        CCLOG("Xx: %i i Yy: %i", Xx,Yy);
+                        //===========
+                        // In future i must apply  y, x coordinates instead of pawnX, pawnY because I deliver these coordinates to viewpos or curpos(i suppose this) for example: viewpos[y][x] = 'X' or '0'. Next i have to updatePawnPositions
+                        //===========
+                        
+                    }
+                    
+                    currentStartingPoint = currentEndingPoint;
+                    //currentEndingPoint +=TILE_SIZE;
+                    currentEndingPoint +=tileSize;
+                    
+                }
+                
+                currentStartingPoint  = boardSprite->boundingBox().origin.x;
+                //currentEndingPoint = currentStartingPoint + TILE_SIZE;
+                currentEndingPoint = currentStartingPoint + tileSize;
+                
+                currentStartingPointY = currentEndingPointY;
+                //currentEndingPointY +=TILE_SIZE;
+                currentEndingPointY +=tileSize;
+                
+            }
+            
+            history[histpos]=curpos;
+            if (move2(&curpos,Xx,Yy)) {
+                histpos++;
+                lastx=Xx; lasty=Yy; dist=0;
+                CCLOG("Mozna postawić pionka");            
+            }else{
+                CCLOG("Nie mozna postawić pionka");
+            }
+            
+        }
+        
+    }
+
+}
 
