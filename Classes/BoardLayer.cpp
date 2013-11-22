@@ -90,15 +90,23 @@ bool BoardLayer::init(){
         
         CCLOG("othello? %i",othelloIsEnabled);
         
-        /*
+        
         if (othelloIsEnabled) {
-            widthBoard = boardSprite->getContentSize().width -2*50; //542, 2*42
+            /*widthBoard = boardSprite->getContentSize().width -2*50; //542, 2*42
             CCLOG("widthBoardCoord: %f", widthBoard);
             //float tileS = (boardSprite->getContentSize().width * 0.9)/8;
             tileSize = widthBoard/8*0.9;
             originBoardX = boardSprite->boundingBox().origin.x + 50.0f; //42
             originBoardY = boardSprite->boundingBox().origin.y + 50.0f; //45
-            anchorPointSprite = ccp(0.2, 0.2);
+            anchorPointSprite = ccp(0.2, 0.2);*/
+            
+            widthBoard = boardSprite->getContentSize().width;
+            originBoardX = boardSprite->boundingBox().origin.x;
+            originBoardY = boardSprite->boundingBox().origin.y;
+            tileSize = floorf((boardSprite->getContentSize().width * scaleSprite)/8);
+            tileSize -= 1;
+            CCLOG("TILESIZE FLOOR %f", tileSize);
+            anchorPointSprite = ccp(0.05, 0.09);
             
             CCLOG("originBoardXCoord: %f", originBoardX);
             CCLOG("originBoardYCoord: %f", originBoardY);
@@ -130,8 +138,8 @@ bool BoardLayer::init(){
             CCLOG("originBoardYCoord: %f", originBoardY);
             CCLOG("tileSCoord: %f", tileSize);
 
-        }*/
-        
+        }
+        /*
         widthBoard = boardSprite->getContentSize().width -2*50; //542, 2*42
         CCLOG("widthBoardCoord: %f", widthBoard);
         //float tileS = (boardSprite->getContentSize().width * 0.9)/8;
@@ -143,7 +151,7 @@ bool BoardLayer::init(){
         CCLOG("originBoardXCoord: %f", originBoardX);
         CCLOG("originBoardYCoord: %f", originBoardY);
         CCLOG("tileSCoord: %f", tileSize);
-        
+        */
         this->setItemsPositions();
         
         this->addItemsToBoard();
@@ -713,7 +721,7 @@ void BoardLayer::createBeginningPawnsPosition(){
             }
 			else {
                 uiv[x][y] = CCSprite::create(colorFileNameFirst);
-                uiv[x][y]->setVisible(true);
+                uiv[x][y]->setVisible(false);
                  
                 //uiv[x][y] = NULL;
             }
@@ -966,16 +974,26 @@ void BoardLayer::ccTouchesEnded(cocos2d::CCSet* touches , cocos2d::CCEvent* even
     
     CCLOG("(BoardBonds)X is: %f and Y is: %f", boardSprite->boundingBox().origin.x, boardSprite->boundingBox().origin.y);
    
+       /* float EndX = originBoardX + widthBoard;
+        float EndY = originBoardY + widthBoard;
+        if (location.x > originBoardX && location.x < EndX && location.y > originBoardY && location.y < EndY)
+            */
+        
      //x,y to indeksy tablicy gry, ktory kafelek inaczej mowiac
     if(boardSprite->boundingBox().containsPoint(location)){
         
         float pawnX, pawnY;
         int Xx, Yy;
         float currentStartingPoint  = boardSprite->boundingBox().origin.x;
+        //float currentStartingPoint = originBoardX;
+        
         //float currentEndingPoint = currentStartingPoint + TILE_SIZE;
         float currentEndingPoint = currentStartingPoint + tileSize;
         
+        
         float currentStartingPointY = boardSprite->boundingBox().origin.y;
+        //float currentStartingPointY = originBoardY;
+        
         //float currentEndingPointY = currentStartingPointY + TILE_SIZE;
         float currentEndingPointY = currentStartingPointY + tileSize;
         
