@@ -40,11 +40,14 @@ bool ScoreBoard::init(const char* normalBoardFileName, const char* selectedBoard
     
         switch (btnType) {
             case BTN_LEFT:           
-                this->mark->setPosition(ccp(this->getPositionX() + this->mark->getContentSize().width + 20, this->getPositionY() + this->mark->getContentSize().height));
+               // this->mark->setPosition(ccp(this->getPositionX() + this->mark->getContentSize().width + 20, this->getPositionY() + this->mark->getContentSize().height));
+                this->mark->setPosition(ccp(this->getPositionX() + this->mark->getContentSize().width + 20, this->getContentSize().height/2));
                 break;
             
             case BTN_RIGHT:
-                this->mark->setPosition(ccp(this->getPositionX() + this->getContentSize().width - this->mark->getContentSize().width - 20, this->getPositionY() + this->mark->getContentSize().height));
+                //this->mark->setPosition(ccp(this->getPositionX() + this->getContentSize().width - this->mark->getContentSize().width - 20, this->getPositionY() + this->mark->getContentSize().height));
+                
+                this->mark->setPosition(ccp(this->getPositionX() + this->getContentSize().width - this->mark->getContentSize().width - 20, this->getContentSize().height/2));
             
             default:
                 break;

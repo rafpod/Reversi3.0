@@ -88,57 +88,6 @@ bool BoardLayer::init(){
         
         this->setBoardPosition();
         
-        CCLOG("othello? %i",othelloIsEnabled);
-        
-        
-        if (othelloIsEnabled) {
-            /*widthBoard = boardSprite->getContentSize().width -2*50; //542, 2*42
-            CCLOG("widthBoardCoord: %f", widthBoard);
-            //float tileS = (boardSprite->getContentSize().width * 0.9)/8;
-            tileSize = widthBoard/8*0.9;
-            originBoardX = boardSprite->boundingBox().origin.x + 50.0f; //42
-            originBoardY = boardSprite->boundingBox().origin.y + 50.0f; //45
-            anchorPointSprite = ccp(0.2, 0.2);*/
-            
-            widthBoard = boardSprite->getContentSize().width;
-            originBoardX = boardSprite->boundingBox().origin.x;
-            originBoardY = boardSprite->boundingBox().origin.y;
-            tileSize = floorf((boardSprite->getContentSize().width * scaleSprite)/8);
-            tileSize -= 1;
-            CCLOG("TILESIZE FLOOR %f", tileSize);
-            anchorPointSprite = ccp(0.05, 0.09);
-            
-            CCLOG("originBoardXCoord: %f", originBoardX);
-            CCLOG("originBoardYCoord: %f", originBoardY);
-            CCLOG("tileSCoord: %f", tileSize);
-        }else{
-            
-            widthBoard = boardSprite->getContentSize().width;
-            originBoardX = boardSprite->boundingBox().origin.x;
-            originBoardY = boardSprite->boundingBox().origin.y;
-            
-            if (visibleSize.width <= boardSprite->getContentSize().width + 10)
-            {
-                //iphone 1136
-                tileSize = 53.35; //boardSprite->getContentSize().width*0.8/8 =54,4;
-                anchorPointSprite = ccp(0.09, 0.1);
-            }
-            else
-            {
-                //tileSize = 60; //boardSprite->getContentSize().width*0.9/8 =61,2;
-                tileSize = floorf((boardSprite->getContentSize().width * scaleSprite)/8);
-                tileSize -= 1;
-                CCLOG("TILESIZE FLOOR %f", tileSize);
-                anchorPointSprite = ccp(0.05, 0.09);
-                
-            }
-            
-            CCLOG("widthBoardCoord: %f", widthBoard);
-            CCLOG("originBoardXCoord: %f", originBoardX);
-            CCLOG("originBoardYCoord: %f", originBoardY);
-            CCLOG("tileSCoord: %f", tileSize);
-
-        }
         /*
         widthBoard = boardSprite->getContentSize().width -2*50; //542, 2*42
         CCLOG("widthBoardCoord: %f", widthBoard);
@@ -276,9 +225,8 @@ void BoardLayer::addItemsToBoard(){
 
 void BoardLayer::setCoordToResolution(){
     
-    if (othelloIsEnabled) {
-        if (visibleSize.width <= boardSprite->getContentSize().width + 10)
-        {
+    if (visibleSize.width <= boardSprite->getContentSize().width + 10)
+    {
             //iphone 1136
             boardSprite->setScaleX(0.8);
             boardSprite->setScaleY(0.8);
@@ -294,56 +242,9 @@ void BoardLayer::setCoordToResolution(){
             diffXForLastItem = -15;
             
             addDistBoardY = 100;
-        }
-        else
-        {
-            
-            //Scale 0.9
-            boardSprite->setScaleX(0.9);
-            boardSprite->setScaleY(0.9);
-            
-            shadowSprite->setScaleY(0.89);
-            shadowSprite->setScaleX(0.9);
-            
-            scaleSprite = 0.9f;
-           // tileSize = 60; //boardSprite->getContentSize().width*0.9/8 =61,2;
-            tileSize = floorf((boardSprite->getContentSize().width)/8);
-            tileSize -= 1;
-            anchorPointSprite = ccp(0.2, 0.2);
-            
-            CCLOG("TILESIZE FLOOR %f", tileSize);
-            //anchorPointSprite = ccp(0.05, 0.09);
-            
-            
-            diffXForFirstItem = 10;
-            diffXForLastItem = 10;
-            
-            addDistBoardY = 100;
-            
-            
-        }
-
-    }else{
-        if (visibleSize.width <= boardSprite->getContentSize().width + 10)
-        {
-            //iphone 1136
-            boardSprite->setScaleX(0.8);
-            boardSprite->setScaleY(0.8);
-            
-            shadowSprite->setScaleY(0.79);
-            shadowSprite->setScaleX(0.8);
-            
-            scaleSprite = 0.841f;
-            tileSize = 53.35; //boardSprite->getContentSize().width*0.8/8 =54,4;
-            anchorPointSprite = ccp(0.09, 0.1);
-            
-            diffXForFirstItem = 10;
-            diffXForLastItem = -15;
-            
-            addDistBoardY = 100;
-        }
-        else
-        {
+    }
+    else
+    {
             //Scale 0.9
             boardSprite->setScaleX(0.9);
             boardSprite->setScaleY(0.9);
@@ -353,18 +254,19 @@ void BoardLayer::setCoordToResolution(){
             
             scaleSprite = 0.9f;
             //tileSize = 60; //boardSprite->getContentSize().width*0.9/8 =61,2;
-            tileSize = floorf((boardSprite->getContentSize().width * scaleSprite)/8);
-            tileSize -= 1;
+            tileSize = floorf((boardSprite->getContentSize().width*0.9)/8);
+            tileSize -= 1.7;
+            //tileSize = boardSprite->getContentSize().width*0.9/8;
             CCLOG("TILESIZE FLOOR %f", tileSize);
-            anchorPointSprite = ccp(0.05, 0.09);
+            anchorPointSprite = ccp(0.0, 0.01);
             
             diffXForFirstItem = 10;
             diffXForLastItem = 10;
             
             addDistBoardY = 100;
-        }
-
     }
+
+    
 }
 
 //=======================================
@@ -726,29 +628,10 @@ void BoardLayer::createBeginningPawnsPosition(){
                 //uiv[x][y] = NULL;
             }
             
-            /*
-            if (othelloIsEnabled) {
-                
-            
-                uiv[x][y]->setPosition(ccp(originBoardX + distFromOriginOnX,originBoardY +distFromOriginOnY));
-                uiv[x][y]->setAnchorPoint(anchorPointSprite);
-                uiv[x][y]->setScale(scaleSprite);
-                this->addChild(uiv[x][y]);
-                
-                //HELPER SPRITE
-                helperUIV[x][y] = CCSprite::create("stone_select.png");
-                helperUIV[x][y]->setPosition(ccp(originBoardX + distFromOriginOnX,originBoardY +distFromOriginOnY));
-                helperUIV[x][y]->setAnchorPoint(anchorPointSprite);
-                helperUIV[x][y]->setScale(scaleSprite);
-                helperUIV[x][y]->setVisible(false);
-                
-                this->addChild(helperUIV[x][y]);
-            }else{
-            
-                uiv[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + distFromOriginOnX,boardSprite->boundingBox().origin.y +distFromOriginOnY));
-                uiv[x][y]->setAnchorPoint(anchorPointSprite);
-                uiv[x][y]->setScale(scaleSprite);
-                this->addChild(uiv[x][y]);
+            uiv[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + distFromOriginOnX,boardSprite->boundingBox().origin.y +distFromOriginOnY));
+            uiv[x][y]->setAnchorPoint(anchorPointSprite);
+            uiv[x][y]->setScale(scaleSprite);
+            this->addChild(uiv[x][y]);
             
             //HELPER SPRITE
             helperUIV[x][y] = CCSprite::create("stone_select.png");
@@ -758,8 +641,8 @@ void BoardLayer::createBeginningPawnsPosition(){
             helperUIV[x][y]->setVisible(false);
             
             this->addChild(helperUIV[x][y]);
-            }//*/
             
+            /*
             uiv[x][y]->setPosition(ccp(originBoardX + distFromOriginOnX,originBoardY +distFromOriginOnY));
             uiv[x][y]->setAnchorPoint(anchorPointSprite);
             uiv[x][y]->setScale(scaleSprite);
@@ -773,7 +656,7 @@ void BoardLayer::createBeginningPawnsPosition(){
             helperUIV[x][y]->setVisible(false);
             
             this->addChild(helperUIV[x][y]);
-            
+            */
             
             distFromOriginOnX+=tileSize;
             // xx+=TILE_SIZE;
@@ -800,13 +683,22 @@ void BoardLayer::createBeginningPawnsPosition(){
     CCLOG("tileS: %f", tileS);
     */
     /*
+    float widthBoard = boardSprite->getContentSize().width; //542, 2*42
+    CCLOG("widthBoard: %f", widthBoard);
+    //float tileS = (boardSprite->getContentSize().width * 0.9)/8;
+    float tileS = widthBoard/8*0.9;
+    float originBoardX = boardSprite->boundingBox().origin.x ;//42
+    float originBoardY = boardSprite->boundingBox().origin.y; //45
+    CCPoint anch = ccp(0.05,0.09);
+
+    
     CCSprite* testSprite = CCSprite::create("stone_black.png");
     
     testSprite->setScale(0.9f);
     
     testSprite->setPosition(ccp(originBoardX, originBoardY));
-    
-    testSprite->setAnchorPoint(ccp(0.2, 0.2));
+    //testSprite->setAnchorPoint(ccp(0.2, 0.2));
+    testSprite->setAnchorPoint(anch);
     
     this->addChild(testSprite);
     
@@ -814,7 +706,8 @@ void BoardLayer::createBeginningPawnsPosition(){
     testSprite2->setPosition(ccp(originBoardX + tileS, originBoardY + tileS));
     testSprite2->setScale(0.9f);
     //testSprite2->setAnchorPoint(ccp(0.15, 0.15));
-    testSprite2->setAnchorPoint(ccp(0.2,0.2));
+    //testSprite2->setAnchorPoint(ccp(0.2,0.2));
+    testSprite2->setAnchorPoint(anch);
     
     this->addChild(testSprite2);
     
@@ -822,9 +715,9 @@ void BoardLayer::createBeginningPawnsPosition(){
     testSprite3->setScale(0.9f);
     
     testSprite3->setPosition(ccp(originBoardX + 2*tileS, originBoardY));
-    
     //testSprite3->setAnchorPoint(ccp(0.15, 0.15));
-    testSprite3->setAnchorPoint(ccp(0.2,0.2));
+    //testSprite3->setAnchorPoint(ccp(0.2,0.2));
+    testSprite3->setAnchorPoint(anch);
     
     this->addChild(testSprite3);
     */
@@ -1339,14 +1232,14 @@ void BoardLayer::setBoardPosition(){
 
 void BoardLayer::setScoreBoardPosition(){
     
-    //leftScoreBoard->setPosition(ccp(boardSprite->boundingBox().origin.x + leftScoreBoard->getContentSize().width/3 + diffXForFirstItem, visibleSize.height + origin.y - 80));
-    //rightScoreBoard->setPosition(ccp(boardSprite->getContentSize().width - rightScoreBoard->getContentSize().width/3 + diffXForLastItem, visibleSize.height + origin.y -80));
+    leftScoreBoard->setPosition(ccp(boardSprite->boundingBox().origin.x + leftScoreBoard->getContentSize().width/3 + diffXForFirstItem, visibleSize.height + origin.y - 80));
+    rightScoreBoard->setPosition(ccp(boardSprite->getContentSize().width - rightScoreBoard->getContentSize().width/3 + diffXForLastItem, visibleSize.height + origin.y -80));
     
     CCLOG("Origin x Board: %f", boardSprite->boundingBox().origin.x);
     CCLOG("Origin x Board: %f", this->originBoardX);
     
-    leftScoreBoard->setPosition(ccp(originBoardX + leftScoreBoard->getContentSize().width/3 + diffXForFirstItem, visibleSize.height + origin.y - 80));
-    rightScoreBoard->setPosition(ccp(boardSprite->getContentSize().width - rightScoreBoard->getContentSize().width/3 + diffXForLastItem, visibleSize.height + origin.y -80));
+    //leftScoreBoard->setPosition(ccp(originBoardX + leftScoreBoard->getContentSize().width/3 + diffXForFirstItem, visibleSize.height + origin.y - 80));
+    //rightScoreBoard->setPosition(ccp(boardSprite->getContentSize().width - rightScoreBoard->getContentSize().width/3 + diffXForLastItem, visibleSize.height + origin.y -80));
     
 }
 
