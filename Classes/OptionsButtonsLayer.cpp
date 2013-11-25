@@ -38,6 +38,8 @@ bool OptionsButtonsLayer::init(){
         origin = CCDirector::sharedDirector()->getVisibleOrigin();
         screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
         
+        othelloIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("othelloIsEnabled",WOOD_SKIN_BTN_TAG);
+        
         langManager = LanguageManager::create();
                 
         this->initFileName();
@@ -51,11 +53,11 @@ bool OptionsButtonsLayer::init(){
         this->addItemsToLayer();
         
         this->setKeypadEnabled(true);
-        
               
         return true;
     }
 }
+
 
 void OptionsButtonsLayer::createItems(){
     
@@ -174,11 +176,11 @@ void OptionsButtonsLayer::createDiffItems(){
     //===========================
     //Create Buttons
     //===========================
-    easyButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), blackStone, whiteStone,ONE_IMG_BTN);
-    mediumButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), blackStone, whiteStone,TWO_IMG_BTN);
-    hardButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), blackStone, whiteStone,THREE_IMG_BTN);
-    veryHardButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), blackStone, whiteStone,FOUR_IMG_BTN);
-    hardestButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), blackStone, whiteStone,FIVE_IMG_BTN);
+    easyButton = DiffButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), blackStone, whiteStone,ONE_IMG_BTN);
+    mediumButton = DiffButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), blackStone, whiteStone,TWO_IMG_BTN);
+    hardButton = DiffButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), blackStone, whiteStone,THREE_IMG_BTN);
+    veryHardButton = DiffButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), blackStone, whiteStone,FOUR_IMG_BTN);
+    hardestButton = DiffButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::difficultyBtnCallback), blackStone, whiteStone,FIVE_IMG_BTN);
     //hardestButton->setScale(1.1);
 }
 
@@ -238,11 +240,41 @@ void OptionsButtonsLayer::createBoardItems(){
     //===========================
     //boardButton =MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_WOOD)->getCString(), OPTIONS_FONT_SIZE2);
     
+    CCString *fileNormalReverse;
+    CCString *fileSelectedReverse;
     
-    woodButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_WOOD)->getCString(), OPTIONS_FONT_SIZE2);
-    othelloButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_OTHELLO)->getCString(), OPTIONS_FONT_SIZE2);
+    if (othelloIsEnabled) {
+        if (screenSize.height>480) {
+            fileNormalReverse = ccs("640x960-iphonehd/wood/button_wide_0.png");
+            fileSelectedReverse = ccs("640x960-iphonehd/wood/button_wide_1.png");
+            
+            
+        }else{
+            fileNormalReverse = ccs("320x480-iphone/wood/button_wide_0.png");
+            fileSelectedReverse = ccs("320x480-iphone/wood/button_wide_1.png");
+        }
+        
+        woodButton = MenuButton::create(fileNormalReverse->getCString(), fileSelectedReverse->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_WOOD)->getCString(), OPTIONS_FONT_SIZE2);
+        
+        othelloButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_OTHELLO)->getCString(), OPTIONS_FONT_SIZE2);
+        
+    }else{
+        if (screenSize.height>480) {
+            fileNormalReverse = ccs("640x960-iphonehd/othello/button_wide_0.png");
+            fileSelectedReverse = ccs("640x960-iphonehd/othello/button_wide_1.png");
+            
+            
+        }else{
+            fileNormalReverse = ccs("320x480-iphone/othello/button_wide_0.png");
+            fileSelectedReverse = ccs("320x480-iphone/othello/button_wide_1.png");
+            
+        }
+        woodButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_WOOD)->getCString(), OPTIONS_FONT_SIZE2);
+        othelloButton = MenuButton::create(fileNormalReverse->getCString(), fileSelectedReverse->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_OTHELLO)->getCString(), OPTIONS_FONT_SIZE2);
+    }
     
-    boardButton = CCMenuItemToggle::createWithTarget(this, menu_selector(OptionsButtonsLayer::boardBtnCallback), woodButton, othelloButton, NULL);
+    
+    //boardButton = CCMenuItemToggle::createWithTarget(this, menu_selector(OptionsButtonsLayer::boardBtnCallback), woodButton, othelloButton, NULL);
 
     
 }
@@ -293,7 +325,7 @@ void OptionsButtonsLayer::createMenus(){
     //===========================
     //Create menus
     //===========================
-    mainMenu = CCMenu::create(pvpButton,pvcButton, easyButton,mediumButton,hardButton,veryHardButton, hardestButton,crossButton,straightButton, blackWhiteButton,redGreenButton,redBlueButton,boardButton,showMovesButton, liveScoreButton, NULL);
+    mainMenu = CCMenu::create(pvpButton,pvcButton, easyButton,mediumButton,hardButton,veryHardButton, hardestButton,crossButton,straightButton, blackWhiteButton,redGreenButton,redBlueButton,woodButton, othelloButton,showMovesButton, liveScoreButton, NULL);
     
     //menu2 = CCMenu::create(skinButton, NULL);
     
@@ -317,8 +349,10 @@ void OptionsButtonsLayer::setGameModeItemsPositions(){
     /* pvpButton->setPosition(ccp(VisibleRect::left().x + pvpButton->getContentSize().width/2, modeLabel->getPositionY() - pvpButton->getContentSize().height/2));
      pvcButton->setPosition(ccp(pvpButton->getPositionX() + pvcButton->getContentSize().width/1.45, modeLabel->getPositionY() - pvcButton->getContentSize().height/2));
      */
-    pvpButton->setPosition(ccp(VisibleRect::center().x - pvpButton->getContentSize().width/2, modeLabel->getPositionY() - pvpButton->getContentSize().height/2 - dist));
-    pvcButton->setPosition(ccp(VisibleRect::center().x + pvcButton->getContentSize().width/2, modeLabel->getPositionY() - pvcButton->getContentSize().height/2 - dist));
+    
+    pvcButton->setPosition(ccp(VisibleRect::center().x - pvcButton->getContentSize().width/2, modeLabel->getPositionY() - pvcButton->getContentSize().height/2 - dist));
+    
+    pvpButton->setPosition(ccp(VisibleRect::center().x + pvpButton->getContentSize().width/2, modeLabel->getPositionY() - pvpButton->getContentSize().height/2 - dist));
     
     float percentDistanceOnX = pvpButton->getContentSize().width/2 / this->getContentSize().width*100;
     
@@ -336,12 +370,12 @@ void OptionsButtonsLayer::setDiffItemsPositions(){
     //===========================
     //Set Label position
     //===========================
-    difficultyLabel->setPosition(ccp(VisibleRect::center().x,pvpButton->getPositionY() - difficultyLabel->getContentSize().height - 30));
+    difficultyLabel->setPosition(ccp(VisibleRect::center().x,pvcButton->getPositionY() - difficultyLabel->getContentSize().height - 30));
     
     //==============================
     //Set Buttons position
     //==============================
-    easyButton->setPosition(ccp(pvpButton->boundingBox().origin.x + pvpButton->getContentSize().width/2 - easyButton->getContentSize().width/2, difficultyLabel->getPositionY() - easyButton->getContentSize().height/2 - dist));
+    easyButton->setPosition(ccp(pvcButton->boundingBox().origin.x + pvcButton->getContentSize().width/2 - easyButton->getContentSize().width/2, difficultyLabel->getPositionY() - easyButton->getContentSize().height/2 - dist));
     mediumButton->setPosition(ccp(easyButton->getPositionX() + mediumButton->getContentSize().width, easyButton->getPositionY()));
     hardButton->setPosition(ccp(mediumButton->getPositionX() + hardButton->getContentSize().width, easyButton->getPositionY()));
     veryHardButton->setPosition(ccp(easyButton->boundingBox().origin.x + easyButton->getContentSize().width, easyButton->getPositionY() - veryHardButton->getContentSize().height/1.5));
@@ -399,7 +433,10 @@ void OptionsButtonsLayer::setBoardItemsPositions(){
     //==============================
     //Set Button position
     //==============================
-    boardButton->setPosition(ccp(VisibleRect::center().x, boardLabel->getPositionY()- boardButton->getContentSize().height/2 - dist));
+    //boardButton->setPosition(ccp(VisibleRect::center().x, boardLabel->getPositionY()- boardButton->getContentSize().height/2 - dist));
+    
+    woodButton->setPosition(ccp(crossButton->getPositionX(), boardLabel->getPositionY()- woodButton->getContentSize().height/2 - dist));
+    othelloButton->setPosition(ccp(straightButton->getPositionX(), woodButton->getPositionY()));
     
     //skinButton->setPosition(ccp(VisibleRect::center().x, boardLabel->getPositionY()- skinButton->getContentSize().height/2 - dist));
     
@@ -413,7 +450,7 @@ void OptionsButtonsLayer::setMovesItemsPositions(){
     //==============================
     //Set Label position
     //==============================
-    movesLabel->setPosition(ccp(VisibleRect::center().x - movesLabel->getContentSize().width/1.7,boardButton->getPositionY() - movesLabel->getContentSize().height/1.6 - 30));
+    movesLabel->setPosition(ccp(VisibleRect::center().x - movesLabel->getContentSize().width/1.7,woodButton->getPositionY() - movesLabel->getContentSize().height/1.6 - 30));
     
     //==============================
     //Set Button position
@@ -433,7 +470,7 @@ void OptionsButtonsLayer::setLiveScoreItemsPositions(){
     //==============================
     //Set LiveScore Items position
     //==============================
-    liveScoreLabel->setPosition(ccp(boardButton->boundingBox().origin.x + boardButton->getContentSize().width + liveScoreLabel->getContentSize().width/4,lineHeader[SHOW_MOVES_HEADER_INDEX]->getPositionY() + liveScoreLabel->getContentSize().height/2));
+    liveScoreLabel->setPosition(ccp(VisibleRect::center().x + movesLabel->getContentSize().width/1.7,lineHeader[SHOW_MOVES_HEADER_INDEX]->getPositionY() + liveScoreLabel->getContentSize().height/2));
     
     //==============================
     //Set Buttons position
@@ -466,6 +503,9 @@ void OptionsButtonsLayer::setBtnTags(){
     blackWhiteButton->setTag(BL_WHITE_BTN_TAG);
     redBlueButton->setTag(BLUE_RED_BTN_TAG);
     redGreenButton->setTag(GR_RED_BTN_TAG);
+    
+    woodButton->setTag(WOOD_SKIN_BTN_TAG);
+    othelloButton->setTag(OTHELLO_SKIN_BTN_TAG);
    
 }
 
@@ -574,21 +614,19 @@ void OptionsButtonsLayer::setActiveButtons(){
         liveScoreButton->setSelectedIndex(LIVE_SCORE_OFF_BTN_TAG);
     }
     
-    bool othelloIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("othelloIsEnabled",WOOD_SKIN_BTN_TAG);
+     othelloIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("othelloIsEnabled",WOOD_SKIN_BTN_TAG);
     
     if (othelloIsEnabled) {
-        boardButton->setSelectedIndex(OTHELLO_SKIN_BTN_TAG);
+        //boardButton->setSelectedIndex(OTHELLO_SKIN_BTN_TAG);
+        woodButton->setSelectedBtn(false);
+        othelloButton->setSelectedBtn(true);
         
-        //resDirOrders.push_back("640x960-iphonehd/othello");
-        //resDirOrders.push_back("640x960-iphonehd/wood");
     }else{
-        boardButton->setSelectedIndex(WOOD_SKIN_BTN_TAG);
-        
-        //resDirOrders.push_back("640x960-iphonehd/wood");
-        //resDirOrders.push_back("640x960-iphonehd/othello");
+        //boardButton->setSelectedIndex(WOOD_SKIN_BTN_TAG);
+        woodButton->setSelectedBtn(true);
+        othelloButton->setSelectedBtn(false);
     }
     
-    //resDirOrders.push_back("640x960-iphonehd");
     CCLOG("SKIN: %i", othelloIsEnabled);
     
     
@@ -631,7 +669,6 @@ void OptionsButtonsLayer::modeBtnCallback(CCObject *pSender){
 void OptionsButtonsLayer::difficultyBtnCallback(cocos2d::CCObject *pSender){
     ImageOptionButton* pMenuItem = (ImageOptionButton *)(pSender);
     int tag = (int)pMenuItem->getTag();
-    
     
     switch (tag) {
         case EASY_BTN_TAG:
@@ -765,11 +802,13 @@ void OptionsButtonsLayer::boardBtnCallback(cocos2d::CCObject *pSender){
     searchPaths.insert(searchPaths.begin(), "Test_Res");
     CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
     
+    /*
     if (boardButton->getSelectedIndex()) {
         //CCLOG("OTHELLO ON %i", boardButton->getSelectedIndex());
         CCUserDefault::sharedUserDefault()->setBoolForKey("othelloIsEnabled", true);
         
         this->setResources(NORMAL_RES_OTHELLO, SMALL_RES_OTHELLO);
+        this->setResources(NORMAL_RES_WOOD, SMALL_RES_WOOD);
         
         
     }else{
@@ -777,9 +816,43 @@ void OptionsButtonsLayer::boardBtnCallback(cocos2d::CCObject *pSender){
         //CCLOG("WOOD ON %i", boardButton->getSelectedIndex());
         
         this->setResources(NORMAL_RES_WOOD, SMALL_RES_WOOD);
+        this->setResources(NORMAL_RES_OTHELLO, SMALL_RES_OTHELLO);
     }
     
     CCUserDefault::sharedUserDefault()->flush();
+    */
+    
+    MenuButton* pMenuItem = (MenuButton *)(pSender);
+    int tag = (int)pMenuItem->getTag();
+    
+    
+    switch (tag) {
+        case WOOD_SKIN_BTN_TAG:
+            othelloButton->setSelectedBtn(false);
+            woodButton->setSelectedBtn(true);
+            
+            this->setResources(NORMAL_RES_WOOD, SMALL_RES_WOOD);
+            this->setResources(NORMAL_RES_OTHELLO, SMALL_RES_OTHELLO);
+            
+            CCUserDefault::sharedUserDefault()->setBoolForKey("othelloIsEnabled", false);
+            
+            break;
+        case OTHELLO_SKIN_BTN_TAG:
+            othelloButton->setSelectedBtn(true);
+            woodButton->setSelectedBtn(false);
+
+            this->setResources(NORMAL_RES_OTHELLO, SMALL_RES_OTHELLO);
+            this->setResources(NORMAL_RES_WOOD, SMALL_RES_WOOD);
+            
+            CCUserDefault::sharedUserDefault()->setBoolForKey("othelloIsEnabled", true);
+            
+            break;
+        default:
+            break;
+    }
+    
+    CCUserDefault::sharedUserDefault()->flush();
+    
     
     this->setResources(NORMAL_RES_MAIN, SMALL_RES_MAIN);
     

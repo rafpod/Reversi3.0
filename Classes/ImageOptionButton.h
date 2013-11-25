@@ -21,7 +21,7 @@ private:
     
     bool selectedBtn;
     
-    CCArray *tabSprite;    
+    CCArray *tabSprite;   
     
     CCLabelTTF *label;
     

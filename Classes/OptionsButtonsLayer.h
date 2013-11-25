@@ -13,6 +13,7 @@
 #include "MenuButton.h"
 #include "LanguageManager.h"
 #include "ImageOptionButton.h"
+#include "DiffButton.h"
 
 using namespace cocos2d;
 using namespace std;
@@ -23,6 +24,8 @@ private:
     CCSize visibleSize;
     CCSize screenSize;
     CCPoint origin;
+    
+    bool othelloIsEnabled;
     
     vector<string> resDirOrders;
     
@@ -53,11 +56,11 @@ private:
     ImageOptionButton* pvpButton;
     ImageOptionButton* pvcButton;
     
-    ImageOptionButton *easyButton;
-    ImageOptionButton *mediumButton;
-    ImageOptionButton *hardButton;
-    ImageOptionButton *veryHardButton;
-    ImageOptionButton *hardestButton;
+    DiffButton *easyButton;
+    DiffButton *mediumButton;
+    DiffButton *hardButton;
+    DiffButton *veryHardButton;
+    DiffButton *hardestButton;
     
     MenuButton *crossButton;
     MenuButton *straightButton;
@@ -67,7 +70,8 @@ private:
     ImageOptionButton *redBlueButton;
     
     //CCMenuItemToggle* skinButton;
-    CCMenuItemToggle* boardButton;
+    //CCMenuItemToggle* boardButton;
+    
     MenuButton *woodButton;
     MenuButton *othelloButton;
     
@@ -81,6 +85,9 @@ private:
     CCMenuItemToggle* liveScoreButton;
     MenuButton *liveScoreOnButton;
     MenuButton *liveScoreOffButton;
+    
+    //DiffButton *diffBtnTest;
+    //DiffButton *diffBtnTest2;
     
     //MenuButton *liveScoreButton;
     
@@ -132,7 +139,7 @@ private:
     void boardBtnCallback(CCObject* pSender);
     void movesBtnCallback(CCObject* pSender);
     void liveScoreBtnCallback(CCObject* pSender);
-    void backBtnCallback(CCObject* pSender);
+    void backBtnCallback(CCObject* pSender);    
     
     void setResources(const char* resNormal, const char* resSmall);
     

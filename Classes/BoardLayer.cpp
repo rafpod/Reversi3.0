@@ -86,7 +86,7 @@ bool BoardLayer::init(){
         
         this->setCoordToResolution();
         
-        this->setBoardPosition();
+        //this->setBoardPosition();
         
         /*
         widthBoard = boardSprite->getContentSize().width -2*50; //542, 2*42
@@ -151,6 +151,8 @@ void BoardLayer::setOptionsPreferences(){
     liveScore = CCUserDefault::sharedUserDefault()->getBoolForKey("liveScoreIsEnabled", LIVE_SCORE_OFF_BTN_TAG);
     othelloIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("othelloIsEnabled",WOOD_SKIN_BTN_TAG);
     
+    CCLOG("diff: %i", diff);
+    
     switch (stoneColor) {
         case GR_RED_BTN_TAG:
             colorFileNameFirst = "stone_green.png";            
@@ -205,7 +207,7 @@ void BoardLayer::createItems(){
 
 void BoardLayer::setItemsPositions(){
         
-    //this->setBoardPosition();
+    this->setBoardPosition();
     
     this->setScoreBoardPosition();
     
@@ -250,22 +252,23 @@ void BoardLayer::setCoordToResolution(){
     else
     {
             //Scale 0.9
-            boardSprite->setScaleX(0.9);
-            boardSprite->setScaleY(0.9);
+            //boardSprite->setScaleX(0.9);
+            //boardSprite->setScaleY(0.9);
             
-            shadowSprite->setScaleY(0.89);
-            shadowSprite->setScaleX(0.9);
+            //shadowSprite->setScaleY(0.89);
+            //shadowSprite->setScaleX(0.9);
             
             scaleSprite = 0.9f;
             //tileSize = 60; //boardSprite->getContentSize().width*0.9/8 =61,2;
-            tileSize = floorf((boardSprite->getContentSize().width*0.9)/8);
+            tileSize = floorf((boardSprite->getContentSize().width)/8);
             tileSize -= 1.7;
             //tileSize = boardSprite->getContentSize().width*0.9/8;
             CCLOG("TILESIZE FLOOR %f", tileSize);
             anchorPointSprite = ccp(0.0, 0.01);
             
             diffXForFirstItem = 10;
-            diffXForLastItem = 10;
+            diffXForLastItem = 40;
+            //diffXForLastItem = 10;
             
             addDistBoardY = 100;
     }
@@ -1229,21 +1232,21 @@ void BoardLayer::createMenuButtons(){
 
 void BoardLayer::setBoardPosition(){
     
-    shadowSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height + origin.y - shadowSprite->getContentSize().height/2- 60));
-    boardSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height + origin.y - boardSprite->getContentSize().height/2- addDistBoardY));
+    //shadowSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height + origin.y - shadowSprite->getContentSize().height/2- 60));
+    //boardSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height + origin.y - boardSprite->getContentSize().height/2- addDistBoardY));
+    
+    shadowSprite->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y - shadowSprite->getContentSize().height/2- 60));
+    boardSprite->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y - boardSprite->getContentSize().height/2- addDistBoardY));
     
 }
 
 void BoardLayer::setScoreBoardPosition(){
     
-    leftScoreBoard->setPosition(ccp(boardSprite->boundingBox().origin.x + leftScoreBoard->getContentSize().width/3 + diffXForFirstItem, visibleSize.height + origin.y - 80));
-    rightScoreBoard->setPosition(ccp(boardSprite->getContentSize().width - rightScoreBoard->getContentSize().width/3 + diffXForLastItem, visibleSize.height + origin.y -80));
+    //leftScoreBoard->setPosition(ccp(boardSprite->boundingBox().origin.x + leftScoreBoard->getContentSize().width/3 + diffXForFirstItem, visibleSize.height + origin.y - 80));
+   // rightScoreBoard->setPosition(ccp(boardSprite->getContentSize().width - rightScoreBoard->getContentSize().width/3 + diffXForLastItem, visibleSize.height + origin.y -80));
     
-    CCLOG("Origin x Board: %f", boardSprite->boundingBox().origin.x);
-    CCLOG("Origin x Board: %f", this->originBoardX);
-    
-    //leftScoreBoard->setPosition(ccp(originBoardX + leftScoreBoard->getContentSize().width/3 + diffXForFirstItem, visibleSize.height + origin.y - 80));
-    //rightScoreBoard->setPosition(ccp(boardSprite->getContentSize().width - rightScoreBoard->getContentSize().width/3 + diffXForLastItem, visibleSize.height + origin.y -80));
+    leftScoreBoard->setPosition(ccp(boardSprite->boundingBox().origin.x + leftScoreBoard->getContentSize().width/3 + diffXForFirstItem, boardSprite->getPositionY() + boardSprite->getContentSize().height/2 + 35));
+    rightScoreBoard->setPosition(ccp(boardSprite->getContentSize().width - rightScoreBoard->getContentSize().width/3 + diffXForLastItem, leftScoreBoard->getPositionY()));
     
 }
 
@@ -1267,8 +1270,12 @@ void BoardLayer::setMenuButtonPosition(){
 
 void BoardLayer::addBoardToLayer(){
     
-    this->addChild(shadowSprite,-1);
-    this->addChild(boardSprite,0);
+    if (othelloIsEnabled) {
+        this->addChild(boardSprite,0);
+    }else{
+        this->addChild(shadowSprite,-1);
+        this->addChild(boardSprite,0);
+    }
 }
 
 void BoardLayer::addScoreBoardToLayer(){

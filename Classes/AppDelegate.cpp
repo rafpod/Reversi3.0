@@ -257,10 +257,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
         
         if (othelloIsEnabled) {
             resDirOrders.push_back(SMALL_RES_OTHELLO);
-            //resDirOrders.push_back(SMALL_RES_WOOD);
+            resDirOrders.push_back(SMALL_RES_WOOD);
         }else{
             resDirOrders.push_back(SMALL_RES_WOOD);
-            //resDirOrders.push_back(SMALL_RES_OTHELLO);
+            resDirOrders.push_back(SMALL_RES_OTHELLO);
         }
         
         resDirOrders.push_back(SMALL_RES_MAIN);
