@@ -25,7 +25,7 @@ private:
     CCSprite *sprite4;
     CCSprite *sprite5;
     
-    CCSprite* tab[5]={sprite1, sprite2, sprite3, sprite4, sprite5};
+    CCSprite* tab[5];
     
     int numbers;
     

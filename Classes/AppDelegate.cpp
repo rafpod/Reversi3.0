@@ -24,6 +24,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     //PORTRAIT SIZES
     //CCSize designSize = CCSizeMake(1536, 2548);
     //CCSize designSize = CCSizeMake(1280, 1920);
+    
+   /* CCSize designSize = CCSizeMake(1536, 2048);
+    CCSize resourceSize = CCSizeMake(768, 1024);*/
+    
     CCSize designSize = CCSizeMake(640, 960);
     CCSize resourceSize = CCSizeMake(320, 480);
    
@@ -40,168 +44,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     searchPaths.insert(searchPaths.begin(), "Test_Res");
     CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
 
-    /*
-    if (platform == kTargetIphone || platform == kTargetIpad)
-    {
-         //FIRST OPTION PORTRAIT
-         if (screenSize.height > 1136)
-         {
-             //resourceSize = CCSizeMake(2048, 1536);
-             resourceSize = CCSizeMake(1536, 2048);
-             resDirOrders.push_back("Group_I/1536x2048-ipadhd");
-             resDirOrders.push_back("Group_I");
-         }
-         else if (screenSize.height > 1024)
-         {
-             //resourceSize = CCSizeMake(1536, 768);
-             resourceSize = CCSizeMake(640, 1136);
-             resDirOrders.push_back("Group_D/640x1136-iphone5");
-             resDirOrders.push_back("Group_D");
-         }
-         else if (screenSize.height > 960)
-         {
-             //resourceSize = CCSizeMake(1536, 768);
-             resourceSize = CCSizeMake(768, 1024);
-             resDirOrders.push_back("Group_E/768x1024-ipad");
-             resDirOrders.push_back("Group_E");
-         }else if (screenSize.height > 480)
-         {
-             //resourceSize = CCSizeMake(960, 640);
-             resourceSize = CCSizeMake(640, 960);
-             resDirOrders.push_back("Group_D/640x960-iphonehd");
-             resDirOrders.push_back("Group_D");
-         }
-         else
-         {
-             resDirOrders.push_back("Group_B/320x480-iphone");
-             resDirOrders.push_back("Group_B");
-         }
-
-    }
-    else if (platform == kTargetAndroid || platform == kTargetWindows)
-    {
-     
-        if (screenSize.height > 2048)
-        {
-            if(screenSize.width>1536){
-                resourceSize = CCSizeMake(1600, 2560);
-                resDirOrders.push_back("Group_I/1600x2560");
-            }else{
-                resourceSize = CCSizeMake(1536, 2560);
-                resDirOrders.push_back("Group_I/1536x2560");
-            }
-            
-            resDirOrders.push_back("Group_I");
-            
-            
-        }
-        else if (screenSize.height > 1920)
-        {
-            resourceSize = CCSizeMake(1536, 2048);
-            resDirOrders.push_back("Group_I/1536x2048-ipadhd");
-            resDirOrders.push_back("Group_I");
-        }
-        else if(screenSize.height > 1440)
-        {
-            if(screenSize.width > 1200){
-                resourceSize = CCSizeMake(1280, 1920);
-                resDirOrders.push_back("Group_H/1280x1920");
-            }else if (screenSize.width > 1080){
-                resourceSize = CCSizeMake(1200, 1920);
-                resDirOrders.push_back("Group_H/1280x1920");
-            }else{
-                resourceSize = CCSizeMake(1080, 1920);
-                resDirOrders.push_back("Group_H/1080x1920");
-            }
-            
-            resDirOrders.push_back("Group_H");
-        }
-        else if(screenSize.height>1280)
-        {
-            resourceSize = CCSizeMake(900, 1440);
-            resDirOrders.push_back("Group_G/900x1440");
-            resDirOrders.push_back("Group_G");
-        }
-        else if(screenSize.height > 1024)
-        {
-            if(screenSize.width > 768){
-                resourceSize = CCSizeMake(800, 1280);
-                resDirOrders.push_back("Group_F/800x1280");
-            }else if (screenSize.width > 720){
-                resourceSize = CCSizeMake(768, 1280);
-                resDirOrders.push_back("Group_F/768x1280");
-            }else{
-                resourceSize = CCSizeMake(720, 1280);
-                resDirOrders.push_back("Group_F/720x1280");
-            }
-            
-            resDirOrders.push_back("Group_F");
-        }
-        else if (screenSize.height > 960)
-        {
-            if (screenSize.width > 600) {
-                resourceSize = CCSizeMake(768, 1024);
-                resDirOrders.push_back("Group_E/768x1024-ipad");
-            }else{
-                resourceSize = CCSizeMake(600, 1024);
-                resDirOrders.push_back("Group_E/600x1024");
-            }
-            
-            
-            resDirOrders.push_back("Group_E");
-        }
-        else if (screenSize.height > 854)
-        {
-            if(screenSize.width > 540){
-                resourceSize = CCSizeMake(640, 960);
-                resDirOrders.push_back("Group_D/640x960-iphonehd");
-            }else{
-                resourceSize = CCSizeMake(540, 960);
-                resDirOrders.push_back("Group_D/540x960");
-            }
-            
-            resDirOrders.push_back("Group_D");
-        }
-        else if (screenSize.height > 800)
-        {
-            resourceSize = CCSizeMake(480, 854);
-            resDirOrders.push_back("Group_C/480x854");
-            resDirOrders.push_back("Group_C");
-        }
-        else if (screenSize.height > 640)
-        {
-            resourceSize = CCSizeMake(480, 800);
-            resDirOrders.push_back("Group_C/480x800");
-            resDirOrders.push_back("Group_C");            
-        }
-        else if (screenSize.height > 480)
-        {
-            resourceSize = CCSizeMake(360, 640);
-            resDirOrders.push_back("Group_B/360x640");
-            resDirOrders.push_back("Group_B");
-        }
-        else if (screenSize.height > 400)
-        {
-            resourceSize = CCSizeMake(320, 480);
-            resDirOrders.push_back("Group_B/320x480-iphone");
-            resDirOrders.push_back("Group_B");
-        }
-        else if (screenSize.height > 320)
-        {
-            resourceSize = CCSizeMake(240, 400);
-            resDirOrders.push_back("Group_A/240x400");
-            resDirOrders.push_back("Group_A");
-        }
-        else
-        {
-            resourceSize = CCSizeMake(240, 320);
-            resDirOrders.push_back("Group_A/240x320");
-            resDirOrders.push_back("Group_A");
-        }
-        
-    }
-*/
-  
+    
     /* //FIRST OPTION PORTRAIT
     if (screenSize.height > 960)
     {
@@ -229,7 +72,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     bool othelloIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("othelloIsEnabled",WOOD_SKIN_BTN_TAG);
     
-    
+
     //SECOND OPTION PORTRAIT
     if (screenSize.height > 480)
     {
@@ -268,8 +111,47 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
     //CCLOG("SKIN1: %i", othelloIsEnabled);
     CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);   
-    
-    
+
+/*
+    //THIRD OPTION PORTRAIT
+    if (screenSize.height > 1024)
+    {
+        //resourceSize = CCSizeMake(960, 640);
+        resourceSize = CCSizeMake(1536, 2048);
+        //resDirOrders.push_back("Group_D/640x960-iphonehd");
+        //resDirOrders.push_back("Group_D");
+        
+        if (othelloIsEnabled) {
+            resDirOrders.push_back(NORMAL_RES_OTHELLO);
+            //resDirOrders.push_back(NORMAL_RES_WOOD);
+            
+        }else{
+            resDirOrders.push_back(NORMAL_RES_WOOD);
+            //resDirOrders.push_back(NORMAL_RES_OTHELLO);
+        }
+        
+        resDirOrders.push_back(NORMAL_RES_MAIN);
+        
+    }
+    else
+    {
+        //resDirOrders.push_back("Group_B/320x480-iphone");
+        //resDirOrders.push_back("Group_B");
+        
+        if (othelloIsEnabled) {
+            resDirOrders.push_back(SMALL_RES_OTHELLO);
+            resDirOrders.push_back(SMALL_RES_WOOD);
+        }else{
+            resDirOrders.push_back(SMALL_RES_WOOD);
+            resDirOrders.push_back(SMALL_RES_OTHELLO);
+        }
+        
+        resDirOrders.push_back(SMALL_RES_MAIN);
+        
+    }
+    //CCLOG("SKIN1: %i", othelloIsEnabled);
+    CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+ */
     //pDirector->setContentScaleFactor(MIN(resourceSize.width/designSize.width,resourceSize.height/designSize.height));
     pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
     

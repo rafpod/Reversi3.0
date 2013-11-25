@@ -73,7 +73,7 @@
                   symbolName = "BgLayer::createLayer(char const*)"
                   moduleName = "ReversiGL"
                   urlString = "file://localhost/Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/Classes/BgLayer.cpp"
-                  timestampString = "406720646.177022"
+                  timestampString = "407081270.69648"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "159"
@@ -87,7 +87,7 @@
                   symbolName = "non-virtual thunk to BgLayer::~BgLayer()"
                   moduleName = "ReversiGL"
                   urlString = "file://localhost/Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/Classes/BgLayer.cpp"
-                  timestampString = "406720646.177329"
+                  timestampString = "407081270.696787"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "159"
@@ -101,7 +101,7 @@
                   symbolName = "non-virtual thunk to BgLayer::~BgLayer()"
                   moduleName = "ReversiGL"
                   urlString = "file://localhost/Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/Classes/BgLayer.cpp"
-                  timestampString = "406720646.177624"
+                  timestampString = "407081270.697092"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "159"
@@ -115,7 +115,7 @@
                   symbolName = "non-virtual thunk to BgLayer::~BgLayer()"
                   moduleName = "ReversiGL"
                   urlString = "file://localhost/Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/Classes/BgLayer.cpp"
-                  timestampString = "406720646.177916"
+                  timestampString = "407081270.69739"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "159"
@@ -129,7 +129,7 @@
                   symbolName = "non-virtual thunk to BgLayer::~BgLayer()"
                   moduleName = "ReversiGL"
                   urlString = "file://localhost/Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/Classes/BgLayer.cpp"
-                  timestampString = "406720646.17821"
+                  timestampString = "407081270.697692"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "159"
@@ -194,11 +194,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/OptionsButtonsLayer.cpp"
-            timestampString = "407072067.691981"
+            timestampString = "407083866.305518"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
             landmarkName = "OptionsButtonsLayer::setItemPositions()"
             landmarkType = "5">
             <Locations>
@@ -209,12 +209,12 @@
                   symbolName = "OptionsButtonsLayer::init()"
                   moduleName = "ReversiGL"
                   urlString = "file://localhost/Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/Classes/OptionsButtonsLayer.cpp"
-                  timestampString = "406720646.179685"
+                  timestampString = "407081270.699604"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "96"
-                  endingLineNumber = "96"
-                  offsetFromSymbolStart = "240">
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "331">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -223,11 +223,11 @@
                   symbolName = "OptionsButtonsLayer::setItemPositions()"
                   moduleName = "ReversiGL"
                   urlString = "file://localhost/Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/Classes/OptionsButtonsLayer.cpp"
-                  timestampString = "406720646.180121"
+                  timestampString = "407081270.700113"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "96"
-                  endingLineNumber = "96"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
                   offsetFromSymbolStart = "65">
                </Location>
             </Locations>
@@ -255,7 +255,7 @@
                   symbolName = "ImageOptionButton::init(char const*, char const*, cocos2d::CCObject*, void (cocos2d::CCObject::*)(cocos2d::CCObject*), char const*, float, char const*, char const*)"
                   moduleName = "ReversiGL"
                   urlString = "file://localhost/Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/Classes/ImageOptionButton.cpp"
-                  timestampString = "406720646.181411"
+                  timestampString = "407081270.70048"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "66"
@@ -269,7 +269,7 @@
                   symbolName = "ImageOptionButton::init(char const*, char const*, cocos2d::CCObject*, void (cocos2d::CCObject::*)(cocos2d::CCObject*), char const*, float, char const*, char const*)"
                   moduleName = "ReversiGL"
                   urlString = "file://localhost/Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/Classes/ImageOptionButton.cpp"
-                  timestampString = "406720646.18187"
+                  timestampString = "407081270.700793"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "66"
@@ -293,6 +293,20 @@
             endingLineNumber = "44"
             landmarkName = "StatsResultsLayer::createItems()"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/OptionsButtonsLayer.cpp"
+            timestampString = "407083866.305518"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "978"
+            endingLineNumber = "978">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

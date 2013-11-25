@@ -233,12 +233,11 @@
 		7855E0E1153FEF240059DD9A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7855E0DF153FEF240059DD9A /* Default.png */; };
 		AB030D081832385500278E0D /* ScoreBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB030D061832385500278E0D /* ScoreBoard.cpp */; };
 		AB031926184354B600D443B8 /* DiffButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB031924184354B600D443B8 /* DiffButton.cpp */; };
-		AB048139183FA3060028F8B0 /* Test_Res in Resources */ = {isa = PBXBuildFile; fileRef = AB048138183FA3060028F8B0 /* Test_Res */; };
+		AB03192918437EAF00D443B8 /* Test_Res in Resources */ = {isa = PBXBuildFile; fileRef = AB03192818437EAE00D443B8 /* Test_Res */; };
 		AB076C60183A0B32001EF8F2 /* ImageOptionButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB076C5E183A0B32001EF8F2 /* ImageOptionButton.cpp */; };
 		AB0B3A52181127ED000C5EB7 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB0B3A50181127ED000C5EB7 /* GameScene.cpp */; };
 		AB0B3A5518112810000C5EB7 /* BackgroundLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB0B3A5318112810000C5EB7 /* BackgroundLayer.cpp */; };
 		AB0B3A62181165B0000C5EB7 /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB0B3A60181165B0000C5EB7 /* VisibleRect.cpp */; };
-		AB5D26BD183B4FE100011B42 /* Sorted_Res in Resources */ = {isa = PBXBuildFile; fileRef = AB5D26BC183B4FE100011B42 /* Sorted_Res */; };
 		ABD5B0931836314000D8EDD6 /* Reversi-DeveloperConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = ABD5B0921836314000D8EDD6 /* Reversi-DeveloperConfig.xcconfig */; };
 		ABE935BD183E019E00746416 /* StatsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE935BB183E019E00746416 /* StatsScene.cpp */; };
 		ABE935C3183E020400746416 /* StatsResultsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABE935C1183E020400746416 /* StatsResultsLayer.cpp */; };
@@ -749,7 +748,8 @@
 		AB030D071832385500278E0D /* ScoreBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScoreBoard.h; path = ../Classes/ScoreBoard.h; sourceTree = "<group>"; };
 		AB031924184354B600D443B8 /* DiffButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DiffButton.cpp; path = ../Classes/DiffButton.cpp; sourceTree = "<group>"; };
 		AB031925184354B600D443B8 /* DiffButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DiffButton.h; path = ../Classes/DiffButton.h; sourceTree = "<group>"; };
-		AB048138183FA3060028F8B0 /* Test_Res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Test_Res; path = ../Test_Res; sourceTree = "<group>"; };
+		AB03192818437EAE00D443B8 /* Test_Res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Test_Res; path = ../Test_Res; sourceTree = "<group>"; };
+		AB03192B18438C4800D443B8 /* OptionsSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OptionsSize.h; path = ../Classes/OptionsSize.h; sourceTree = "<group>"; };
 		AB076C5E183A0B32001EF8F2 /* ImageOptionButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageOptionButton.cpp; path = ../Classes/ImageOptionButton.cpp; sourceTree = "<group>"; };
 		AB076C5F183A0B32001EF8F2 /* ImageOptionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageOptionButton.h; path = ../Classes/ImageOptionButton.h; sourceTree = "<group>"; };
 		AB0B3A50181127ED000C5EB7 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameScene.cpp; path = ../Classes/GameScene.cpp; sourceTree = "<group>"; };
@@ -758,7 +758,6 @@
 		AB0B3A5418112810000C5EB7 /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackgroundLayer.h; path = ../Classes/BackgroundLayer.h; sourceTree = "<group>"; };
 		AB0B3A60181165B0000C5EB7 /* VisibleRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VisibleRect.cpp; path = ../Classes/VisibleRect.cpp; sourceTree = "<group>"; };
 		AB0B3A61181165B0000C5EB7 /* VisibleRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VisibleRect.h; path = ../Classes/VisibleRect.h; sourceTree = "<group>"; };
-		AB5D26BC183B4FE100011B42 /* Sorted_Res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sorted_Res; path = ../Sorted_Res; sourceTree = "<group>"; };
 		AB5D26BF183B69B000011B42 /* OptionButtonDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OptionButtonDefinitions.h; path = ../Classes/OptionButtonDefinitions.h; sourceTree = "<group>"; };
 		ABD5B0921836314000D8EDD6 /* Reversi-DeveloperConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Reversi-DeveloperConfig.xcconfig"; sourceTree = "<group>"; };
 		ABE935BB183E019E00746416 /* StatsScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StatsScene.cpp; path = ../Classes/StatsScene.cpp; sourceTree = "<group>"; };
@@ -1777,8 +1776,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AB048138183FA3060028F8B0 /* Test_Res */,
-				AB5D26BC183B4FE100011B42 /* Sorted_Res */,
+				AB03192818437EAE00D443B8 /* Test_Res */,
 				D41A0AD0160F154A004552AE /* Default-568h@2x.png */,
 				7855E0DF153FEF240059DD9A /* Default.png */,
 				D446FD6D16102124000ADA7B /* Default@2x.png */,
@@ -1808,6 +1806,14 @@
 			name = GUI;
 			sourceTree = "<group>";
 		};
+		AB03192A18438C2000D443B8 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				AB03192B18438C4800D443B8 /* OptionsSize.h */,
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
 		ABE935BE183E01B000746416 /* StatsScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -1833,6 +1839,7 @@
 				ABED883F18336C6D000952A6 /* OptionsScene.cpp */,
 				ABED884018336C6D000952A6 /* OptionsScene.h */,
 				ABED884518337106000952A6 /* OptionsLayers */,
+				AB03192A18438C2000D443B8 /* New Group */,
 			);
 			name = OptionsScene;
 			sourceTree = "<group>";
@@ -1996,15 +2003,14 @@
 				7855E0E1153FEF240059DD9A /* Default.png in Resources */,
 				D4EF949A15BD2D8B00D803EB /* Icon-57.png in Resources */,
 				D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */,
-				AB048139183FA3060028F8B0 /* Test_Res in Resources */,
 				D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */,
 				D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */,
 				D41A0AD1160F154A004552AE /* Default-568h@2x.png in Resources */,
 				D446FD6E16102124000ADA7B /* Default@2x.png in Resources */,
-				AB5D26BD183B4FE100011B42 /* Sorted_Res in Resources */,
 				15A3D9961682F7F9002FB0C5 /* CMakeLists.txt in Resources */,
 				379BB9CC17F03F3700829B88 /* json_internalarray.inl in Resources */,
 				379BB9CD17F03F3700829B88 /* json_internalmap.inl in Resources */,
+				AB03192918437EAF00D443B8 /* Test_Res in Resources */,
 				379BB9D017F03F3700829B88 /* json_valueiterator.inl in Resources */,
 				379BB9D217F03F3700829B88 /* sconscript in Resources */,
 			);

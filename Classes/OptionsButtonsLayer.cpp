@@ -12,6 +12,7 @@
 #include "OptionButtonDefinitions.h"
 #include "OptionsScene.h"
 #include "ResourcesDef.h"
+#include "OptionsSize.h"
 
 using namespace cocos2d;
 
@@ -41,6 +42,9 @@ bool OptionsButtonsLayer::init(){
         othelloIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("othelloIsEnabled",WOOD_SKIN_BTN_TAG);
         
         langManager = LanguageManager::create();
+        
+        visHeight = VisibleRect::getVisibleRect().size.height;
+        visWidth = VisibleRect::getVisibleRect().size.width;
                 
         this->initFileName();
         
@@ -51,6 +55,8 @@ bool OptionsButtonsLayer::init(){
         this->setItemPositions();
         this->setActiveButtons();
         this->addItemsToLayer();
+        
+        //this->setScaleForItems();
         
         this->setKeypadEnabled(true);
               
@@ -243,6 +249,7 @@ void OptionsButtonsLayer::createBoardItems(){
     CCString *fileNormalReverse;
     CCString *fileSelectedReverse;
     
+    
     if (othelloIsEnabled) {
         if (screenSize.height>480) {
             fileNormalReverse = ccs("640x960-iphonehd/wood/button_wide_0.png");
@@ -272,7 +279,37 @@ void OptionsButtonsLayer::createBoardItems(){
         woodButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_WOOD)->getCString(), OPTIONS_FONT_SIZE2);
         othelloButton = MenuButton::create(fileNormalReverse->getCString(), fileSelectedReverse->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_OTHELLO)->getCString(), OPTIONS_FONT_SIZE2);
     }
-    
+    /*
+    if (othelloIsEnabled) {
+        if (screenSize.height>1024) {
+            fileNormalReverse = ccs("1536x2048/wood/button_wide_0.png");
+            fileSelectedReverse = ccs("1536x2048/wood/button_wide_1.png");
+            
+            
+        }else{
+            fileNormalReverse = ccs("768x1024/wood/button_wide_0.png");
+            fileSelectedReverse = ccs("768x1024/wood/button_wide_1.png");
+        }
+        
+        woodButton = MenuButton::create(fileNormalReverse->getCString(), fileSelectedReverse->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_WOOD)->getCString(), OPTIONS_FONT_SIZE2);
+        
+        othelloButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_OTHELLO)->getCString(), OPTIONS_FONT_SIZE2);
+        
+    }else{
+        if (screenSize.height>1024) {
+            fileNormalReverse = ccs("1536x2048/othello/button_wide_0.png");
+            fileSelectedReverse = ccs("1536x2048/othello/button_wide_1.png");
+            
+            
+        }else{
+            fileNormalReverse = ccs("768x1024/othello/button_wide_0.png");
+            fileSelectedReverse = ccs("768x1024/othello/button_wide_1.png");
+            
+        }
+        woodButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_WOOD)->getCString(), OPTIONS_FONT_SIZE2);
+        othelloButton = MenuButton::create(fileNormalReverse->getCString(), fileSelectedReverse->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_OTHELLO)->getCString(), OPTIONS_FONT_SIZE2);
+    }
+    */
     
     //boardButton = CCMenuItemToggle::createWithTarget(this, menu_selector(OptionsButtonsLayer::boardBtnCallback), woodButton, othelloButton, NULL);
 
@@ -295,8 +332,9 @@ void OptionsButtonsLayer::createMovesItems(){
     movesOnButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_ON)->getCString(), OPTIONS_FONT_SIZE2);
     movesOffButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_OFF)->getCString(), OPTIONS_FONT_SIZE2);
     
-    showMovesButton = CCMenuItemToggle::createWithTarget(this, menu_selector(OptionsButtonsLayer::movesBtnCallback), movesOffButton, movesOnButton, NULL);    
+    showMovesButton = CCMenuItemToggle::createWithTarget(this, menu_selector(OptionsButtonsLayer::movesBtnCallback), movesOffButton, movesOnButton, NULL);
     
+        
     //movesOffButton->setScale(0.65f);
 }
 
@@ -900,6 +938,12 @@ void OptionsButtonsLayer::setResources(const char *resNormal, const char* resSma
     }else{
         resDirOrders.push_back(resSmall);
     }
+    /*
+    if(screenSize.height > 1024){
+        resDirOrders.push_back(resNormal);
+    }else{
+        resDirOrders.push_back(resSmall);
+    }*/
 }
 
 void OptionsButtonsLayer::keyBackClicked(){
@@ -912,4 +956,113 @@ void OptionsButtonsLayer::keyBackClicked(){
 
 void OptionsButtonsLayer::backBtnCallback(cocos2d::CCObject *pSender){
     this->keyBackClicked();
+}
+
+void OptionsButtonsLayer::setProperLabelScale(CCLabelTTF* label){
+    
+    float ratioLabelH = modeLabel->getContentSize().height/visHeight * 100;
+    float ratioLabelW = label->getContentSize().width/visWidth* 100;
+    
+    CCLOG("Label Procent: %f, %f", ratioLabelH, ratioLabelW );
+    
+    float heightItem, scaleItem;
+    
+    if(ratioLabelH > RATIO_LABEL_HEIGHT_PERCENT){
+        heightItem = visHeight * RATIO_LABEL_HEIGHT_PERCENT / 100; // width item on current screen equals default percent
+        scaleItem = heightItem/label->getContentSize().height; //new width/old "bad" width, smaller/bigger
+        
+        label->setScale(scaleItem);
+    }
+}
+
+void OptionsButtonsLayer::setProperScale(ImageOptionButton* tabImage[], DiffButton* tabDiff[], MenuButton* tabMenu[],CCMenuItemToggle* tabTogg[] ){
+    
+    float ratioLabelH;
+    float ratioLabelW;
+    
+    float heightItem, scaleItem;
+    
+    /*
+    for (int i =0; i<7; i++) {
+        ratioLabelH = tab[i]->getContentSize().height/visHeight * 100;
+        ratioLabelW = tab[i]->getContentSize().width/visWidth* 100;
+        
+        if(ratioLabelH > RATIO_LABEL_HEIGHT_PERCENT){
+            heightItem = visHeight * RATIO_LABEL_HEIGHT_PERCENT / 100; // width item on current screen equals default percent
+            scaleItem = heightItem/tab[i]->getContentSize().height; //new width/old "bad" width, smaller/bigger
+            
+            tab[i]->setScale(scaleItem);
+        }        
+        
+    }*/
+    
+    
+    for (int i =0; i<5; i++) {
+        ratioLabelH = tabImage[i]->getContentSize().height/visHeight * 100;
+        ratioLabelW = tabImage[i]->getContentSize().width/visWidth* 100;
+        
+        if(ratioLabelH > RATIO_BTN_HEIGHT_PERCENT){
+            heightItem = visHeight * RATIO_BTN_HEIGHT_PERCENT / 100; // width item on current screen equals default percent
+            scaleItem = heightItem/tabImage[i]->getContentSize().height; //new width/old "bad" width, smaller/bigger
+            
+            tabImage[i]->setScale(scaleItem);
+        }
+        
+    }
+    
+    for (int i =0; i<5; i++) {
+        ratioLabelH = tabDiff[i]->getContentSize().height/visHeight * 100;
+        ratioLabelW = tabDiff[i]->getContentSize().width/visWidth* 100;
+        
+        if(ratioLabelH > RATIO_BTN_HEIGHT_PERCENT){
+            heightItem = visHeight * RATIO_BTN_HEIGHT_PERCENT / 100; // width item on current screen equals default percent
+            scaleItem = heightItem/tabDiff[i]->getContentSize().height; //new width/old "bad" width, smaller/bigger
+            
+            tabDiff[i]->setScale(scaleItem);
+        }
+        
+    }
+    
+    for (int i =0; i<4; i++) {
+        ratioLabelH = tabMenu[i]->getContentSize().height/visHeight * 100;
+        ratioLabelW = tabMenu[i]->getContentSize().width/visWidth* 100;
+        
+        if(ratioLabelH > RATIO_BTN_HEIGHT_PERCENT){
+            heightItem = visHeight * RATIO_BTN_HEIGHT_PERCENT / 100; // width item on current screen equals default percent
+            scaleItem = heightItem/tabMenu[i]->getContentSize().height; //new width/old "bad" width, smaller/bigger
+            
+            tabMenu[i]->setScale(scaleItem);
+        }
+        
+    }
+    
+    for (int i =0; i<2; i++) {
+        ratioLabelH = tabTogg[i]->getContentSize().height/visHeight * 100;
+        ratioLabelW = tabTogg[i]->getContentSize().width/visWidth* 100;
+        
+        if(ratioLabelH > RATIO_BTN_HEIGHT_PERCENT){
+            heightItem = visHeight * RATIO_BTN_HEIGHT_PERCENT / 100; // width item on current screen equals default percent
+            scaleItem = heightItem/tabTogg[i]->getContentSize().height; //new width/old "bad" width, smaller/bigger
+            
+            tabTogg[i]->setScale(scaleItem);
+        }
+        
+    }
+
+
+
+}
+
+void OptionsButtonsLayer::setScaleForItems(){
+    
+    //CCLabelTTF* tabLabel[7] ={modeLabel, difficultyLabel, startFormLabel, colorsLabel, boardLabel, movesLabel, liveScoreLabel };
+    
+    //ImageOptionButton* tabImagea[5] = {pvcButton, pvpButton, easyButton, mediumButton, hardButton, veryHardButton, hardestButton, crossButton, straightButton, blackWhiteButton, redGreenButton, redBlueButton, woodButton, othelloButton, showMovesButton, liveScoreButton};
+    
+    ImageOptionButton* tabImage[5] = {pvcButton, pvpButton, blackWhiteButton, redGreenButton, redBlueButton};
+    MenuButton* tabMenu[4] = {crossButton, straightButton,woodButton, othelloButton};
+    DiffButton* tabDiff[5] = {easyButton, mediumButton, hardButton, veryHardButton, hardestButton};
+    CCMenuItemToggle* tabTogg[2] = {showMovesButton, liveScoreButton};
+    
+    this->setProperScale(tabImage,tabDiff, tabMenu, tabTogg);
 }

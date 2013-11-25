@@ -36,6 +36,8 @@ bool DiffButton::init(const char *normalImage, const char *selectedImage, cocos2
         }
         
         
+        
+        
         for (int i = 0; i<numberOfSprites; i++) {
             if(i%2==0){
                 tab[i] = CCSprite::create(firstImage->getCString());
@@ -44,21 +46,6 @@ bool DiffButton::init(const char *normalImage, const char *selectedImage, cocos2
             }
         }
         
-        sprite1 =CCSprite::create(firstImage->getCString());
-        sprite1->setPosition(ccp(0 + sprite1->getContentSize().width/2, this->boundingBox().origin.y + this->getContentSize().height));
-        sprite1->setScale(0.52f);
-        //this->addChild(sprite1,3);
-        
-        sprite2 =CCSprite::create(secondImage->getCString());
-        sprite2->setPosition(ccp(this->getContentSize().width/2 - sprite2->getContentSize().width/4, this->boundingBox().origin.y + this->getContentSize().height));
-        sprite2->setScale(0.52f);
-        //this->addChild(sprite2,3);
-        
-        sprite3 =CCSprite::create(firstImage->getCString());
-        sprite3->setPosition(ccp(this->getContentSize().width/2, this->boundingBox().origin.y + this->getContentSize().height));
-        sprite3->setScale(0.52f);
-        //this->addChild(sprite3,3);
-
         
         createImages(numberOfSprites);
 

@@ -25,6 +25,9 @@ private:
     CCSize screenSize;
     CCPoint origin;
     
+    float visHeight;
+    float visWidth;
+    
     bool othelloIsEnabled;
     
     vector<string> resDirOrders;
@@ -143,7 +146,13 @@ private:
     
     void setResources(const char* resNormal, const char* resSmall);
     
-    void keyBackClicked();   
+    void keyBackClicked();
+    
+    void setProperLabelScale(CCLabelTTF * item);
+    //void setProperBtnScale(CCMenuItem * item);
+    
+    void setProperScale(ImageOptionButton* tabImage[], DiffButton* tabDiff[], MenuButton* tabMenu[], CCMenuItemToggle* tabTogg[]);
+    void setScaleForItems();
     
     
     
