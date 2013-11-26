@@ -84,9 +84,6 @@ bool BoardLayer::init(){
         return false;
     }else{
         
-        visSize = VisibleRect::getVisibleRect().size;
-        designSize = CCEGLView::sharedOpenGLView()->getDesignResolutionSize();
-        
         this->initVariables();
        
         this->setOptionsPreferences();
@@ -98,14 +95,6 @@ bool BoardLayer::init(){
         this->setCoordToResolution();
         
         //this->setBoardPosition();
-        
-        shadowOffFromTop = visSize.height/designSize.height * 56;
-        boardOffFromTop = visSize.height/designSize.height * 100;
-        scoreBoardOffAboveBoard = visSize.height/designSize.height * 35;
-        diffXForFirstItem = visSize.width/designSize.width * 10;
-        
-        int offForLastItem = (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 40 : 80);
-        diffXForLastItem = visSize.width/designSize.width * offForLastItem;
         
         this->setItemsPositions();
         
@@ -143,6 +132,9 @@ void BoardLayer::initVariables(){
     visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     //bottom left
     origin = CCDirector::sharedDirector()->getVisibleOrigin();
+    
+    visSize = VisibleRect::getVisibleRect().size;
+    designSize = CCEGLView::sharedOpenGLView()->getDesignResolutionSize();
     
     langManager = LanguageManager::create();
 }
@@ -236,26 +228,25 @@ void BoardLayer::setCoordToResolution(){
     if (visibleSize.width <= boardSprite->getContentSize().width + 10)
     {
             //iphone 1136
-            boardSprite->setScaleX(0.9);
-            boardSprite->setScaleY(0.9);
+            boardSprite->setScaleX(0.8);
+            boardSprite->setScaleY(0.8);
             
-            shadowSprite->setScaleY(0.89);
-            shadowSprite->setScaleX(0.9);
+            shadowSprite->setScaleY(0.79);
+            shadowSprite->setScaleX(0.8);
             
             //scaleSprite = 0.841f;
-            scaleSprite = 0.9f;
+            scaleSprite = 0.8f;
            // tileSize = 53.35; //boardSprite->getContentSize().width*0.8/8 =54,4;
-            tileSize = boardSprite->getContentSize().width*0.9/8;
+            tileSize = boardSprite->getContentSize().width*0.8/8;
             tileSize-=1.7f;
         
             //anchorPointSprite = ccp(0.09, 0.1);
             //anchorPointSprite = ccp(0.03, 0.06);
             anchorPointSprite = ccp(0.02, 0.01);
-            
-            //diffXForFirstItem = 10;
-            //diffXForLastItem = -15;
-            
-            //boardOffFromTop = 100;
+        
+        int offForLastItem = (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 40 : designSize.width/visSize.width * 30); //for 0.9 =60
+        diffXForLastItem = visSize.width/designSize.width * offForLastItem;
+        
     }
     else
     {
@@ -270,20 +261,23 @@ void BoardLayer::setCoordToResolution(){
             //(cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 40 : 80);
             
             //scaleSprite = visSize.height/designSize.height* 0.9f;
-        scaleSprite =0.99f;
+            scaleSprite =0.99f;
             //tileSize = 60; //boardSprite->getContentSize().width*0.9/8 =61,2;
             tileSize = floorf((boardSprite->getContentSize().width)/8);
             tileSize -= 1.7;
             //tileSize = boardSprite->getContentSize().width*0.9/8;
             CCLOG("TILESIZE FLOOR %f", tileSize);
             anchorPointSprite = ccp(0.02, 0.02);
-            
-            //diffXForFirstItem = 10;
-            //diffXForLastItem = 40;
-            //diffXForLastItem = 10;
-            
-            //boardOffFromTop = 100;
+        
+        int offForLastItem = (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 40 : designSize.width/visSize.width * 80);
+        diffXForLastItem = visSize.width/designSize.width * offForLastItem;
+        
     }
+    
+    shadowOffFromTop = visSize.height/designSize.height * 56;
+    boardOffFromTop = visSize.height/designSize.height * 100;
+    scoreBoardOffAboveBoard = visSize.height/designSize.height * 35;
+    diffXForFirstItem = visSize.width/designSize.width * 10;
 
     
 }

@@ -235,10 +235,10 @@ void OptionsButtonsLayer::createColorSetItems(){
     blackWhiteButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::colorBtnCallback), blackStone, whiteStone,TWO_IMG_BTN);
     
    
-    redGreenButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::colorBtnCallback), greenStone, redStone,TWO_IMG_BTN);
+    redGreenButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::colorBtnCallback), redStone, greenStone,TWO_IMG_BTN);
     
     
-    redBlueButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::colorBtnCallback), blueStone, redStone,TWO_IMG_BTN);
+    redBlueButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::colorBtnCallback), redStone, blueStone,TWO_IMG_BTN);
     
     //blackWhiteButton->setScale(1.1);
     //redGreenButton->setScale(1.1);
@@ -436,7 +436,7 @@ void OptionsButtonsLayer::setGameModeItemsPositions(){
     
     if(visWidth/designWidth != 1){
     
-        backButton->setPosition(ccp(lineHeader[0]->boundingBox().origin.x + backButton->getContentSize().width/4, lineHeader[0]->getPositionY()));
+        backButton->setPosition(ccp(lineHeader[0]->boundingBox().origin.x + backButton->getContentSize().width/3.8, lineHeader[0]->getPositionY()));
     }else{
         backButton->setPosition(ccp(lineHeader[0]->boundingBox().origin.x, lineHeader[0]->getPositionY()));
     }
