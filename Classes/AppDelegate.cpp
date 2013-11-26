@@ -72,7 +72,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     bool othelloIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("othelloIsEnabled",WOOD_SKIN_BTN_TAG);
     
-
+/*
     //SECOND OPTION PORTRAIT
     if (screenSize.height > 480)
     {
@@ -111,6 +111,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
     //CCLOG("SKIN1: %i", othelloIsEnabled);
     CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);   
+ */
 
 /*
     //THIRD OPTION PORTRAIT
@@ -152,6 +153,43 @@ bool AppDelegate::applicationDidFinishLaunching() {
     //CCLOG("SKIN1: %i", othelloIsEnabled);
     CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
  */
+    
+    //FOURTH OPTION PORTRAIT
+    if (screenSize.height > 1024) {
+        
+        resourceSize = CCSizeMake(1536, 2048);
+        designSize = CCSizeMake(768, 1024);
+        
+        resDirOrders = this->setGameResources(BIGGEST_RES_WOOD, BIGGEST_RES_OTHELLO, BIGGEST_RES_MAIN, othelloIsEnabled);
+        
+    }
+    else if(screenSize.height > 960){
+        
+        resourceSize = CCSizeMake(768, 1024);
+        designSize = CCSizeMake(768, 1024);
+        
+        resDirOrders = this->setGameResources(BIG_RES_WOOD, BIG_RES_OTHELLO, BIG_RES_MAIN, othelloIsEnabled);
+        
+    }
+    else if (screenSize.height > 480)
+    {
+        resourceSize = CCSizeMake(640, 960);
+        designSize = CCSizeMake(640,960);
+        
+        resDirOrders = this->setGameResources(NORMAL_RES_WOOD, NORMAL_RES_OTHELLO, NORMAL_RES_MAIN, othelloIsEnabled);
+        
+    }
+    else
+    {
+        resourceSize = CCSizeMake(320, 480);
+        designSize = CCSizeMake(640,960);
+        
+        resDirOrders = this->setGameResources(SMALL_RES_WOOD, SMALL_RES_OTHELLO, SMALL_RES_MAIN, othelloIsEnabled);
+    }
+    
+    //CCLOG("SKIN1: %i", othelloIsEnabled);
+    CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+    
     //pDirector->setContentScaleFactor(MIN(resourceSize.width/designSize.width,resourceSize.height/designSize.height));
     pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
     
@@ -187,4 +225,21 @@ void AppDelegate::applicationWillEnterForeground() {
    
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+}
+
+std::vector<std::string> AppDelegate::setGameResources(const char *resWood, const char *resOthello, const char *resMain, bool othelloIsEnabled){
+    
+    std::vector<std::string> resDirOrders;
+    
+    if (othelloIsEnabled) {
+        resDirOrders.push_back(resOthello);
+        resDirOrders.push_back(resWood);
+    }else{
+        resDirOrders.push_back(resWood);
+        resDirOrders.push_back(resOthello);
+    }
+    
+    resDirOrders.push_back(resMain);
+    
+    return resDirOrders;
 }

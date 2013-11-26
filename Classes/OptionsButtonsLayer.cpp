@@ -16,16 +16,20 @@
 
 using namespace cocos2d;
 
-#define OPTIONS_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height/ cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * 28) //32
-//#define OPTIONS_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 30) //32
-#define MODE_FONT_SIZE     (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height / cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * 32)
-#define OPTIONS_FONT_SIZE2  (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height/ cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * 16) //26
-#define DIFFICULTY_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height/ cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * 20)
+/*
+#define FONT_OPTION_LABEL (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 28 : 32)
+#define FONT_OPTION_BTN (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 16 : 20)
+#define FONT_OPTION_DIFF (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 20 : 24)
+
+#define OPTIONS_FONT_SIZE_LABEL  (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height/ cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * FONT_OPTION_LABEL) //32
+#define OPTIONS_FONT_SIZE_BTN  (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height/ cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * FONT_OPTION_BTN) //26
+#define DIFFICULTY_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height/ cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * FONT_OPTION_DIFF)
+*/
 
 #define SHOW_MOVES_HEADER_INDEX 5
 
-#define OPTION_OFF_BTN (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 15 : 100)
-#define LABEL_OFF_BTN (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 30 : 100)
+//#define OPTION_OFF_BTN (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 15 : 17)
+//#define OPTION_OFF_LABEL (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 30 : 32)
 
 #define ONE_IMG_BTN     1
 #define TWO_IMG_BTN     2
@@ -50,16 +54,14 @@ bool OptionsButtonsLayer::init(){
         
         visHeight = VisibleRect::getVisibleRect().size.height;
         visWidth = VisibleRect::getVisibleRect().size.width;
+        
+        designHeight = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height;
+        designWidth = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width;
                 
         this->initFileName();
         
-       // dist = 15;
-        designHeight = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height;
-        designWidth = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width;
-        
-        distOffBtn = visHeight/designHeight * 15;
-        distOffLabel = visHeight/designHeight * 30;
-        
+        this->setOptionOffsets();
+        this->setFontSize();
                 
         this->createItems();
         this->setBtnTags();
@@ -67,7 +69,6 @@ bool OptionsButtonsLayer::init(){
         this->setActiveButtons();
         this->addItemsToLayer();
         
-        //this->setScaleForItems();
         
         this->setKeypadEnabled(true);
               
@@ -162,7 +163,7 @@ void OptionsButtonsLayer::createGameModeItems(){
     //===========================
     //Create Label
     //===========================
-    modeLabel = CCLabelTTF::create(langManager->Translate(STRING_MODES)->getCString(), "Georgia", OPTIONS_FONT_SIZE);
+    modeLabel = CCLabelTTF::create(langManager->Translate(STRING_MODES)->getCString(), "Georgia", fontSizeLabel);
     modeLabel->setColor(ccc3(0, 0, 0));
     
     //===========================
@@ -170,21 +171,17 @@ void OptionsButtonsLayer::createGameModeItems(){
     //===========================
     
     
-    pvpButton=ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::modeBtnCallback), "vs", DIFFICULTY_FONT_SIZE, humanMark, humanMark);
+    pvpButton=ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::modeBtnCallback), "vs", fontSizeDiff, humanMark, humanMark);
     //pvpButton->setScale(1.1f);
     
     //pvpButton->setSelectedBtn(false);
     
-    pvcButton=ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::modeBtnCallback), "vs", DIFFICULTY_FONT_SIZE, humanMark, aiMark);
+    pvcButton=ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::modeBtnCallback), "vs", fontSizeDiff, humanMark, aiMark);
     //pvcButton->setScale(1.1f);
     
     //pvcButton->setSelectedBtn(true);
     
     backButton = CCMenuItemImage::create("button_back_0.png", "button_back_1.png", "button_back_0.png", this, menu_selector(OptionsButtonsLayer::backBtnCallback));
-    
-    float buttonPercent = pvpButton->getContentSize().height/this->getContentSize().height*100;
-    
-    CCLOG("MODE_BUTTON: %f", buttonPercent);
     
 }
 
@@ -192,7 +189,7 @@ void OptionsButtonsLayer::createDiffItems(){
     //===========================
     //Create Label Items
     //===========================
-    difficultyLabel = CCLabelTTF::create(langManager->Translate(STRING_DIFFICULTY)->getCString(), "Georgia", OPTIONS_FONT_SIZE);
+    difficultyLabel = CCLabelTTF::create(langManager->Translate(STRING_DIFFICULTY)->getCString(), "Georgia", fontSizeLabel);
     difficultyLabel->setColor(ccc3(0, 0, 0));
     
     //===========================
@@ -210,16 +207,16 @@ void OptionsButtonsLayer::createStartFormItems(){
     //===========================
     //Create Label Items
     //===========================
-    startFormLabel = CCLabelTTF::create(langManager->Translate(STRING_START_FORM)->getCString(), "Georgia", OPTIONS_FONT_SIZE);
+    startFormLabel = CCLabelTTF::create(langManager->Translate(STRING_START_FORM)->getCString(), "Georgia",fontSizeLabel);
     startFormLabel->setColor(ccc3(0, 0, 0));
     
     //===========================
     //Create Buttons
     //===========================
-    crossButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::startFormBtnCallback), langManager->Translate(STRING_CROSS)->getCString(), OPTIONS_FONT_SIZE2);
+    crossButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::startFormBtnCallback), langManager->Translate(STRING_CROSS)->getCString(),fontSizeBtn);
     //crossButton->setScale(0.65f);
     
-    straightButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::startFormBtnCallback), langManager->Translate(STRING_STRAIGHT)->getCString(), OPTIONS_FONT_SIZE2);
+    straightButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::startFormBtnCallback), langManager->Translate(STRING_STRAIGHT)->getCString(), fontSizeBtn);
     //straightButton->setScale(0.65f);
     
     //crossButton->setScale(1.1);
@@ -230,7 +227,7 @@ void OptionsButtonsLayer::createColorSetItems(){
     //===========================
     //Create Label
     //===========================
-    colorsLabel = CCLabelTTF::create(langManager->Translate(STRING_COLORS)->getCString(), "Georgia", OPTIONS_FONT_SIZE);
+    colorsLabel = CCLabelTTF::create(langManager->Translate(STRING_COLORS)->getCString(), "Georgia",fontSizeLabel);
     colorsLabel->setColor(ccc3(0, 0, 0));
     
     //===========================
@@ -254,7 +251,7 @@ void OptionsButtonsLayer::createBoardItems(){
     //===========================
     //Create Label
     //===========================
-    boardLabel = CCLabelTTF::create(langManager->Translate(STRING_BOARD)->getCString(), "Georgia", OPTIONS_FONT_SIZE);
+    boardLabel = CCLabelTTF::create(langManager->Translate(STRING_BOARD)->getCString(), "Georgia", fontSizeLabel);
     boardLabel->setColor(ccc3(0, 0, 0));
     
     //===========================
@@ -267,22 +264,43 @@ void OptionsButtonsLayer::createBoardItems(){
     
     
     if (othelloIsEnabled) {
-        if (screenSize.height>480) {
+        if (screenSize.height>1024) {
+            
+            fileNormalReverse = ccs("1536x2048/wood/button_wide_0.png");
+            fileSelectedReverse = ccs("1536x2048/wood/button_wide_1.png");
+            
+        }else if (screenSize.height>960){
+            
+            fileNormalReverse = ccs("768x1024/wood/button_wide_0.png");
+            fileSelectedReverse = ccs("768x1024/wood/button_wide_1.png");
+            
+        }else if (screenSize.height>480) {
+            
             fileNormalReverse = ccs("640x960-iphonehd/wood/button_wide_0.png");
             fileSelectedReverse = ccs("640x960-iphonehd/wood/button_wide_1.png");
             
-            
         }else{
+            
             fileNormalReverse = ccs("320x480-iphone/wood/button_wide_0.png");
             fileSelectedReverse = ccs("320x480-iphone/wood/button_wide_1.png");
         }
         
-        woodButton = MenuButton::create(fileNormalReverse->getCString(), fileSelectedReverse->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_WOOD)->getCString(), OPTIONS_FONT_SIZE2);
+        woodButton = MenuButton::create(fileNormalReverse->getCString(), fileSelectedReverse->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_WOOD)->getCString(),fontSizeBtn);
         
-        othelloButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_OTHELLO)->getCString(), OPTIONS_FONT_SIZE2);
+        othelloButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_OTHELLO)->getCString(), fontSizeBtn);
         
     }else{
-        if (screenSize.height>480) {
+        if (screenSize.height>1024) {
+            
+            fileNormalReverse = ccs("1536x2048/othello/button_wide_0.png");
+            fileSelectedReverse = ccs("1536x2048/othello/button_wide_1.png");
+            
+        }else if (screenSize.height>960){
+            
+            fileNormalReverse = ccs("768x1024/othello/button_wide_0.png");
+            fileSelectedReverse = ccs("768x1024/othello/button_wide_1.png");
+            
+        }else if (screenSize.height>480) {
             fileNormalReverse = ccs("640x960-iphonehd/othello/button_wide_0.png");
             fileSelectedReverse = ccs("640x960-iphonehd/othello/button_wide_1.png");
             
@@ -292,8 +310,8 @@ void OptionsButtonsLayer::createBoardItems(){
             fileSelectedReverse = ccs("320x480-iphone/othello/button_wide_1.png");
             
         }
-        woodButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_WOOD)->getCString(), OPTIONS_FONT_SIZE2);
-        othelloButton = MenuButton::create(fileNormalReverse->getCString(), fileSelectedReverse->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_OTHELLO)->getCString(), OPTIONS_FONT_SIZE2);
+        woodButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_WOOD)->getCString(), fontSizeBtn);
+        othelloButton = MenuButton::create(fileNormalReverse->getCString(), fileSelectedReverse->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_OTHELLO)->getCString(), fontSizeBtn);
     }
     /*
     if (othelloIsEnabled) {
@@ -340,7 +358,7 @@ void OptionsButtonsLayer::createMovesItems(){
     
     float labelWidth = visWidth/CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width*200;  //0.3125*visWidth;
     
-    movesLabel = CCLabelTTF::create(langManager->Translate(STRING_SHOW_MOVES)->getCString(), "Georgia", OPTIONS_FONT_SIZE, CCSizeMake(labelWidth, 0), kCCTextAlignmentCenter);
+    movesLabel = CCLabelTTF::create(langManager->Translate(STRING_SHOW_MOVES)->getCString(), "Georgia", fontSizeLabel, CCSizeMake(labelWidth, 0), kCCTextAlignmentCenter);
     movesLabel->setColor(ccc3(0, 0, 0));
     
     //===========================
@@ -349,8 +367,8 @@ void OptionsButtonsLayer::createMovesItems(){
     
     //movesOnButton->setScale(0.65f);
     
-    movesOnButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_ON)->getCString(), OPTIONS_FONT_SIZE2);
-    movesOffButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_OFF)->getCString(), OPTIONS_FONT_SIZE2);
+    movesOnButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_ON)->getCString(), fontSizeBtn);
+    movesOffButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_OFF)->getCString(), fontSizeBtn);
     
     showMovesButton = CCMenuItemToggle::createWithTarget(this, menu_selector(OptionsButtonsLayer::movesBtnCallback), movesOffButton, movesOnButton, NULL);
     
@@ -365,7 +383,7 @@ void OptionsButtonsLayer::createLiveScoreItems(){
     //liveScoreLabel = CCLabelTTF::create(langManager->Translate(STRING_LIVE_SCORE)->getCString(), "Georgia", OPTIONS_FONT_SIZE);
     float labelWidth = visWidth/CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width*150;
     
-    liveScoreLabel = CCLabelTTF::create(langManager->Translate(STRING_LIVE_SCORE)->getCString(), "Georgia", OPTIONS_FONT_SIZE, CCSizeMake(labelWidth, 0), kCCTextAlignmentCenter);
+    liveScoreLabel = CCLabelTTF::create(langManager->Translate(STRING_LIVE_SCORE)->getCString(), "Georgia", fontSizeLabel, CCSizeMake(labelWidth, 0), kCCTextAlignmentCenter);
     liveScoreLabel->setColor(ccc3(0, 0, 0));
     
     //===========================
@@ -374,8 +392,8 @@ void OptionsButtonsLayer::createLiveScoreItems(){
     //liveScoreButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::liveScoreBtnCallback), langManager->Translate(STRING_ON)->getCString(), OPTIONS_FONT_SIZE2);
     //liveScoreOnButton->setScale(0.65f);
     
-    liveScoreOnButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_ON)->getCString(), OPTIONS_FONT_SIZE2);
-    liveScoreOffButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_OFF)->getCString(), OPTIONS_FONT_SIZE2);
+    liveScoreOnButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_ON)->getCString(), fontSizeBtn);
+    liveScoreOffButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, NULL, langManager->Translate(STRING_OFF)->getCString(), fontSizeBtn);
     
     liveScoreButton = CCMenuItemToggle::createWithTarget(this, menu_selector(OptionsButtonsLayer::liveScoreBtnCallback), liveScoreOffButton, liveScoreOnButton, NULL);
     //liveScoreOffButton->setScale(0.65f);
@@ -885,8 +903,8 @@ void OptionsButtonsLayer::boardBtnCallback(cocos2d::CCObject *pSender){
             othelloButton->setSelectedBtn(false);
             woodButton->setSelectedBtn(true);
             
-            this->setResources(NORMAL_RES_WOOD, SMALL_RES_WOOD);
-            this->setResources(NORMAL_RES_OTHELLO, SMALL_RES_OTHELLO);
+            this->setResources(SMALL_RES_WOOD, NORMAL_RES_WOOD, BIG_RES_WOOD, BIGGEST_RES_WOOD);
+            this->setResources(SMALL_RES_OTHELLO, NORMAL_RES_OTHELLO, BIG_RES_OTHELLO, BIGGEST_RES_OTHELLO);
             
             CCUserDefault::sharedUserDefault()->setBoolForKey("othelloIsEnabled", false);
             
@@ -895,8 +913,8 @@ void OptionsButtonsLayer::boardBtnCallback(cocos2d::CCObject *pSender){
             othelloButton->setSelectedBtn(true);
             woodButton->setSelectedBtn(false);
 
-            this->setResources(NORMAL_RES_OTHELLO, SMALL_RES_OTHELLO);
-            this->setResources(NORMAL_RES_WOOD, SMALL_RES_WOOD);
+            this->setResources(SMALL_RES_OTHELLO, NORMAL_RES_OTHELLO, BIG_RES_OTHELLO, BIGGEST_RES_OTHELLO);
+            this->setResources(SMALL_RES_WOOD, NORMAL_RES_WOOD, BIG_RES_WOOD, BIGGEST_RES_WOOD);
             
             CCUserDefault::sharedUserDefault()->setBoolForKey("othelloIsEnabled", true);
             
@@ -908,7 +926,7 @@ void OptionsButtonsLayer::boardBtnCallback(cocos2d::CCObject *pSender){
     CCUserDefault::sharedUserDefault()->flush();
     
     
-    this->setResources(NORMAL_RES_MAIN, SMALL_RES_MAIN);
+    this->setResources(SMALL_RES_MAIN, NORMAL_RES_MAIN, BIG_RES_MAIN, BIGGEST_RES_MAIN);
     
     
     CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
@@ -948,8 +966,13 @@ void OptionsButtonsLayer::liveScoreBtnCallback(cocos2d::CCObject *pSender){
     CCUserDefault::sharedUserDefault()->flush();
 }
 
-void OptionsButtonsLayer::setResources(const char *resNormal, const char* resSmall){
-    if(screenSize.height > 480){
+void OptionsButtonsLayer::setResources(const char *resSmall, const char* resNormal, const char* resBig, const char* resBiggest){
+    
+    if(screenSize.height > 1024){
+        resDirOrders.push_back(resBiggest);
+    }else if(screenSize.height > 960){
+        resDirOrders.push_back(resBig);
+    }else if(screenSize.height > 480){
         resDirOrders.push_back(resNormal);
     }else{
         resDirOrders.push_back(resSmall);
@@ -972,4 +995,33 @@ void OptionsButtonsLayer::keyBackClicked(){
 
 void OptionsButtonsLayer::backBtnCallback(cocos2d::CCObject *pSender){
     this->keyBackClicked();
+}
+
+void OptionsButtonsLayer::setFontSize(){
+    
+    int fontOptionLabel, fontOptionBtn, fontOptionDiff;
+    
+    if(designHeight <= 960){
+        fontOptionLabel = 28;
+        fontOptionBtn = 16;
+        fontOptionDiff = 20;
+    }else{
+        fontOptionLabel = 32;
+        fontOptionBtn = 20;
+        fontOptionDiff = 24;
+    }
+    
+    this->fontSizeLabel = visHeight/designHeight * fontOptionLabel;
+    this->fontSizeBtn = visHeight/designHeight * fontOptionBtn;
+    this->fontSizeDiff = visHeight/designHeight * fontOptionDiff;
+}
+
+void OptionsButtonsLayer::setOptionOffsets(){
+    
+    int smallerDesign = 960;
+    int optionOffBtn = designHeight <= smallerDesign ? 15: 17;
+    int optionOffLabel = designHeight <= smallerDesign ? 30 : 32;
+    
+    distOffBtn = visHeight/designHeight * optionOffBtn;
+    distOffLabel = visHeight/designHeight * optionOffLabel;
 }

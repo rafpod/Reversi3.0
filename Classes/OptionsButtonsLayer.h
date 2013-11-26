@@ -102,7 +102,10 @@ private:
         
     int distOffBtn, distOffLabel;
     int designHeight, designWidth;
-    float scaleBtnX, scaleBtnY;
+    
+    float fontSizeLabel;
+    float fontSizeBtn;
+    float fontSizeDiff;
     
     
     bool init();
@@ -146,7 +149,10 @@ private:
     void liveScoreBtnCallback(CCObject* pSender);
     void backBtnCallback(CCObject* pSender);    
     
-    void setResources(const char* resNormal, const char* resSmall);
+    void setResources(const char* resSmall, const char* resNormal, const char* resBig, const char* resBiggest);
+    
+    void setFontSize();
+    void setOptionOffsets();
     
     void keyBackClicked();    
     

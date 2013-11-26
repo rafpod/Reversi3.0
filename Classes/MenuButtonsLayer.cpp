@@ -13,8 +13,16 @@
 #include "StatsScene.h"
 
 
-#define MAIN_MENU_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 44)
-#define MAIN_MENU_FONT_SIZE2  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 36)
+//#define MAIN_MENU_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 44)
+
+#define FONT_MENU (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 36 : 46)
+
+#define MAIN_MENU_FONT_SIZE2  (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().width / cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width * FONT_MENU)
+
+#define MENU_OFF_DIST_FROM_LOGO (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 30 : 40)
+
+#define MENU_OFF_DIST_FROM_BTN (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 43 : 53)
+
 #define RATIO_BTN_HEIGHT_TO_VIS_SIZE_HEIGHT_PERCENT 13.96
 #define PERCENT_DISTANCE_FROM_LOGO 3.125
 #define PERCENT_DISTANCE_FROM_BTN 4.47
@@ -74,6 +82,16 @@ void MenuButtonsLayer::createItems(){
     
     moreGamesButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(MenuButtonsLayer::menuBtnCallback), langManager->Translate(STRING_MOREGAMES)->getCString(), MAIN_MENU_FONT_SIZE2);
     
+    float scaleBtnH = VisibleRect::getVisibleRect().size.height/ CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height;
+    
+    playButton->setScale(scaleBtnH);
+    optionsButton->setScale(scaleBtnH);
+    rulesButton->setScale(scaleBtnH);
+    statsButton->setScale(scaleBtnH);
+    moreGamesButton->setScale(scaleBtnH);
+
+    
+    /*
     //=========================
     //Set adequate scale to buttons
     //=========================
@@ -88,6 +106,12 @@ void MenuButtonsLayer::createItems(){
         
         //mainLogo->setScale(scaleBtn);
         
+        //CCLOG("scaleBTNfirst : %f", scaleBtn);
+        
+        //scaleBtn = VisibleRect::getVisibleRect().size.height/ CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height;
+        
+        //CCLOG("scaleBTNfirst2 : %f", scaleBtn);
+        
         playButton->setScale(scaleBtn);
         optionsButton->setScale(scaleBtn);
         rulesButton->setScale(scaleBtn);
@@ -95,7 +119,7 @@ void MenuButtonsLayer::createItems(){
         moreGamesButton->setScale(scaleBtn);
         
     }
-    
+    */
     //===========================
     //Create Main Menu
     //===========================
@@ -117,16 +141,20 @@ void MenuButtonsLayer::setItemPositions(){
     //===========================
     //Set MenuButtons Position
     //===========================
-    float partDistFromLogo = visibleSize.height * PERCENT_DISTANCE_FROM_LOGO/100;
-    int designSizeHeight = CCDirector::sharedDirector()->getWinSize().height;
+    //float partDistFromLogo = visibleSize.height * PERCENT_DISTANCE_FROM_LOGO/100;
+    //int designSizeHeight = CCDirector::sharedDirector()->getWinSize().height;
     
-    if( designSizeHeight - visibleSize.height > 100){
+    /*if( designSizeHeight - visibleSize.height > 100){
         partDistFromLogo = visibleSize.height * (PERCENT_DISTANCE_FROM_LOGO-1)/100;
-    }
+    }*/
+    
+    float partDistFromLogo = VisibleRect::getVisibleRect().size.height/CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * MENU_OFF_DIST_FROM_LOGO;
     
     playButton->setPosition(ccp(VisibleRect::center().x ,mainLogo->boundingBox().origin.y - playButton->getContentSize().height/2 - partDistFromLogo));
     
-    float partDistFromBtn = visibleSize.height * PERCENT_DISTANCE_FROM_BTN/100;
+    //float partDistFromBtn = visibleSize.height * PERCENT_DISTANCE_FROM_BTN/100;
+    
+   float partDistFromBtn = VisibleRect::getVisibleRect().size.height/CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * MENU_OFF_DIST_FROM_BTN;
     
     optionsButton->setPosition(ccp(VisibleRect::center().x ,playButton->boundingBox().origin.y - partDistFromBtn));
     

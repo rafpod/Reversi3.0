@@ -32,6 +32,8 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
+    
+    std::vector<std::string> setGameResources(const char* resWood, const char* resOthello, const char* resMain, bool othelloIsEnabled);
 };
 
 #endif // _APP_DELEGATE_H_
