@@ -12,7 +12,6 @@
 #include "OptionButtonDefinitions.h"
 #include "OptionsScene.h"
 #include "ResourcesDef.h"
-#include "OptionsSize.h"
 
 using namespace cocos2d;
 
@@ -24,12 +23,11 @@ using namespace cocos2d;
 #define OPTIONS_FONT_SIZE_LABEL  (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height/ cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * FONT_OPTION_LABEL) //32
 #define OPTIONS_FONT_SIZE_BTN  (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height/ cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * FONT_OPTION_BTN) //26
 #define DIFFICULTY_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height/ cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * FONT_OPTION_DIFF)
+ 
+ //#define OPTION_OFF_BTN (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 15 : 17)
+ //#define OPTION_OFF_LABEL (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 30 : 32)
 */
-
 #define SHOW_MOVES_HEADER_INDEX 5
-
-//#define OPTION_OFF_BTN (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 15 : 17)
-//#define OPTION_OFF_LABEL (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 30 : 32)
 
 #define ONE_IMG_BTN     1
 #define TWO_IMG_BTN     2
@@ -150,9 +148,9 @@ void OptionsButtonsLayer::createMarkerLine(CCLabelTTF* labelHeader, int index){
     
     lineHeader[index] = CCSprite::create("marker_header.png");
     
-    float scale = visWidth/designWidth;
+    //float scale = visWidth/designWidth;
     
-    lineHeader[index]->setScaleX(scale);
+    //lineHeader[index]->setScaleX(scale);
     
     lineHeader[index]->setPosition(ccp(VisibleRect::center().x, labelHeader->boundingBox().origin.y - lineHeader[index]->getContentSize().height/2));
     this->addChild(lineHeader[index],1);
@@ -356,7 +354,7 @@ void OptionsButtonsLayer::createMovesItems(){
     //===========================
     CCLOG("Procent Moves: %f",200/visWidth *100);
     
-    float labelWidth = visWidth/CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width*200;  //0.3125*visWidth;
+    float labelWidth = visWidth/CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width*210;  //0.3125*visWidth;
     
     movesLabel = CCLabelTTF::create(langManager->Translate(STRING_SHOW_MOVES)->getCString(), "Georgia", fontSizeLabel, CCSizeMake(labelWidth, 0), kCCTextAlignmentCenter);
     movesLabel->setColor(ccc3(0, 0, 0));
@@ -381,7 +379,7 @@ void OptionsButtonsLayer::createLiveScoreItems(){
     //Create Label
     //===========================
     //liveScoreLabel = CCLabelTTF::create(langManager->Translate(STRING_LIVE_SCORE)->getCString(), "Georgia", OPTIONS_FONT_SIZE);
-    float labelWidth = visWidth/CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width*150;
+    float labelWidth = visWidth/CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width*170;
     
     liveScoreLabel = CCLabelTTF::create(langManager->Translate(STRING_LIVE_SCORE)->getCString(), "Georgia", fontSizeLabel, CCSizeMake(labelWidth, 0), kCCTextAlignmentCenter);
     liveScoreLabel->setColor(ccc3(0, 0, 0));
@@ -436,7 +434,12 @@ void OptionsButtonsLayer::setGameModeItemsPositions(){
     //============================================
     createMarkerLine(modeLabel,0);
     
-    backButton->setPosition(ccp(lineHeader[0]->boundingBox().origin.x, lineHeader[0]->getPositionY()));
+    if(visWidth/designWidth != 1){
+    
+        backButton->setPosition(ccp(lineHeader[0]->boundingBox().origin.x + backButton->getContentSize().width/4, lineHeader[0]->getPositionY()));
+    }else{
+        backButton->setPosition(ccp(lineHeader[0]->boundingBox().origin.x, lineHeader[0]->getPositionY()));
+    }
 }
 
 void OptionsButtonsLayer::setDiffItemsPositions(){
@@ -1018,9 +1021,9 @@ void OptionsButtonsLayer::setFontSize(){
 
 void OptionsButtonsLayer::setOptionOffsets(){
     
-    int smallerDesign = 960;
-    int optionOffBtn = designHeight <= smallerDesign ? 15: 17;
-    int optionOffLabel = designHeight <= smallerDesign ? 30 : 32;
+    int smallerDesignHeight = 960;
+    int optionOffBtn = designHeight <= smallerDesignHeight ? 15: 15;
+    int optionOffLabel = designHeight <= smallerDesignHeight ? 30 : 30;
     
     distOffBtn = visHeight/designHeight * optionOffBtn;
     distOffLabel = visHeight/designHeight * optionOffLabel;

@@ -17,15 +17,15 @@
 
 #define FONT_MENU (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 36 : 46)
 
-#define MAIN_MENU_FONT_SIZE2  (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().width / cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width * FONT_MENU)
+#define MAIN_MENU_FONT_SIZE2  (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height / cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * FONT_MENU)
 
 #define MENU_OFF_DIST_FROM_LOGO (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 30 : 40)
 
 #define MENU_OFF_DIST_FROM_BTN (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 43 : 53)
 
-#define RATIO_BTN_HEIGHT_TO_VIS_SIZE_HEIGHT_PERCENT 13.96
+/*#define RATIO_BTN_HEIGHT_TO_VIS_SIZE_HEIGHT_PERCENT 13.96
 #define PERCENT_DISTANCE_FROM_LOGO 3.125
-#define PERCENT_DISTANCE_FROM_BTN 4.47
+#define PERCENT_DISTANCE_FROM_BTN 4.47*/
 
 #define PLAY_BTN_TAG        0
 #define OPTIONS_BTN_TAG     1
@@ -46,6 +46,10 @@ bool MenuButtonsLayer::init(){
         
         //langManager = new LanguageManager();
         langManager = LanguageManager::create();
+        
+        designHeight = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height;        
+        
+        
         
         createItems();
         setBtnTag();
@@ -82,7 +86,7 @@ void MenuButtonsLayer::createItems(){
     
     moreGamesButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(MenuButtonsLayer::menuBtnCallback), langManager->Translate(STRING_MOREGAMES)->getCString(), MAIN_MENU_FONT_SIZE2);
     
-    float scaleBtnH = VisibleRect::getVisibleRect().size.height/ CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height;
+    float scaleBtnH = VisibleRect::getVisibleRect().size.height/ designHeight;
     
     playButton->setScale(scaleBtnH);
     optionsButton->setScale(scaleBtnH);

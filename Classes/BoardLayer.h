@@ -61,8 +61,12 @@ private:
     float tileSize;
     CCPoint anchorPointSprite;
     CCPoint positionOfWhiteMark;
+    
     CCSize visibleSize;
     CCPoint origin;
+    CCSize designSize;
+    CCSize visSize;
+    
     LanguageManager* langManager;
     int counterBlack;
     int counterWhite;
@@ -70,7 +74,10 @@ private:
     int diffXForFirstItem;
     int diffXForLastItem;
     
-    int addDistBoardY;
+    int scoreBoardOffAboveBoard;
+    int boardOffFromTop;
+    int shadowOffFromTop;
+    
     int dialogStatus;
     int updateStatus;
     

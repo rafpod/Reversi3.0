@@ -209,8 +209,7 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/OptionsButtonsLayer.o: \
  jni/../../Classes/ImageOptionButton.h jni/../../Classes/DiffButton.h \
  jni/../../Classes/VisibleRect.h jni/../../Classes/MenuScene.h \
  jni/../../Classes/OptionButtonDefinitions.h \
- jni/../../Classes/OptionsScene.h jni/../../Classes/ResourcesDef.h \
- jni/../../Classes/OptionsSize.h
+ jni/../../Classes/OptionsScene.h jni/../../Classes/ResourcesDef.h
 
 jni/../../Classes/OptionsButtonsLayer.h:
 
@@ -639,5 +638,3 @@ jni/../../Classes/OptionButtonDefinitions.h:
 jni/../../Classes/OptionsScene.h:
 
 jni/../../Classes/ResourcesDef.h:
-
-jni/../../Classes/OptionsSize.h:

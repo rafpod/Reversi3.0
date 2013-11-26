@@ -16,8 +16,16 @@
 using namespace cocos2d;
 
 #define TILE_SIZE 60
-#define SCORE_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 24)
-#define BOARD_MENU_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 22)
+
+//#define SCORE_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 24)
+//#define BOARD_MENU_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 22)
+
+#define FONT_SCORE_DEFAULT (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 24 : 26)
+#define FONT_BOARD_MENU_DEFAULT (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 22 : 24)
+
+#define SCORE_FONT_SIZE (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height/ cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * FONT_SCORE_DEFAULT)
+#define BOARD_MENU_FONT_SIZE (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height/ cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * FONT_BOARD_MENU_DEFAULT )
+
 #define BTN_LEFT    1
 #define BTN_RIGHT   2
 
@@ -76,6 +84,9 @@ bool BoardLayer::init(){
         return false;
     }else{
         
+        visSize = VisibleRect::getVisibleRect().size;
+        designSize = CCEGLView::sharedOpenGLView()->getDesignResolutionSize();
+        
         this->initVariables();
        
         this->setOptionsPreferences();
@@ -88,19 +99,14 @@ bool BoardLayer::init(){
         
         //this->setBoardPosition();
         
-        /*
-        widthBoard = boardSprite->getContentSize().width -2*50; //542, 2*42
-        CCLOG("widthBoardCoord: %f", widthBoard);
-        //float tileS = (boardSprite->getContentSize().width * 0.9)/8;
-        tileSize = widthBoard/8*0.9;
-        originBoardX = boardSprite->boundingBox().origin.x + 50.0f; //42
-        originBoardY = boardSprite->boundingBox().origin.y + 50.0f; //45
-        anchorPointSprite = ccp(0.18, 0.18);
+        shadowOffFromTop = visSize.height/designSize.height * 56;
+        boardOffFromTop = visSize.height/designSize.height * 100;
+        scoreBoardOffAboveBoard = visSize.height/designSize.height * 35;
+        diffXForFirstItem = visSize.width/designSize.width * 10;
         
-        CCLOG("originBoardXCoord: %f", originBoardX);
-        CCLOG("originBoardYCoord: %f", originBoardY);
-        CCLOG("tileSCoord: %f", tileSize);
-        */
+        int offForLastItem = (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 40 : 80);
+        diffXForLastItem = visSize.width/designSize.width * offForLastItem;
+        
         this->setItemsPositions();
         
         this->addItemsToBoard();
@@ -230,47 +236,53 @@ void BoardLayer::setCoordToResolution(){
     if (visibleSize.width <= boardSprite->getContentSize().width + 10)
     {
             //iphone 1136
-            boardSprite->setScaleX(0.8);
-            boardSprite->setScaleY(0.8);
+            boardSprite->setScaleX(0.9);
+            boardSprite->setScaleY(0.9);
             
-            shadowSprite->setScaleY(0.79);
-            shadowSprite->setScaleX(0.8);
+            shadowSprite->setScaleY(0.89);
+            shadowSprite->setScaleX(0.9);
             
             //scaleSprite = 0.841f;
-        scaleSprite = 0.8f;
+            scaleSprite = 0.9f;
            // tileSize = 53.35; //boardSprite->getContentSize().width*0.8/8 =54,4;
-        tileSize = boardSprite->getContentSize().width*0.8/8;
-        tileSize-=1.7f;
+            tileSize = boardSprite->getContentSize().width*0.9/8;
+            tileSize-=1.7f;
+        
             //anchorPointSprite = ccp(0.09, 0.1);
-        anchorPointSprite = ccp(0.03, 0.06);
+            //anchorPointSprite = ccp(0.03, 0.06);
+            anchorPointSprite = ccp(0.02, 0.01);
             
-            diffXForFirstItem = 10;
-            diffXForLastItem = -15;
+            //diffXForFirstItem = 10;
+            //diffXForLastItem = -15;
             
-            addDistBoardY = 100;
+            //boardOffFromTop = 100;
     }
     else
     {
+        
             //Scale 0.9
             //boardSprite->setScaleX(0.9);
             //boardSprite->setScaleY(0.9);
             
             //shadowSprite->setScaleY(0.89);
             //shadowSprite->setScaleX(0.9);
+        
+            //(cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 40 : 80);
             
-            scaleSprite = 0.9f;
+            //scaleSprite = visSize.height/designSize.height* 0.9f;
+        scaleSprite =0.99f;
             //tileSize = 60; //boardSprite->getContentSize().width*0.9/8 =61,2;
             tileSize = floorf((boardSprite->getContentSize().width)/8);
             tileSize -= 1.7;
             //tileSize = boardSprite->getContentSize().width*0.9/8;
             CCLOG("TILESIZE FLOOR %f", tileSize);
-            anchorPointSprite = ccp(0.0, 0.01);
+            anchorPointSprite = ccp(0.02, 0.02);
             
-            diffXForFirstItem = 10;
-            diffXForLastItem = 40;
+            //diffXForFirstItem = 10;
+            //diffXForLastItem = 40;
             //diffXForLastItem = 10;
             
-            addDistBoardY = 100;
+            //boardOffFromTop = 100;
     }
 
     
@@ -1235,8 +1247,8 @@ void BoardLayer::setBoardPosition(){
     //shadowSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height + origin.y - shadowSprite->getContentSize().height/2- 60));
     //boardSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height + origin.y - boardSprite->getContentSize().height/2- addDistBoardY));
     
-    shadowSprite->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y - shadowSprite->getContentSize().height/2- 60));
-    boardSprite->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y - boardSprite->getContentSize().height/2- addDistBoardY));
+    shadowSprite->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y - shadowSprite->getContentSize().height/2- shadowOffFromTop));
+    boardSprite->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y - boardSprite->getContentSize().height/2- boardOffFromTop));
     
 }
 
@@ -1245,7 +1257,8 @@ void BoardLayer::setScoreBoardPosition(){
     //leftScoreBoard->setPosition(ccp(boardSprite->boundingBox().origin.x + leftScoreBoard->getContentSize().width/3 + diffXForFirstItem, visibleSize.height + origin.y - 80));
    // rightScoreBoard->setPosition(ccp(boardSprite->getContentSize().width - rightScoreBoard->getContentSize().width/3 + diffXForLastItem, visibleSize.height + origin.y -80));
     
-    leftScoreBoard->setPosition(ccp(boardSprite->boundingBox().origin.x + leftScoreBoard->getContentSize().width/3 + diffXForFirstItem, boardSprite->getPositionY() + boardSprite->getContentSize().height/2 + 35));
+    leftScoreBoard->setPosition(ccp(boardSprite->boundingBox().origin.x + leftScoreBoard->getContentSize().width/3 + diffXForFirstItem, boardSprite->getPositionY() + boardSprite->getContentSize().height/2 + scoreBoardOffAboveBoard));
+    
     rightScoreBoard->setPosition(ccp(boardSprite->getContentSize().width - rightScoreBoard->getContentSize().width/3 + diffXForLastItem, leftScoreBoard->getPositionY()));
     
 }
@@ -1255,11 +1268,13 @@ void BoardLayer::setMenuButtonPosition(){
     //===========================
     //Set Menu Buttons position
     //===========================
-    undoButton->setPosition(ccp(boardSprite->boundingBox().origin.x + undoButton->getContentSize().width/3 + diffXForFirstItem,boardSprite->boundingBox().origin.y - 40));
+    int offForMenuBtn = visSize.height/designSize.height * 40;
     
-    newButton->setPosition(ccp(VisibleRect::center().x,boardSprite->boundingBox().origin.y - 40));
+    undoButton->setPosition(ccp(boardSprite->boundingBox().origin.x + undoButton->getContentSize().width/3 + diffXForFirstItem,boardSprite->boundingBox().origin.y - offForMenuBtn));
     
-    menuButton->setPosition(ccp(boardSprite->getContentSize().width - menuButton->getContentSize().width/3 +diffXForLastItem,boardSprite->boundingBox().origin.y - 40));
+    newButton->setPosition(ccp(VisibleRect::center().x,boardSprite->boundingBox().origin.y - offForMenuBtn));
+    
+    menuButton->setPosition(ccp(boardSprite->getContentSize().width - menuButton->getContentSize().width/3 +diffXForLastItem,boardSprite->boundingBox().origin.y - offForMenuBtn));
     
     
     //===========================

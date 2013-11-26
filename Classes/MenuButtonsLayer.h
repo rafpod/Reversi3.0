@@ -32,6 +32,8 @@ private:
     CCPoint origin;
     
     LanguageManager* langManager;
+        
+    int designHeight;
     
     bool init();
     
