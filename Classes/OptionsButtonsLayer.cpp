@@ -16,11 +16,16 @@
 
 using namespace cocos2d;
 
-#define OPTIONS_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 30) //32
-#define MODE_FONT_SIZE     (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 32)
-#define OPTIONS_FONT_SIZE2  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 16) //26
-#define DIFFICULTY_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 20)
+#define OPTIONS_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height/ cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * 28) //32
+//#define OPTIONS_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 30) //32
+#define MODE_FONT_SIZE     (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height / cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * 32)
+#define OPTIONS_FONT_SIZE2  (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height/ cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * 16) //26
+#define DIFFICULTY_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getVisibleSize().height/ cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height * 20)
+
 #define SHOW_MOVES_HEADER_INDEX 5
+
+#define OPTION_OFF_BTN (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 15 : 100)
+#define LABEL_OFF_BTN (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 30 : 100)
 
 #define ONE_IMG_BTN     1
 #define TWO_IMG_BTN     2
@@ -48,8 +53,14 @@ bool OptionsButtonsLayer::init(){
                 
         this->initFileName();
         
-        dist = 15;
+       // dist = 15;
+        designHeight = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height;
+        designWidth = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width;
         
+        distOffBtn = visHeight/designHeight * 15;
+        distOffLabel = visHeight/designHeight * 30;
+        
+                
         this->createItems();
         this->setBtnTags();
         this->setItemPositions();
@@ -137,6 +148,11 @@ void OptionsButtonsLayer::initFileName(){
 void OptionsButtonsLayer::createMarkerLine(CCLabelTTF* labelHeader, int index){
     
     lineHeader[index] = CCSprite::create("marker_header.png");
+    
+    float scale = visWidth/designWidth;
+    
+    lineHeader[index]->setScaleX(scale);
+    
     lineHeader[index]->setPosition(ccp(VisibleRect::center().x, labelHeader->boundingBox().origin.y - lineHeader[index]->getContentSize().height/2));
     this->addChild(lineHeader[index],1);
     
@@ -206,8 +222,8 @@ void OptionsButtonsLayer::createStartFormItems(){
     straightButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::startFormBtnCallback), langManager->Translate(STRING_STRAIGHT)->getCString(), OPTIONS_FONT_SIZE2);
     //straightButton->setScale(0.65f);
     
-    crossButton->setScale(1.1);
-    straightButton->setScale(1.1);
+    //crossButton->setScale(1.1);
+    //straightButton->setScale(1.1);
 }
 
 void OptionsButtonsLayer::createColorSetItems(){
@@ -229,9 +245,9 @@ void OptionsButtonsLayer::createColorSetItems(){
     
     redBlueButton = ImageOptionButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::colorBtnCallback), blueStone, redStone,TWO_IMG_BTN);
     
-    blackWhiteButton->setScale(1.1);
-    redGreenButton->setScale(1.1);
-    redBlueButton->setScale(1.1);
+    //blackWhiteButton->setScale(1.1);
+    //redGreenButton->setScale(1.1);
+    //redBlueButton->setScale(1.1);
 }
 
 void OptionsButtonsLayer::createBoardItems(){
@@ -320,7 +336,11 @@ void OptionsButtonsLayer::createMovesItems(){
     //===========================
     //Create Label
     //===========================
-    movesLabel = CCLabelTTF::create(langManager->Translate(STRING_SHOW_MOVES)->getCString(), "Georgia", OPTIONS_FONT_SIZE, CCSizeMake(200, 0), kCCTextAlignmentCenter);
+    CCLOG("Procent Moves: %f",200/visWidth *100);
+    
+    float labelWidth = visWidth/CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width*200;  //0.3125*visWidth;
+    
+    movesLabel = CCLabelTTF::create(langManager->Translate(STRING_SHOW_MOVES)->getCString(), "Georgia", OPTIONS_FONT_SIZE, CCSizeMake(labelWidth, 0), kCCTextAlignmentCenter);
     movesLabel->setColor(ccc3(0, 0, 0));
     
     //===========================
@@ -343,7 +363,9 @@ void OptionsButtonsLayer::createLiveScoreItems(){
     //Create Label
     //===========================
     //liveScoreLabel = CCLabelTTF::create(langManager->Translate(STRING_LIVE_SCORE)->getCString(), "Georgia", OPTIONS_FONT_SIZE);
-    liveScoreLabel = CCLabelTTF::create(langManager->Translate(STRING_LIVE_SCORE)->getCString(), "Georgia", OPTIONS_FONT_SIZE, CCSizeMake(150, 0), kCCTextAlignmentCenter);
+    float labelWidth = visWidth/CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width*150;
+    
+    liveScoreLabel = CCLabelTTF::create(langManager->Translate(STRING_LIVE_SCORE)->getCString(), "Georgia", OPTIONS_FONT_SIZE, CCSizeMake(labelWidth, 0), kCCTextAlignmentCenter);
     liveScoreLabel->setColor(ccc3(0, 0, 0));
     
     //===========================
@@ -379,22 +401,17 @@ void OptionsButtonsLayer::setGameModeItemsPositions(){
     //==============================
     //Set Label position
     //==============================
-    modeLabel->setPosition(ccp(VisibleRect::center().x,VisibleRect::top().y - modeLabel->getContentSize().height - 30));
+    //CCLOG("MODE offset: %f", 30/visHeight*100);
+    
+    modeLabel->setPosition(ccp(VisibleRect::center().x,VisibleRect::top().y - modeLabel->getContentSize().height - distOffLabel));
     
     //==============================
     //Set Buttons position
     //==============================
-    /* pvpButton->setPosition(ccp(VisibleRect::left().x + pvpButton->getContentSize().width/2, modeLabel->getPositionY() - pvpButton->getContentSize().height/2));
-     pvcButton->setPosition(ccp(pvpButton->getPositionX() + pvcButton->getContentSize().width/1.45, modeLabel->getPositionY() - pvcButton->getContentSize().height/2));
-     */
+    pvcButton->setPosition(ccp(VisibleRect::center().x - pvcButton->getContentSize().width/2, modeLabel->getPositionY() - pvcButton->getContentSize().height/2 - distOffBtn));
     
-    pvcButton->setPosition(ccp(VisibleRect::center().x - pvcButton->getContentSize().width/2, modeLabel->getPositionY() - pvcButton->getContentSize().height/2 - dist));
+    pvpButton->setPosition(ccp(VisibleRect::center().x + pvpButton->getContentSize().width/2, modeLabel->getPositionY() - pvpButton->getContentSize().height/2 - distOffBtn));
     
-    pvpButton->setPosition(ccp(VisibleRect::center().x + pvpButton->getContentSize().width/2, modeLabel->getPositionY() - pvpButton->getContentSize().height/2 - dist));
-    
-    float percentDistanceOnX = pvpButton->getContentSize().width/2 / this->getContentSize().width*100;
-    
-    CCLOG("BUTTON_DISTANCE_ON_X: %f", percentDistanceOnX);
     
     //============================================
     //Create Set Positions and Add Marker to Layer
@@ -408,12 +425,12 @@ void OptionsButtonsLayer::setDiffItemsPositions(){
     //===========================
     //Set Label position
     //===========================
-    difficultyLabel->setPosition(ccp(VisibleRect::center().x,pvcButton->getPositionY() - difficultyLabel->getContentSize().height - 30));
+    difficultyLabel->setPosition(ccp(VisibleRect::center().x,pvcButton->getPositionY() - difficultyLabel->getContentSize().height - distOffLabel));
     
     //==============================
     //Set Buttons position
     //==============================
-    easyButton->setPosition(ccp(pvcButton->boundingBox().origin.x + pvcButton->getContentSize().width/2 - easyButton->getContentSize().width/2, difficultyLabel->getPositionY() - easyButton->getContentSize().height/2 - dist));
+    easyButton->setPosition(ccp(pvcButton->boundingBox().origin.x + pvcButton->getContentSize().width/2 - easyButton->getContentSize().width/2, difficultyLabel->getPositionY() - easyButton->getContentSize().height/2 - distOffBtn));
     mediumButton->setPosition(ccp(easyButton->getPositionX() + mediumButton->getContentSize().width, easyButton->getPositionY()));
     hardButton->setPosition(ccp(mediumButton->getPositionX() + hardButton->getContentSize().width, easyButton->getPositionY()));
     veryHardButton->setPosition(ccp(easyButton->boundingBox().origin.x + easyButton->getContentSize().width, easyButton->getPositionY() - veryHardButton->getContentSize().height/1.5));
@@ -429,12 +446,12 @@ void OptionsButtonsLayer::setStartFormItemsPositions(){
     //==============================
     //Set Label position
     //==============================
-    startFormLabel->setPosition(ccp(VisibleRect::center().x,veryHardButton->getPositionY() - startFormLabel->getContentSize().height - 30));
+    startFormLabel->setPosition(ccp(VisibleRect::center().x,veryHardButton->getPositionY() - startFormLabel->getContentSize().height - distOffLabel));
     
     //==============================
     //Set Buttons position
     //==============================
-    crossButton->setPosition(ccp(veryHardButton->getPositionX(), startFormLabel->getPositionY() - crossButton->getContentSize().height/2 - dist));
+    crossButton->setPosition(ccp(veryHardButton->getPositionX(), startFormLabel->getPositionY() - crossButton->getContentSize().height/2 - distOffBtn));
     straightButton->setPosition(ccp(hardestButton->getPositionX(), crossButton->getPositionY()));
     
     //============================================
@@ -447,12 +464,12 @@ void OptionsButtonsLayer::setColorSetItemsPositions(){
     //==============================
     //Set Label position
     //==============================
-    colorsLabel->setPosition(ccp(VisibleRect::center().x,crossButton->getPositionY() - colorsLabel->getContentSize().height - 30));
+    colorsLabel->setPosition(ccp(VisibleRect::center().x,crossButton->getPositionY() - colorsLabel->getContentSize().height - distOffLabel));
     
     //==============================
     //Set Buttons position
     //==============================
-    blackWhiteButton->setPosition(ccp(easyButton->getPositionX(), colorsLabel->getPositionY() - blackWhiteButton->getContentSize().height/2 - dist));
+    blackWhiteButton->setPosition(ccp(easyButton->getPositionX(), colorsLabel->getPositionY() - blackWhiteButton->getContentSize().height/2 - distOffBtn));
     redGreenButton->setPosition(ccp(mediumButton->getPositionX(), blackWhiteButton->getPositionY()));
     redBlueButton->setPosition(ccp(hardButton->getPositionX(), blackWhiteButton->getPositionY()));
     
@@ -466,14 +483,13 @@ void OptionsButtonsLayer::setBoardItemsPositions(){
     //==============================
     //Set Label position
     //==============================
-    boardLabel->setPosition(ccp(VisibleRect::center().x,blackWhiteButton->getPositionY() - boardLabel->getContentSize().height - 30));
+    boardLabel->setPosition(ccp(VisibleRect::center().x,blackWhiteButton->getPositionY() - boardLabel->getContentSize().height - distOffLabel));
     
     //==============================
     //Set Button position
     //==============================
-    //boardButton->setPosition(ccp(VisibleRect::center().x, boardLabel->getPositionY()- boardButton->getContentSize().height/2 - dist));
     
-    woodButton->setPosition(ccp(crossButton->getPositionX(), boardLabel->getPositionY()- woodButton->getContentSize().height/2 - dist));
+    woodButton->setPosition(ccp(crossButton->getPositionX(), boardLabel->getPositionY()- woodButton->getContentSize().height/2 - distOffBtn));
     othelloButton->setPosition(ccp(straightButton->getPositionX(), woodButton->getPositionY()));
     
     //skinButton->setPosition(ccp(VisibleRect::center().x, boardLabel->getPositionY()- skinButton->getContentSize().height/2 - dist));
@@ -488,14 +504,14 @@ void OptionsButtonsLayer::setMovesItemsPositions(){
     //==============================
     //Set Label position
     //==============================
-    movesLabel->setPosition(ccp(VisibleRect::center().x - movesLabel->getContentSize().width/1.7,woodButton->getPositionY() - movesLabel->getContentSize().height/1.6 - 30));
+    movesLabel->setPosition(ccp(VisibleRect::center().x - movesLabel->getContentSize().width/1.7,woodButton->getPositionY() - movesLabel->getContentSize().height/1.6 - distOffLabel));
     
     //==============================
     //Set Button position
     //==============================
     //movesButton->setPosition(ccp(movesLabel->boundingBox().origin.x + movesLabel->getContentSize().width/2, movesLabel->boundingBox().origin.y - movesButton->getContentSize().height/3.5 - dist));
     
-    showMovesButton->setPosition(ccp(movesLabel->boundingBox().origin.x + movesLabel->getContentSize().width/2, movesLabel->boundingBox().origin.y - showMovesButton->getContentSize().height/3.5 - dist));
+    showMovesButton->setPosition(ccp(movesLabel->boundingBox().origin.x + movesLabel->getContentSize().width/2, movesLabel->boundingBox().origin.y - showMovesButton->getContentSize().height/3.5 - distOffBtn));
     
     //============================================
     //Create Set Positions and Add Marker to Layer
@@ -956,113 +972,4 @@ void OptionsButtonsLayer::keyBackClicked(){
 
 void OptionsButtonsLayer::backBtnCallback(cocos2d::CCObject *pSender){
     this->keyBackClicked();
-}
-
-void OptionsButtonsLayer::setProperLabelScale(CCLabelTTF* label){
-    
-    float ratioLabelH = modeLabel->getContentSize().height/visHeight * 100;
-    float ratioLabelW = label->getContentSize().width/visWidth* 100;
-    
-    CCLOG("Label Procent: %f, %f", ratioLabelH, ratioLabelW );
-    
-    float heightItem, scaleItem;
-    
-    if(ratioLabelH > RATIO_LABEL_HEIGHT_PERCENT){
-        heightItem = visHeight * RATIO_LABEL_HEIGHT_PERCENT / 100; // width item on current screen equals default percent
-        scaleItem = heightItem/label->getContentSize().height; //new width/old "bad" width, smaller/bigger
-        
-        label->setScale(scaleItem);
-    }
-}
-
-void OptionsButtonsLayer::setProperScale(ImageOptionButton* tabImage[], DiffButton* tabDiff[], MenuButton* tabMenu[],CCMenuItemToggle* tabTogg[] ){
-    
-    float ratioLabelH;
-    float ratioLabelW;
-    
-    float heightItem, scaleItem;
-    
-    /*
-    for (int i =0; i<7; i++) {
-        ratioLabelH = tab[i]->getContentSize().height/visHeight * 100;
-        ratioLabelW = tab[i]->getContentSize().width/visWidth* 100;
-        
-        if(ratioLabelH > RATIO_LABEL_HEIGHT_PERCENT){
-            heightItem = visHeight * RATIO_LABEL_HEIGHT_PERCENT / 100; // width item on current screen equals default percent
-            scaleItem = heightItem/tab[i]->getContentSize().height; //new width/old "bad" width, smaller/bigger
-            
-            tab[i]->setScale(scaleItem);
-        }        
-        
-    }*/
-    
-    
-    for (int i =0; i<5; i++) {
-        ratioLabelH = tabImage[i]->getContentSize().height/visHeight * 100;
-        ratioLabelW = tabImage[i]->getContentSize().width/visWidth* 100;
-        
-        if(ratioLabelH > RATIO_BTN_HEIGHT_PERCENT){
-            heightItem = visHeight * RATIO_BTN_HEIGHT_PERCENT / 100; // width item on current screen equals default percent
-            scaleItem = heightItem/tabImage[i]->getContentSize().height; //new width/old "bad" width, smaller/bigger
-            
-            tabImage[i]->setScale(scaleItem);
-        }
-        
-    }
-    
-    for (int i =0; i<5; i++) {
-        ratioLabelH = tabDiff[i]->getContentSize().height/visHeight * 100;
-        ratioLabelW = tabDiff[i]->getContentSize().width/visWidth* 100;
-        
-        if(ratioLabelH > RATIO_BTN_HEIGHT_PERCENT){
-            heightItem = visHeight * RATIO_BTN_HEIGHT_PERCENT / 100; // width item on current screen equals default percent
-            scaleItem = heightItem/tabDiff[i]->getContentSize().height; //new width/old "bad" width, smaller/bigger
-            
-            tabDiff[i]->setScale(scaleItem);
-        }
-        
-    }
-    
-    for (int i =0; i<4; i++) {
-        ratioLabelH = tabMenu[i]->getContentSize().height/visHeight * 100;
-        ratioLabelW = tabMenu[i]->getContentSize().width/visWidth* 100;
-        
-        if(ratioLabelH > RATIO_BTN_HEIGHT_PERCENT){
-            heightItem = visHeight * RATIO_BTN_HEIGHT_PERCENT / 100; // width item on current screen equals default percent
-            scaleItem = heightItem/tabMenu[i]->getContentSize().height; //new width/old "bad" width, smaller/bigger
-            
-            tabMenu[i]->setScale(scaleItem);
-        }
-        
-    }
-    
-    for (int i =0; i<2; i++) {
-        ratioLabelH = tabTogg[i]->getContentSize().height/visHeight * 100;
-        ratioLabelW = tabTogg[i]->getContentSize().width/visWidth* 100;
-        
-        if(ratioLabelH > RATIO_BTN_HEIGHT_PERCENT){
-            heightItem = visHeight * RATIO_BTN_HEIGHT_PERCENT / 100; // width item on current screen equals default percent
-            scaleItem = heightItem/tabTogg[i]->getContentSize().height; //new width/old "bad" width, smaller/bigger
-            
-            tabTogg[i]->setScale(scaleItem);
-        }
-        
-    }
-
-
-
-}
-
-void OptionsButtonsLayer::setScaleForItems(){
-    
-    //CCLabelTTF* tabLabel[7] ={modeLabel, difficultyLabel, startFormLabel, colorsLabel, boardLabel, movesLabel, liveScoreLabel };
-    
-    //ImageOptionButton* tabImagea[5] = {pvcButton, pvpButton, easyButton, mediumButton, hardButton, veryHardButton, hardestButton, crossButton, straightButton, blackWhiteButton, redGreenButton, redBlueButton, woodButton, othelloButton, showMovesButton, liveScoreButton};
-    
-    ImageOptionButton* tabImage[5] = {pvcButton, pvpButton, blackWhiteButton, redGreenButton, redBlueButton};
-    MenuButton* tabMenu[4] = {crossButton, straightButton,woodButton, othelloButton};
-    DiffButton* tabDiff[5] = {easyButton, mediumButton, hardButton, veryHardButton, hardestButton};
-    CCMenuItemToggle* tabTogg[2] = {showMovesButton, liveScoreButton};
-    
-    this->setProperScale(tabImage,tabDiff, tabMenu, tabTogg);
 }

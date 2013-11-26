@@ -194,11 +194,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/OptionsButtonsLayer.cpp"
-            timestampString = "407083866.305518"
+            timestampString = "407149773.233263"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "OptionsButtonsLayer::setItemPositions()"
             landmarkType = "5">
             <Locations>
@@ -293,20 +293,6 @@
             endingLineNumber = "44"
             landmarkName = "StatsResultsLayer::createItems()"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Classes/OptionsButtonsLayer.cpp"
-            timestampString = "407083866.305518"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "978"
-            endingLineNumber = "978">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

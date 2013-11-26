@@ -100,7 +100,9 @@ private:
     CCMenu *menu2;
     CCMenu *backBtnMenu;
         
-    int dist;
+    int distOffBtn, distOffLabel;
+    int designHeight, designWidth;
+    float scaleBtnX, scaleBtnY;
     
     
     bool init();
@@ -146,13 +148,8 @@ private:
     
     void setResources(const char* resNormal, const char* resSmall);
     
-    void keyBackClicked();
+    void keyBackClicked();    
     
-    void setProperLabelScale(CCLabelTTF * item);
-    //void setProperBtnScale(CCMenuItem * item);
-    
-    void setProperScale(ImageOptionButton* tabImage[], DiffButton* tabDiff[], MenuButton* tabMenu[], CCMenuItemToggle* tabTogg[]);
-    void setScaleForItems();
     
     
     
