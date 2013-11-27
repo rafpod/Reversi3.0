@@ -225,8 +225,8 @@ void BoardLayer::addItemsToBoard(){
 
 void BoardLayer::setCoordToResolution(){
     
-    
-    if (visibleSize.width <= boardSprite->getContentSize().width + 50)
+    float offToBoard = designSize.height <=960 ? 50 : 80;
+    if (visibleSize.width <= boardSprite->getContentSize().width + offToBoard)
     {
         float scale = 0.8;
             //iphone 1136

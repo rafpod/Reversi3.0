@@ -16,6 +16,8 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/MenuButtonsLayer.cpp \
                    ../../Classes/OptionsButtonsLayer.cpp \
                    ../../Classes/StatsResultsLayer.cpp \
+                   ../../Classes/StatsDetailsLayer.cpp \
+                   ../../Classes/StatsHeaderLayer.cpp \
                    ../../Classes/BackgroundLayer.cpp \
                    ../../Classes/MenuButton.cpp \
                    ../../Classes/DiffButton.cpp \
