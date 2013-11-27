@@ -153,11 +153,12 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_ON:             return ccs("ON");
                 case STRING_OFF:            return ccs("OFF");
                     
-                case STRING_STATS_GAMES:    return ccs("Total Games:");
-                case STRING_STATS_WON:      return ccs("Won:");
-                case STRING_STATS_LOST:     return ccs("Lost:");
-                case STRING_STATS_TIED:     return ccs("Tied:");
+                case STRING_STATS_GAMES:    return ccs("Total Games Played:");
+                case STRING_STATS_WON:      return ccs("Games Won:");
+                case STRING_STATS_LOST:     return ccs("Games Lost:");
+                case STRING_STATS_TIED:     return ccs("Games Tied:");
                 case STRING_STATS_RESET:    return ccs("RESET");
+                case STRING_STATS_DETAILS:  return ccs("Details");
                 
                     
 			}
@@ -230,6 +231,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STATS_LOST:     return ccs("Verloren:");
                 case STRING_STATS_TIED:     return ccs("Unentschieden:");
                 case STRING_STATS_RESET:    return ccs("LÖSCHEN");
+                case STRING_STATS_DETAILS:  return ccs("Details");
 
                     
 			}
@@ -302,6 +304,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STATS_LOST:     return ccs("Perdidos:");
                 case STRING_STATS_TIED:     return ccs("Empate:");
                 case STRING_STATS_RESET:    return ccs("BORAR");
+                case STRING_STATS_DETAILS:  return ccs("Detalles");
 
                     
 			}
@@ -374,6 +377,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STATS_LOST:     return ccs("Perdus:");
                 case STRING_STATS_TIED:     return ccs("Nul:");
                 case STRING_STATS_RESET:    return ccs("EFFACER");
+                case STRING_STATS_DETAILS:  return ccs("Détails");
 
                     
 			}
@@ -446,6 +450,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STATS_LOST:     return ccs("Perse:");
                 case STRING_STATS_TIED:     return ccs("Legate:");
                 case STRING_STATS_RESET:    return ccs("CANCELLARE");
+                case STRING_STATS_DETAILS:  return ccs("Dettagli");
 
                     
 			}
@@ -518,6 +523,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STATS_LOST:     return ccs("負け:");
                 case STRING_STATS_TIED:     return ccs("同点:");
                 case STRING_STATS_RESET:    return ccs("リセット");
+                case STRING_STATS_DETAILS:  return ccs("細部");
 
                     
 			}

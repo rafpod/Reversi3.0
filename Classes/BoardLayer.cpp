@@ -274,7 +274,7 @@ void BoardLayer::setCoordToResolution(){
         
             //scaleSprite = visSize.height/designSize.height* 0.9f;
             scaleSprite =0.99f;
-            
+        
             tileSize = floorf((boardSprite->getContentSize().width)/8);
             //tileSize -= 1.7;
             //tileSize = boardSprite->getContentSize().width*0.9/8;

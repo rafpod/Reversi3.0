@@ -29,17 +29,26 @@ bool BackgroundLayer::init(){
         CCLOG("(Director Origin)WidthOrigin is: %f and heightOrigin is: %f", origin.x, origin.y);
         CCLOG("(Director WinSize)WidthWinSize is: %f and heightWinSize is: %f", winSize.width, winSize.height);
         
-        CCPoint autoScale = CCPointMake(CCEGLView::sharedOpenGLView()->getScaleX(), CCEGLView::sharedOpenGLView()->getScaleY());
+       // CCPoint autoScale = CCPointMake(CCEGLView::sharedOpenGLView()->getScaleX(), CCEGLView::sharedOpenGLView()->getScaleY());
         //CCLOG("(AutoScale)ScaleX is: %f and ScaleY is: %f", autoScale.x, autoScale.y);
         
         bool othelloIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("othelloIsEnabled",0);
+        TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
+        CCLOG("platform %i", platform);
+        
         
         if (CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height> 960 && othelloIsEnabled) {
-            bgSprite = CCSprite::create("bg_android.jpg");
+            if (platform ==kTargetIphone || platform == kTargetIpad) {
+                //bgSprite = CCSprite::create("bg_android.jpg");
+                bgSprite = CCSprite::create("bg.jpg");
+            }else{
+                bgSprite = CCSprite::create("bg_android.jpg");
+            }
         }else{
             bgSprite = CCSprite::create("bg.jpg");
         }
         
+        //bgSprite = CCSprite::create("bg.jpg");
                
         float scaleY = 1;
         float scaleX = 1;

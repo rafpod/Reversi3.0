@@ -18,6 +18,9 @@ USING_NS_CC;
 class StatsResultsLayer: public cocos2d::CCLayer{
 private:
     
+    CCSize designSize;
+    CCSize visibleSize;
+    
     LanguageManager* langManager;
     
     CCLabelTTF *gamesTitleLabel;
@@ -30,17 +33,30 @@ private:
     CCLabelTTF *lostResultLabel;
     CCLabelTTF *drawResultLabel;
     
+    CCLabelTTF *wonPercentLabel;
+    CCLabelTTF *lostPercentLabel;
+    CCLabelTTF *drawPercentLabel;
+    
     CCLabelTTF *statsTitleLabel;
+    
+    CCString *resultString;
+    CCString *percentString;
     
     int games;
     int won;
     int lost;
     int draw;
     
+    int labelOffFromTop;
+    int labelOffFromEachOther;
+    int buttonOffFromLastLabel;
+    
+    
     MenuButton *resetButton;
+    MenuButton *detailsButton;
     CCMenuItemImage *backButton;
     
-    CCSprite *lineHeader[4];
+    CCSprite *lineHeader, *lineBottom;
     
     CCMenu *statsMenu;
     
@@ -50,14 +66,33 @@ private:
     void setItemPositions();
     void addItemsToLayer();
     
+    void createHeader();
+    void createWonItems();
+    void createLostItems();
+    void createTiedItems();
+    void createGamesItems();
+    void createBottomButtons();
+    
+    void setHeaderPosition();
+    void setWonPositionItems();
+    void setLostPositionItems();
+    void setTiedPositionItems();
+    void setGamesPositionItems();
+    void setBottomButtonsPosition();
+    
     void getStats();
     
-    void createMarkerLine(CCLabelTTF* labelHeader, int index);
+    //void createMarkerLine(CCLabelTTF* labelHeader, int index);
+    void setStatsOffsets();
         
     void resetBtnCallback(CCObject* pSender);
     void backBtnCallback(CCObject* pSender);
+    void detailsBtnCallback(CCObject* pSender);
     
     void keyBackClicked();
+   
+    
+        
     
 public:
     CREATE_FUNC(StatsResultsLayer);
