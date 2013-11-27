@@ -225,27 +225,40 @@ void BoardLayer::addItemsToBoard(){
 
 void BoardLayer::setCoordToResolution(){
     
-    if (visibleSize.width <= boardSprite->getContentSize().width + 10)
+    
+    if (visibleSize.width <= boardSprite->getContentSize().width + 50)
     {
+        float scale = 0.8;
             //iphone 1136
-            boardSprite->setScaleX(0.8);
-            boardSprite->setScaleY(0.8);
+            boardSprite->setScaleX(scale);
+            boardSprite->setScaleY(scale);
             
             shadowSprite->setScaleY(0.79);
-            shadowSprite->setScaleX(0.8);
-            
-            //scaleSprite = 0.841f;
-            scaleSprite = 0.8f;
-           // tileSize = 53.35; //boardSprite->getContentSize().width*0.8/8 =54,4;
-            tileSize = boardSprite->getContentSize().width*0.8/8;
-            tileSize-=1.7f;
+            shadowSprite->setScaleX(scale);
         
+            scaleSprite = scale;
+        
+            tileSize = boardSprite->getContentSize().width* scale/8;
+            tileSize-=1.7f;
+            CCLOG("TILESIZE FLOOR %f", tileSize);
             //anchorPointSprite = ccp(0.09, 0.1);
             //anchorPointSprite = ccp(0.03, 0.06);
-            anchorPointSprite = ccp(0.02, 0.01);
+        
         
         int offForLastItem = (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 40 : designSize.width/visSize.width * 30); //for 0.9 =60
         diffXForLastItem = visSize.width/designSize.width * offForLastItem;
+        
+        if (othelloIsEnabled) {
+            
+            leftScoreBoard->setScale(scale);
+            rightScoreBoard->setScale(scale);
+            undoButton->setScale(scale);
+            menuButton->setScale(scale);
+            newButton->setScale(scale);
+            anchorPointSprite = ccp(0.03, 0.03);
+        }else{
+            anchorPointSprite = ccp(0.02, 0.01);
+        }
         
     }
     else
@@ -258,13 +271,12 @@ void BoardLayer::setCoordToResolution(){
             //shadowSprite->setScaleY(0.89);
             //shadowSprite->setScaleX(0.9);
         
-            //(cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 40 : 80);
-            
+        
             //scaleSprite = visSize.height/designSize.height* 0.9f;
             scaleSprite =0.99f;
-            //tileSize = 60; //boardSprite->getContentSize().width*0.9/8 =61,2;
+            
             tileSize = floorf((boardSprite->getContentSize().width)/8);
-            tileSize -= 1.7;
+            //tileSize -= 1.7;
             //tileSize = boardSprite->getContentSize().width*0.9/8;
             CCLOG("TILESIZE FLOOR %f", tileSize);
             anchorPointSprite = ccp(0.02, 0.02);
@@ -272,13 +284,22 @@ void BoardLayer::setCoordToResolution(){
         int offForLastItem = (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 40 : designSize.width/visSize.width * 80);
         diffXForLastItem = visSize.width/designSize.width * offForLastItem;
         
+        if (designSize.height > 960 && othelloIsEnabled) {
+            scaleSprite =1.0f;
+            tileSize -= 2.59;
+        }else{
+            tileSize -= 1.7;
+        }
+        CCLOG("TILESIZE FLOOR %f", tileSize);
+        
     }
     
     shadowOffFromTop = visSize.height/designSize.height * 56;
     boardOffFromTop = visSize.height/designSize.height * 100;
     scoreBoardOffAboveBoard = visSize.height/designSize.height * 35;
     diffXForFirstItem = visSize.width/designSize.width * 10;
-
+    
+    
     
 }
 

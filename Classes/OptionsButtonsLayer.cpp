@@ -262,7 +262,7 @@ void OptionsButtonsLayer::createBoardItems(){
     
     
     if (othelloIsEnabled) {
-        if (screenSize.height>1024) {
+        if (screenSize.height>1500) {
             
             fileNormalReverse = ccs("1536x2048/wood/button_wide_0.png");
             fileSelectedReverse = ccs("1536x2048/wood/button_wide_1.png");
@@ -288,7 +288,7 @@ void OptionsButtonsLayer::createBoardItems(){
         othelloButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(OptionsButtonsLayer::boardBtnCallback), langManager->Translate(STRING_OTHELLO)->getCString(), fontSizeBtn);
         
     }else{
-        if (screenSize.height>1024) {
+        if (screenSize.height>1500) {
             
             fileNormalReverse = ccs("1536x2048/othello/button_wide_0.png");
             fileSelectedReverse = ccs("1536x2048/othello/button_wide_1.png");
@@ -971,7 +971,7 @@ void OptionsButtonsLayer::liveScoreBtnCallback(cocos2d::CCObject *pSender){
 
 void OptionsButtonsLayer::setResources(const char *resSmall, const char* resNormal, const char* resBig, const char* resBiggest){
     
-    if(screenSize.height > 1024){
+    if(screenSize.height > 1500){
         resDirOrders.push_back(resBiggest);
     }else if(screenSize.height > 960){
         resDirOrders.push_back(resBig);

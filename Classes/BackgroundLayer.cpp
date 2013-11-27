@@ -32,7 +32,13 @@ bool BackgroundLayer::init(){
         CCPoint autoScale = CCPointMake(CCEGLView::sharedOpenGLView()->getScaleX(), CCEGLView::sharedOpenGLView()->getScaleY());
         //CCLOG("(AutoScale)ScaleX is: %f and ScaleY is: %f", autoScale.x, autoScale.y);
         
-        bgSprite = CCSprite::create("bg.jpg");
+        bool othelloIsEnabled = CCUserDefault::sharedUserDefault()->getBoolForKey("othelloIsEnabled",0);
+        
+        if (CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height> 960 && othelloIsEnabled) {
+            bgSprite = CCSprite::create("bg_android.jpg");
+        }else{
+            bgSprite = CCSprite::create("bg.jpg");
+        }
         
                
         float scaleY = 1;

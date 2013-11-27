@@ -155,7 +155,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
  */
     
     //FOURTH OPTION PORTRAIT
-    if (screenSize.height > 1024) {
+    if (screenSize.height > 1500) {
         
         resourceSize = CCSizeMake(1536, 2048);
         designSize = CCSizeMake(768, 1024);
