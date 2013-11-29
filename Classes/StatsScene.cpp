@@ -9,6 +9,7 @@
 #include "StatsScene.h"
 #include "BackgroundLayer.h"
 #include "StatsResultsLayer.h"
+#include "StatsDetailsLayer.h"
 #include "cocos2d.h"
 
 using namespace cocos2d;
@@ -21,8 +22,11 @@ bool StatsScene::init(){
         BackgroundLayer *bg = BackgroundLayer::create();
         StatsResultsLayer *stats = StatsResultsLayer::create();
         
+        StatsDetailsLayer *details = StatsDetailsLayer::create();
+        
         this->addChild(bg, 0);
-        this->addChild(stats,1);
+        //this->addChild(stats,1);
+        this->addChild(details,1);
         
         
         return true;

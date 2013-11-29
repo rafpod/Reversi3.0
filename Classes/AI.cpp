@@ -217,7 +217,7 @@ void bestmove2(struct field *f,int diff)
 	
     returnVal = pthread_attr_init(&attr);
     assert(!returnVal);
-    returnVal = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED); //set type of thread
+    returnVal = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE); //set type of thread
     assert(!returnVal);
 	
     //=======================================

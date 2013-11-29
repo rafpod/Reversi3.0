@@ -154,6 +154,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
  */
     
+    
     //FOURTH OPTION PORTRAIT
     if (screenSize.height > 1500) {
         
@@ -189,6 +190,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     //CCLOG("SKIN1: %i", othelloIsEnabled);
     CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+    
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("pawns.plist");
     
     //pDirector->setContentScaleFactor(MIN(resourceSize.width/designSize.width,resourceSize.height/designSize.height));
     pDirector->setContentScaleFactor(resourceSize.width/designSize.width);

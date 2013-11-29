@@ -12,8 +12,10 @@
 #include "MenuScene.h"
 #include "AI.h"
 #include "OptionButtonDefinitions.h"
+#include <exception>
 
 using namespace cocos2d;
+using namespace std;
 
 
 //#define SCORE_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 24)
@@ -152,7 +154,7 @@ void BoardLayer::setOptionsPreferences(){
     
     switch (stoneColor) {
         case GR_RED_BTN_TAG:
-            colorFileNameFirst = "stone_green.png";            
+            colorFileNameFirst = "stone_green.png";
             colorFileNameSecond = "stone_red.png";
             postfixColor = "gr";
             
@@ -194,18 +196,15 @@ void BoardLayer::setOptionsPreferences(){
 
 void BoardLayer::createItems(){
     
-    //this->batchNodeBoard = CCSpriteBatchNode::create("board.pvr.ccz");
-    //this->addChild(batchNodeBoard);
-    
-    //this->batchNodeGui = CCSpriteBatchNode::create("gui_sprites.pvr.ccz");
-    //this->addChild(batchNodeGui);
-    
-    this->batchNodeAnim = CCSpriteBatchNode::create("anim_sprites.pvr.ccz");
-    this->addChild(batchNodeAnim);
-    
-    //CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("board.plist");
-    //CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("gui_sprites.plist");
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("anim_sprites.plist");
+    try
+    {
+        this->batchNodeSprites = CCSpriteBatchNode::create("pawns.pvr.ccz");
+        this->addChild(batchNodeSprites,1);
+        
+        //CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("sprites.plist");
+    }catch(exception& e){
+        CCMessageBox(e.what(), "Error");
+    }    
     
     this->createBoard();
     
@@ -631,12 +630,12 @@ void BoardLayer::createBeginningPawnsPosition(){
     for (int x=7; x>=0; x--) {
         for(int y=0;y<8;y++){
             if(uiv[x][y]!=NULL){
-                this->removeChild(uiv[x][y]);
-                //batchNodeGui->removeChild(uiv[x][y], false);
+                //this->removeChild(uiv[x][y]);
+                batchNodeSprites->removeChild(uiv[x][y], true);
             }
             
             if (helperUIV[x][y] !=NULL) {
-                //this->removeChild(helperUIV[x][y]);
+                this->removeChild(helperUIV[x][y]);
             }
         }
     }
@@ -657,44 +656,76 @@ void BoardLayer::createBeginningPawnsPosition(){
 			if (curpos.pos[x][y]=='X')
             {
                 //in original should be white
-                uiv[x][y] = CCSprite::create(colorFileNameFirst);
-                //uiv[x][y] = CCSprite::createWithSpriteFrameName(colorFileNameFirst);
-                //CCLOG("White: uiv[x][y] uiv:[%i] [%i]",x,y);
-                //counterWhite++;
+                try {
+                    //uiv[x][y] = CCSprite::create(colorFileNameFirst);
+                    uiv[x][y] = CCSprite::createWithSpriteFrameName(colorFileNameFirst);
+                    //CCLOG("White: uiv[x][y] uiv:[%i] [%i]",x,y);
+                    
+                    uiv[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + distFromOriginOnX,boardSprite->boundingBox().origin.y +distFromOriginOnY));
+                    
+                    //this->addChild(uiv[x][y]);
+                    //this->batchNodeSprites->addChild(uiv[x][y]);
+                    
+                } catch (std::exception& e) {
+                    CCMessageBox(e.what(), "Error");
+                }
+
             }
 			else if (curpos.pos[x][y]=='O')
             {
                 //in original should be black
-                uiv[x][y] = CCSprite::create(colorFileNameSecond);
-                //uiv[x][y] = CCSprite::createWithSpriteFrameName(colorFileNameSecond);
-                //CCLOG("Black: uiv[x][y] uiv:[%i] [%i]",x,y);
-                //counterBlack++;
+                
+                try
+                {
+                    //uiv[x][y] = CCSprite::create(colorFileNameSecond);
+                    uiv[x][y] = CCSprite::createWithSpriteFrameName(colorFileNameSecond);
+                    //CCLOG("Black: uiv[x][y] uiv:[%i] [%i]",x,y);
+                
+                    uiv[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + distFromOriginOnX,boardSprite->boundingBox().origin.y +distFromOriginOnY));
+                    //this->addChild(uiv[x][y]);
+                    //this->batchNodeSprites->addChild(uiv[x][y]);
+                }catch(exception& e){
+                    CCMessageBox(e.what(), "Error");
+                }
+                
             }
 			else {
-                uiv[x][y] = CCSprite::create(colorFileNameFirst);
-                //uiv[x][y] = CCSprite::createWithSpriteFrameName(colorFileNameFirst);
-                uiv[x][y]->setVisible(false);
-                 
-                //uiv[x][y] = NULL;
+                try
+                {
+                    //uiv[x][y] = CCSprite::create(colorFileNameFirst);
+                    uiv[x][y] = CCSprite::createWithSpriteFrameName(colorFileNameFirst);
+                    uiv[x][y]->setVisible(false);
+                
+                    uiv[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + distFromOriginOnX,boardSprite->boundingBox().origin.y +distFromOriginOnY));
+                }catch(exception& e){
+                    CCMessageBox(e.what(), "Error");
+                }
             }
             
-            uiv[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + distFromOriginOnX,boardSprite->boundingBox().origin.y +distFromOriginOnY));
+            //uiv[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + distFromOriginOnX,boardSprite->boundingBox().origin.y +distFromOriginOnY));
             uiv[x][y]->setAnchorPoint(anchorPointSprite);
             uiv[x][y]->setScale(scaleSprite);
             
-            this->addChild(uiv[x][y]);
-            //batchNodeGui->addChild(uiv[x][y]);
+            //this->addChild(uiv[x][y]);
+            this->batchNodeSprites->addChild(uiv[x][y]);
             
             //HELPER SPRITE
-            helperUIV[x][y] = CCSprite::create("stone_select.png");
-            //helperUIV[x][y] = CCSprite::createWithSpriteFrameName("stone_select.png");
-            helperUIV[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + distFromOriginOnX,boardSprite->boundingBox().origin.y +distFromOriginOnY));
-            helperUIV[x][y]->setAnchorPoint(anchorPointSprite);
-            helperUIV[x][y]->setScale(scaleSprite);
-            helperUIV[x][y]->setVisible(false);
             
-            this->addChild(helperUIV[x][y]);
-            //batchNodeGui->addChild(helperUIV[x][y]);
+            try
+            {
+                helperUIV[x][y] = CCSprite::create("stone_select.png");
+                //helperUIV[x][y] = CCSprite::createWithSpriteFrameName("stone_select.png");
+                helperUIV[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + distFromOriginOnX,boardSprite->boundingBox().origin.y +distFromOriginOnY));
+                helperUIV[x][y]->setAnchorPoint(anchorPointSprite);
+                helperUIV[x][y]->setScale(scaleSprite);
+                helperUIV[x][y]->setVisible(false);
+                
+                this->addChild(helperUIV[x][y]);
+                //batchNodeGui->addChild(helperUIV[x][y]);
+                
+            }catch(exception& e){
+                CCMessageBox(e.what(), "Error");
+            }
             
             distFromOriginOnX+=tileSize;
             // xx+=TILE_SIZE;
@@ -708,6 +739,15 @@ void BoardLayer::createBeginningPawnsPosition(){
     
     updateResults();
     
+    /*
+    CCSprite* a = CCSprite::createWithSpriteFrameName("gui/stone_red.png");
+    a->setPosition(ccp(boardSprite->boundingBox().origin.x + 20, boardSprite->boundingBox().origin.y + 20));
+    this->addChild(a);
+    
+    
+    CCSpriteFrame *frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("gui/stone_green.png");
+    a->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("gui/stone_green.png"));
+    */
 }
 
 
@@ -748,6 +788,19 @@ void BoardLayer:: newGame() {
 
 void BoardLayer::undoUpdatePositions(){    
     
+    /*
+    for (int x=7; x>=0; x--) {
+        for(int y=0;y<8;y++){
+            if(uiv[x][y]!=NULL){
+                this->removeChild(uiv[x][y],true);
+                //batchNodeSprites->removeChild(uiv[x][y], false);
+            }
+        }
+    }
+*/
+    
+    try{
+        
     for (int x=7; x>=0; x--)
     {
         for(int y=0; y<8; y++)
@@ -758,22 +811,34 @@ void BoardLayer::undoUpdatePositions(){
             if (curpos.pos[x][y]=='X')
             {
                 //uiv[x][y] = CCSprite::create("stone_white.png");
-                uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameFirst));
+                uiv[x][y]->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(colorFileNameFirst));
+                //uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameFirst));
                 uiv[x][y]->setVisible(true);
+                //this->addChild(uiv[x][y]);
+                //this->batchNodeSprites->addChild(uiv[x][y]);
+                
+                
             }
             else if (curpos.pos[x][y]=='O')
             {
                 //uiv[x][y] = CCSprite::create("stone_black.png");
-                uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameSecond));
+                uiv[x][y]->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(colorFileNameSecond));
+                //uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameSecond));
                 uiv[x][y]->setVisible(true);
+                //this->addChild(uiv[x][y]);
+                //this->batchNodeSprites->addChild(uiv[x][y]);
             }
             else
             {
                 //uiv[x][y] = NULL;
                 uiv[x][y]->setVisible(false);
+                
             }
 
         }
+    }
+    }catch(exception& e){
+        CCMessageBox(e.what(), "Error");
     }
     
     updateResults();
@@ -827,25 +892,52 @@ void BoardLayer::update_pos(int x,int y) {
         return;
     }
     
+    /*
+    for (int x=7; x>=0; x--) {
+        for(int y=0;y<8;y++){
+            if(uiv[x][y]!=NULL){
+                //this->removeChild(uiv[x][y],true);
+                batchNodeSprites->removeChild(uiv[x][y], true);
+            }
+        }
+    }
+    */
+    
     
 	//==============================================
     //Update data about pawns with current positions
     //==============================================
 	if (curpos.pos[x][y]=='X')
     {
+        try
+        {
         //uiv[x][y] = CCSprite::create("stone_white.png");
-        uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameFirst));
+        uiv[x][y]->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(colorFileNameFirst));
+        //uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameFirst));
         uiv[x][y]->setVisible(true);
+        //uiv[x][y]->addChild(uiv[x][y]);
+        //this->batchNodeSprites->addChild(uiv[x][y]);
+        }catch(exception& e){
+            CCMessageBox(e.what(), "Error");
+        }
     }
 	else if (curpos.pos[x][y]=='O')
     {
+        try
+        {
         //uiv[x][y] = CCSprite::create("stone_black.png");
-        uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameSecond));
+        uiv[x][y]->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(colorFileNameSecond));
+        //uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameSecond));
         uiv[x][y]->setVisible(true);
+        //uiv[x][y]->addChild(uiv[x][y]);
+        //this->batchNodeSprites->addChild(uiv[x][y]);
+        }catch(exception& e){
+            CCMessageBox(e.what(), "Error");
+        }
     }
     else
     {
-        uiv[x][y] = NULL;
+        //uiv[x][y] = NULL;
         uiv[x][y]->setVisible(false);
     }
     
@@ -853,14 +945,20 @@ void BoardLayer::update_pos(int x,int y) {
     CCArray* animFrames = CCArray::createWithCapacity(9);
     //CCAnimation* animationOfChangingPawn = CCAnimation::create();
     CCString *name;
-    for (int i=1; i<=9; i++) {
-        name = CCString::createWithFormat("anim_stone_%s%i.png",postfixColor,i);
+    try
+    {
+        for (int i=1; i<=9; i++) {
+            name = CCString::createWithFormat("anim_stone_%s%i.png",postfixColor,i);
         
-        CCSpriteFrame* frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(name->getCString());
-        animFrames->addObject(frame);
+            CCSpriteFrame* frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(name->getCString());
+            animFrames->addObject(frame);
         
-       // animationOfChangingPawn->addSpriteFrameWithFileName(name->getCString());
+            // animationOfChangingPawn->addSpriteFrameWithFileName(name->getCString());
+        }
+    }catch(exception& e){
+        CCMessageBox(e.what(), "Error");
     }
+    
     CCAnimation* animationOfChangingPawn = CCAnimation::createWithSpriteFrames(animFrames, 0.25f/9.0f);
     animationOfChangingPawn->setDelayPerUnit(0.25f/9.0f);
     animationOfChangingPawn->setRestoreOriginalFrame(true);
@@ -1031,9 +1129,14 @@ int BoardLayer::cpuTurn(){
 
 void BoardLayer::createBoard(){
     
-    shadowSprite = CCSprite::create("test_shadow.png");
-    boardSprite = CCSprite::create("test_board.png");
-    
+    try
+    {
+        shadowSprite = CCSprite::create("test_shadow.png");
+        boardSprite = CCSprite::create("test_board.png");
+        
+    }catch(exception& e){
+        CCMessageBox(e.what(), "Error");
+    }
     //shadowSprite = CCSprite::createWithSpriteFrameName("test_shadow.png");
     //boardSprite = CCSprite::createWithSpriteFrameName("test_board.png");
 }
@@ -1062,7 +1165,8 @@ void BoardLayer::createMenuButtons(){
     //Create Menu Buttons
     //===========================
     CCString *btnFileNameNormal = CCString::create("button_wide_0.png");
-    CCString *btnFileNameSelected = CCString::create("button_wide_1.png");
+    CCString *btnFileNameSelected = CCString::create("button_wide_1.png");    
+    
     
     undoButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(BoardLayer::undobBtnCallback), langManager->Translate(STRING_UNDO_BTN)->getCString(), BOARD_MENU_FONT_SIZE);
     newButton = MenuButton::create(btnFileNameNormal->getCString(), btnFileNameSelected->getCString(), this, menu_selector(BoardLayer::newBtnCallback), langManager->Translate(STRING_NEW_BTN)->getCString(), BOARD_MENU_FONT_SIZE);
@@ -1177,13 +1281,11 @@ void BoardLayer::ccTouchEnded(cocos2d::CCTouch *touch, cocos2d::CCEvent *event){
             
             int Xx, Yy;
             float currentStartingPoint  = boardSprite->boundingBox().origin.x;
-            //float currentStartingPoint = originBoardX;
             
             float currentEndingPoint = currentStartingPoint + tileSize;
             
-            
             float currentStartingPointY = boardSprite->boundingBox().origin.y;
-            //float currentStartingPointY = originBoardY;
+            
             
             float currentEndingPointY = currentStartingPointY + tileSize;
             

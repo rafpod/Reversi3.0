@@ -20,6 +20,31 @@ private:
     CCSize designSize;
     CCSize visibleSize;
     
+    CCLabelTTF* wonLabel;
+    CCLabelTTF* lostLabel;
+    CCLabelTTF* tiedLabel;
+    CCLabelTTF* allLabelH;
+    
+    CCLabelTTF* tabResult[4][6];
+    CCLabelTTF* tabPercent[4][6];
+    
+    int tabResultValue[4][6];
+    float tabPercentValue[4][6];
+    
+    CCLabelTTF* allLabelV;
+    CCLabelTTF* hardestLabel;
+    CCLabelTTF* veryHard;
+    CCLabelTTF* hardLabel;
+    CCLabelTTF* mediumLabel;
+    CCLabelTTF* easyLabel;
+    
+    CCLabelTTF* headerLabel;
+    
+    CCSprite *lineHeader;
+    
+    int labelOffFromTop;
+    int labelOffFromHeader;
+    
     LanguageManager* langManager;
     
     CCLabelTTF *statsTitleLabel;
@@ -36,6 +61,13 @@ private:
     
     void backBtnCallback(CCObject* pSender);
     void keyBackClicked();
+    
+    void createHeader();
+    void setHeaderPosition();    
+    
+    void setDetailsOffsets();
+    
+    void countStats();    
 
     
 public:

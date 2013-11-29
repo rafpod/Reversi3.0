@@ -160,6 +160,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STATS_RESET:    return ccs("RESET");
                 case STRING_STATS_DETAILS:  return ccs("Details");
                 
+                case STRING_STATS_ALL:      return ccs("All");                    
                     
 			}
 			return ccs("UNTRANSLATEDenGB!");
@@ -232,6 +233,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STATS_TIED:     return ccs("Unentschieden:");
                 case STRING_STATS_RESET:    return ccs("LÖSCHEN");
                 case STRING_STATS_DETAILS:  return ccs("Details");
+                case STRING_STATS_ALL:      return ccs("All");
 
                     
 			}
@@ -305,6 +307,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STATS_TIED:     return ccs("Empate:");
                 case STRING_STATS_RESET:    return ccs("BORAR");
                 case STRING_STATS_DETAILS:  return ccs("Detalles");
+                case STRING_STATS_ALL:      return ccs("All");
 
                     
 			}
@@ -378,6 +381,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STATS_TIED:     return ccs("Nul:");
                 case STRING_STATS_RESET:    return ccs("EFFACER");
                 case STRING_STATS_DETAILS:  return ccs("Détails");
+                case STRING_STATS_ALL:      return ccs("All");
 
                     
 			}
@@ -451,6 +455,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STATS_TIED:     return ccs("Legate:");
                 case STRING_STATS_RESET:    return ccs("CANCELLARE");
                 case STRING_STATS_DETAILS:  return ccs("Dettagli");
+                case STRING_STATS_ALL:      return ccs("All");
 
                     
 			}
@@ -524,6 +529,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_STATS_TIED:     return ccs("同点:");
                 case STRING_STATS_RESET:    return ccs("リセット");
                 case STRING_STATS_DETAILS:  return ccs("細部");
+                case STRING_STATS_ALL:      return ccs("All");
 
                     
 			}

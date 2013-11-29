@@ -84,7 +84,7 @@
 #define STRING_STATS_TIED   60
 #define STRING_STATS_RESET  61
 #define STRING_STATS_DETAILS 63
-
+#define STRING_STATS_ALL    64
 
 
 #endif

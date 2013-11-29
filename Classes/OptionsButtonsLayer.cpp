@@ -951,6 +951,8 @@ void OptionsButtonsLayer::boardBtnCallback(cocos2d::CCObject *pSender){
     
     CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
     
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("pawns.plist");
+    
     CCScene *optionsScene = OptionsScene::create();
     CCDirector::sharedDirector()->setDepthTest(true);
     CCDirector::sharedDirector()->replaceScene(CCTransitionPageTurn::create(0.1f, optionsScene,false));

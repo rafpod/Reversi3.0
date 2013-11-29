@@ -47,12 +47,7 @@ private:
     bool othelloIsEnabled;
     
     int whoseMove;
-    
-    float widthBoard;
-    float tileS;
-    float originBoardX;
-    float originBoardY;    
-    
+        
     
     CCSprite *uiv[8][8],*uivx,*uiback;
     //New variables
@@ -65,11 +60,9 @@ private:
     CCSize visibleSize;
     CCPoint origin;
     CCSize designSize;
-    CCSize visSize;
+    CCSize visSize;    
     
-    CCSpriteBatchNode * batchNodeBoard;
-    CCSpriteBatchNode * batchNodeAnim;
-    CCSpriteBatchNode * batchNodeGui;
+    CCSpriteBatchNode *batchNodeSprites;
     
     LanguageManager* langManager;
     int counterBlack;
