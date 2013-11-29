@@ -15,6 +15,8 @@ using namespace cocos2d;
 
 class BackgroundLayer:public cocos2d::CCLayer{
 private:
+    CCSpriteBatchNode * batchNode;
+    
     CCSprite *bgSprite;
     
     bool init();

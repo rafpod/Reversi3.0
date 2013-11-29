@@ -107,6 +107,8 @@ private:
     float fontSizeBtn;
     float fontSizeDiff;
     
+    bool isHighIphone;
+    
     
     bool init();
     
@@ -153,6 +155,7 @@ private:
     
     void setFontSize();
     void setOptionOffsets();
+    void setItemsScale();
     
     void keyBackClicked();    
     

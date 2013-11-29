@@ -15,7 +15,6 @@
 
 using namespace cocos2d;
 
-#define TILE_SIZE 60
 
 //#define SCORE_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 24)
 //#define BOARD_MENU_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / 640 * 22)
@@ -194,6 +193,19 @@ void BoardLayer::setOptionsPreferences(){
 
 
 void BoardLayer::createItems(){
+    
+    //this->batchNodeBoard = CCSpriteBatchNode::create("board.pvr.ccz");
+    //this->addChild(batchNodeBoard);
+    
+    //this->batchNodeGui = CCSpriteBatchNode::create("gui_sprites.pvr.ccz");
+    //this->addChild(batchNodeGui);
+    
+    this->batchNodeAnim = CCSpriteBatchNode::create("anim_sprites.pvr.ccz");
+    this->addChild(batchNodeAnim);
+    
+    //CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("board.plist");
+    //CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("gui_sprites.plist");
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("anim_sprites.plist");
     
     this->createBoard();
     
@@ -620,10 +632,11 @@ void BoardLayer::createBeginningPawnsPosition(){
         for(int y=0;y<8;y++){
             if(uiv[x][y]!=NULL){
                 this->removeChild(uiv[x][y]);
+                //batchNodeGui->removeChild(uiv[x][y], false);
             }
             
             if (helperUIV[x][y] !=NULL) {
-                this->removeChild(helperUIV[x][y]);
+                //this->removeChild(helperUIV[x][y]);
             }
         }
     }
@@ -645,6 +658,7 @@ void BoardLayer::createBeginningPawnsPosition(){
             {
                 //in original should be white
                 uiv[x][y] = CCSprite::create(colorFileNameFirst);
+                //uiv[x][y] = CCSprite::createWithSpriteFrameName(colorFileNameFirst);
                 //CCLOG("White: uiv[x][y] uiv:[%i] [%i]",x,y);
                 //counterWhite++;
             }
@@ -652,11 +666,13 @@ void BoardLayer::createBeginningPawnsPosition(){
             {
                 //in original should be black
                 uiv[x][y] = CCSprite::create(colorFileNameSecond);
+                //uiv[x][y] = CCSprite::createWithSpriteFrameName(colorFileNameSecond);
                 //CCLOG("Black: uiv[x][y] uiv:[%i] [%i]",x,y);
                 //counterBlack++;
             }
 			else {
                 uiv[x][y] = CCSprite::create(colorFileNameFirst);
+                //uiv[x][y] = CCSprite::createWithSpriteFrameName(colorFileNameFirst);
                 uiv[x][y]->setVisible(false);
                  
                 //uiv[x][y] = NULL;
@@ -665,32 +681,20 @@ void BoardLayer::createBeginningPawnsPosition(){
             uiv[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + distFromOriginOnX,boardSprite->boundingBox().origin.y +distFromOriginOnY));
             uiv[x][y]->setAnchorPoint(anchorPointSprite);
             uiv[x][y]->setScale(scaleSprite);
+            
             this->addChild(uiv[x][y]);
+            //batchNodeGui->addChild(uiv[x][y]);
             
             //HELPER SPRITE
             helperUIV[x][y] = CCSprite::create("stone_select.png");
+            //helperUIV[x][y] = CCSprite::createWithSpriteFrameName("stone_select.png");
             helperUIV[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + distFromOriginOnX,boardSprite->boundingBox().origin.y +distFromOriginOnY));
             helperUIV[x][y]->setAnchorPoint(anchorPointSprite);
             helperUIV[x][y]->setScale(scaleSprite);
             helperUIV[x][y]->setVisible(false);
             
             this->addChild(helperUIV[x][y]);
-            
-            /*
-            uiv[x][y]->setPosition(ccp(originBoardX + distFromOriginOnX,originBoardY +distFromOriginOnY));
-            uiv[x][y]->setAnchorPoint(anchorPointSprite);
-            uiv[x][y]->setScale(scaleSprite);
-            this->addChild(uiv[x][y]);
-            
-            //HELPER SPRITE
-            helperUIV[x][y] = CCSprite::create("stone_select.png");
-            helperUIV[x][y]->setPosition(ccp(originBoardX + distFromOriginOnX,originBoardY +distFromOriginOnY));
-            helperUIV[x][y]->setAnchorPoint(anchorPointSprite);
-            helperUIV[x][y]->setScale(scaleSprite);
-            helperUIV[x][y]->setVisible(false);
-            
-            this->addChild(helperUIV[x][y]);
-            */
+            //batchNodeGui->addChild(helperUIV[x][y]);
             
             distFromOriginOnX+=tileSize;
             // xx+=TILE_SIZE;
@@ -703,58 +707,6 @@ void BoardLayer::createBeginningPawnsPosition(){
 	}
     
     updateResults();
-    
-    
-    /*float widthBoard = boardSprite->getContentSize().width -2*50; //542, 2*42
-    CCLOG("widthBoard: %f", widthBoard);
-    //float tileS = (boardSprite->getContentSize().width * 0.9)/8;
-    float tileS = widthBoard/8*0.9;
-    float originBoardX = boardSprite->boundingBox().origin.x + 50.0f; //42
-    float originBoardY = boardSprite->boundingBox().origin.y + 50.0f; //45
-    
-    CCLOG("originBoardX: %f", originBoardX);
-    CCLOG("originBoardY: %f", originBoardY);
-    CCLOG("tileS: %f", tileS);
-    */
-    /*
-    float widthBoard = boardSprite->getContentSize().width; //542, 2*42
-    CCLOG("widthBoard: %f", widthBoard);
-    //float tileS = (boardSprite->getContentSize().width * 0.9)/8;
-    float tileS = widthBoard/8*0.9;
-    float originBoardX = boardSprite->boundingBox().origin.x ;//42
-    float originBoardY = boardSprite->boundingBox().origin.y; //45
-    CCPoint anch = ccp(0.05,0.09);
-
-    
-    CCSprite* testSprite = CCSprite::create("stone_black.png");
-    
-    testSprite->setScale(0.9f);
-    
-    testSprite->setPosition(ccp(originBoardX, originBoardY));
-    //testSprite->setAnchorPoint(ccp(0.2, 0.2));
-    testSprite->setAnchorPoint(anch);
-    
-    this->addChild(testSprite);
-    
-    CCSprite* testSprite2 = CCSprite::create("stone_black.png");
-    testSprite2->setPosition(ccp(originBoardX + tileS, originBoardY + tileS));
-    testSprite2->setScale(0.9f);
-    //testSprite2->setAnchorPoint(ccp(0.15, 0.15));
-    //testSprite2->setAnchorPoint(ccp(0.2,0.2));
-    testSprite2->setAnchorPoint(anch);
-    
-    this->addChild(testSprite2);
-    
-    CCSprite* testSprite3 = CCSprite::create("stone_black.png");
-    testSprite3->setScale(0.9f);
-    
-    testSprite3->setPosition(ccp(originBoardX + 2*tileS, originBoardY));
-    //testSprite3->setAnchorPoint(ccp(0.15, 0.15));
-    //testSprite3->setAnchorPoint(ccp(0.2,0.2));
-    testSprite3->setAnchorPoint(anch);
-    
-    this->addChild(testSprite3);
-    */
     
 }
 
@@ -833,148 +785,6 @@ void BoardLayer::undoUpdatePositions(){
     
 }
 
-
-void updateSomething() {
-	/*
-    if (status==ST_RUNNING && xt && yt) {
-		CGRect r;
-		r.origin.x=xt-XSTEP/2;
-		r.origin.y=yt-XSTEP/2;
-		r.size.height=XSTEP;
-		r.size.width=XSTEP;
-		[uivx setFrame:r];
-        
-        int mode=[defaults integerForKey:@"mode"];
-        
-        if(mode == 1)
-        {
-            {
-                if (curpos.turn&1) {
-                    [uivx setImage:im_red];
-                }
-                else
-                {
-                    [uivx setImage:im_green];
-                }
-            }
-        }
-        else
-        {
-            if (playeris) [uivx setImage:im_red];
-            else [uivx setImage:im_green];
-        }
-		[uivx setHidden:NO];
-	} else {
-		[uivx setHidden:YES];
-	}
-    */
-}
-/*
-void BoardLayer::ccTouchesBegan(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
-    
-    CCTouch *touch = (CCTouch*)  (touches->anyObject());
-    CCPoint location =  touch->getLocation();
-    
-    if(boardSprite->boundingBox().containsPoint(location)){
-        xl=xt = location.x;
-        yl=yt = location.y;
-        
-        //updateSomething();
-    }
-}
-
-void BoardLayer::ccTouchesMoved(cocos2d::CCSet* touches, cocos2d::CCEvent* event){
-    
-}
-
-void BoardLayer::ccTouchesEnded(cocos2d::CCSet* touches , cocos2d::CCEvent* event){
-    
-    if (dialogStatus == DIALOG_OFF && updateStatus==UPDATE_OFF) {
-        
-    
-    // Choose one of the touches to work with
-	CCTouch* touch = (CCTouch*)( touches->anyObject() );
-	CCPoint location = touch->getLocation();
-    //location = CCDirector::sharedDirector()->convertToGL(location);
-    
-    CCLOG("(location)X is: %f and Y is: %f", location.x, location.y);
-    
-    CCLOG("(BoardBonds)X is: %f and Y is: %f", boardSprite->boundingBox().origin.x, boardSprite->boundingBox().origin.y);
-   
-        //float EndX = originBoardX + widthBoard;
-        //float EndY = originBoardY + widthBoard;
-        //if (location.x > originBoardX && location.x < EndX && location.y > originBoardY && location.y < EndY)
-            
-        
-     //x,y to indeksy tablicy gry, ktory kafelek inaczej mowiac
-    if(boardSprite->boundingBox().containsPoint(location)){
-        
-        float pawnX, pawnY;
-        int Xx, Yy;
-        float currentStartingPoint  = boardSprite->boundingBox().origin.x;
-        //float currentStartingPoint = originBoardX;
-        
-        //float currentEndingPoint = currentStartingPoint + TILE_SIZE;
-        float currentEndingPoint = currentStartingPoint + tileSize;
-        
-        
-        float currentStartingPointY = boardSprite->boundingBox().origin.y;
-        //float currentStartingPointY = originBoardY;
-        
-        //float currentEndingPointY = currentStartingPointY + TILE_SIZE;
-        float currentEndingPointY = currentStartingPointY + tileSize;
-        
-        for (int x=7; x>=0; x--)
-        {
-            
-            for (int y=0; y<8; y++)
-            {
-                //============================================
-                //  Check which tile on gameboard, was tapped by user's finger. If we know it, we can set our pawn on center position of this tile.
-                //===========================================
-                if ((location.x > currentStartingPoint && location.x < currentEndingPoint) && (location.y >currentStartingPointY && location.y < currentEndingPointY)) {
-                    //warun
-                    //CCLOG("JESTEM pomiędzy punktami %f i %f w poziomie oraz punktami %f i %f w pionie, dokaldnie w punkcie X: %f Y: %f", currentStartingPoint,currentEndingPoint,currentStartingPointY, currentEndingPointY, location.x, location.y);
-                    
-                    Xx = x;
-                    Yy = y;
-                    CCLOG("Xx: %i i Yy: %i", Xx,Yy);
-                    //===========
-                    // In future i must apply  y, x coordinates instead of pawnX, pawnY because I deliver these coordinates to viewpos or curpos(i suppose this) for example: viewpos[y][x] = 'X' or '0'. Next i have to updatePawnPositions
-                    //===========
-                    
-                }
-                
-                currentStartingPoint = currentEndingPoint;
-               //currentEndingPoint +=TILE_SIZE;
-                currentEndingPoint +=tileSize;
-                
-            }
-            
-            currentStartingPoint  = boardSprite->boundingBox().origin.x;
-            //currentEndingPoint = currentStartingPoint + TILE_SIZE;
-            currentEndingPoint = currentStartingPoint + tileSize;
-            
-            currentStartingPointY = currentEndingPointY;
-            //currentEndingPointY +=TILE_SIZE;
-            currentEndingPointY +=tileSize;
-            
-        }
-        
-        history[histpos]=curpos;
-        if (move2(&curpos,Xx,Yy)) {
-            histpos++;
-            lastx=Xx; lasty=Yy; dist=0;
-            CCLOG("Mozna postawić pionka");            
-        }else{
-            CCLOG("Nie mozna postawić pionka");
-        }
-
-    }
-    
-    }
-}
-*/
 //======================================================
 //TO DO METHODS
 //======================================================
@@ -1035,19 +845,23 @@ void BoardLayer::update_pos(int x,int y) {
     }
     else
     {
-        //uiv[x][y] = NULL;
+        uiv[x][y] = NULL;
         uiv[x][y]->setVisible(false);
     }
     
     
-    
-    CCAnimation* animationOfChangingPawn = CCAnimation::create();
+    CCArray* animFrames = CCArray::createWithCapacity(9);
+    //CCAnimation* animationOfChangingPawn = CCAnimation::create();
     CCString *name;
     for (int i=1; i<=9; i++) {
         name = CCString::createWithFormat("anim_stone_%s%i.png",postfixColor,i);
-        animationOfChangingPawn->addSpriteFrameWithFileName(name->getCString());
+        
+        CCSpriteFrame* frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(name->getCString());
+        animFrames->addObject(frame);
+        
+       // animationOfChangingPawn->addSpriteFrameWithFileName(name->getCString());
     }
-    
+    CCAnimation* animationOfChangingPawn = CCAnimation::createWithSpriteFrames(animFrames, 0.25f/9.0f);
     animationOfChangingPawn->setDelayPerUnit(0.25f/9.0f);
     animationOfChangingPawn->setRestoreOriginalFrame(true);
     //CCAnimate* action = CCAnimate::create(animationOfChangingPawn);
@@ -1219,6 +1033,9 @@ void BoardLayer::createBoard(){
     
     shadowSprite = CCSprite::create("test_shadow.png");
     boardSprite = CCSprite::create("test_board.png");
+    
+    //shadowSprite = CCSprite::createWithSpriteFrameName("test_shadow.png");
+    //boardSprite = CCSprite::createWithSpriteFrameName("test_board.png");
 }
 
 void BoardLayer::createScoreBoards(){
@@ -1259,18 +1076,12 @@ void BoardLayer::createMenuButtons(){
 
 void BoardLayer::setBoardPosition(){
     
-    //shadowSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height + origin.y - shadowSprite->getContentSize().height/2- 60));
-    //boardSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height + origin.y - boardSprite->getContentSize().height/2- addDistBoardY));
-    
     shadowSprite->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y - shadowSprite->getContentSize().height/2- shadowOffFromTop));
     boardSprite->setPosition(ccp(VisibleRect::center().x, VisibleRect::top().y - boardSprite->getContentSize().height/2- boardOffFromTop));
     
 }
 
 void BoardLayer::setScoreBoardPosition(){
-    
-    //leftScoreBoard->setPosition(ccp(boardSprite->boundingBox().origin.x + leftScoreBoard->getContentSize().width/3 + diffXForFirstItem, visibleSize.height + origin.y - 80));
-   // rightScoreBoard->setPosition(ccp(boardSprite->getContentSize().width - rightScoreBoard->getContentSize().width/3 + diffXForLastItem, visibleSize.height + origin.y -80));
     
     leftScoreBoard->setPosition(ccp(boardSprite->boundingBox().origin.x + leftScoreBoard->getContentSize().width/3 + diffXForFirstItem, boardSprite->getPositionY() + boardSprite->getContentSize().height/2 + scoreBoardOffAboveBoard));
     
@@ -1302,9 +1113,13 @@ void BoardLayer::addBoardToLayer(){
     
     if (othelloIsEnabled) {
         this->addChild(boardSprite,0);
+        //batchNodeBoard->addChild(boardSprite,0);
     }else{
         this->addChild(shadowSprite,-1);
         this->addChild(boardSprite,0);
+        
+        //batchNodeBoard->addChild(shadowSprite,-1);
+        //batchNodeBoard->addChild(boardSprite,0);
     }
 }
 
@@ -1321,7 +1136,6 @@ void BoardLayer::addMenuToLayer(){
 }
 
 void BoardLayer::keyBackClicked(){
-    CCLOG("BACK");
     CCScene *backScene = MenuScene::create();
     
     CCDirector::sharedDirector()->setDepthTest(true);
@@ -1347,6 +1161,7 @@ void BoardLayer::ccTouchMoved(cocos2d::CCTouch *touch, cocos2d::CCEvent *event){
 }
 
 void BoardLayer::ccTouchEnded(cocos2d::CCTouch *touch, cocos2d::CCEvent *event){
+    
     if (dialogStatus == DIALOG_OFF && updateStatus==UPDATE_OFF) {
         
         
@@ -1357,29 +1172,19 @@ void BoardLayer::ccTouchEnded(cocos2d::CCTouch *touch, cocos2d::CCEvent *event){
         
         CCLOG("(location)X is: %f and Y is: %f", location.x, location.y);
         
-        CCLOG("(BoardBonds)X is: %f and Y is: %f", boardSprite->boundingBox().origin.x, boardSprite->boundingBox().origin.y);
-        
-        //float EndX = originBoardX + widthBoard;
-        //float EndY = originBoardY + widthBoard;
-        //if (location.x > originBoardX && location.x < EndX && location.y > originBoardY && location.y < EndY)
-        
-        
         //x,y to indeksy tablicy gry, ktory kafelek inaczej mowiac
         if(boardSprite->boundingBox().containsPoint(location)){
             
-            float pawnX, pawnY;
             int Xx, Yy;
             float currentStartingPoint  = boardSprite->boundingBox().origin.x;
             //float currentStartingPoint = originBoardX;
             
-            //float currentEndingPoint = currentStartingPoint + TILE_SIZE;
             float currentEndingPoint = currentStartingPoint + tileSize;
             
             
             float currentStartingPointY = boardSprite->boundingBox().origin.y;
             //float currentStartingPointY = originBoardY;
             
-            //float currentEndingPointY = currentStartingPointY + TILE_SIZE;
             float currentEndingPointY = currentStartingPointY + tileSize;
             
             for (int x=7; x>=0; x--)
@@ -1391,8 +1196,6 @@ void BoardLayer::ccTouchEnded(cocos2d::CCTouch *touch, cocos2d::CCEvent *event){
                     //  Check which tile on gameboard, was tapped by user's finger. If we know it, we can set our pawn on center position of this tile.
                     //===========================================
                     if ((location.x > currentStartingPoint && location.x < currentEndingPoint) && (location.y >currentStartingPointY && location.y < currentEndingPointY)) {
-                        //warun
-                        //CCLOG("JESTEM pomiędzy punktami %f i %f w poziomie oraz punktami %f i %f w pionie, dokaldnie w punkcie X: %f Y: %f", currentStartingPoint,currentEndingPoint,currentStartingPointY, currentEndingPointY, location.x, location.y);
                         
                         Xx = x;
                         Yy = y;
@@ -1404,17 +1207,14 @@ void BoardLayer::ccTouchEnded(cocos2d::CCTouch *touch, cocos2d::CCEvent *event){
                     }
                     
                     currentStartingPoint = currentEndingPoint;
-                    //currentEndingPoint +=TILE_SIZE;
                     currentEndingPoint +=tileSize;
                     
                 }
                 
                 currentStartingPoint  = boardSprite->boundingBox().origin.x;
-                //currentEndingPoint = currentStartingPoint + TILE_SIZE;
                 currentEndingPoint = currentStartingPoint + tileSize;
                 
                 currentStartingPointY = currentEndingPointY;
-                //currentEndingPointY +=TILE_SIZE;
                 currentEndingPointY +=tileSize;
                 
             }
@@ -1423,9 +1223,9 @@ void BoardLayer::ccTouchEnded(cocos2d::CCTouch *touch, cocos2d::CCEvent *event){
             if (move2(&curpos,Xx,Yy)) {
                 histpos++;
                 lastx=Xx; lasty=Yy; dist=0;
-                CCLOG("Mozna postawić pionka");            
+                CCLOG("You can place the pawn");
             }else{
-                CCLOG("Nie mozna postawić pionka");
+                CCLOG("You can't place the pawn");
             }
             
         }

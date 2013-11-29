@@ -55,6 +55,14 @@ bool OptionsButtonsLayer::init(){
         
         designHeight = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height;
         designWidth = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width;
+        
+        TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
+        
+        if (platform ==kTargetIphone && visibleSize.height > 960) {
+            isHighIphone = true;
+        }else{
+            isHighIphone = false;
+        }
                 
         this->initFileName();
         
@@ -67,6 +75,7 @@ bool OptionsButtonsLayer::init(){
         this->setActiveButtons();
         this->addItemsToLayer();
         
+        this->setItemsScale();
         
         this->setKeypadEnabled(true);
               
@@ -148,11 +157,14 @@ void OptionsButtonsLayer::createMarkerLine(CCLabelTTF* labelHeader, int index){
     
     lineHeader[index] = CCSprite::create("marker_header.png");
     
-    //float scale = visWidth/designWidth;
-    
-    //lineHeader[index]->setScaleX(scale);
-    
     lineHeader[index]->setPosition(ccp(VisibleRect::center().x, labelHeader->boundingBox().origin.y - lineHeader[index]->getContentSize().height/2));
+    
+    if (isHighIphone && othelloIsEnabled) {
+        lineHeader[index]->setScale(0.8f);
+    }else if(isHighIphone && !othelloIsEnabled){
+        lineHeader[index]->setScale(0.85f);
+    }
+    
     this->addChild(lineHeader[index],1);
     
 }
@@ -435,8 +447,10 @@ void OptionsButtonsLayer::setGameModeItemsPositions(){
     createMarkerLine(modeLabel,0);
     
     if(visWidth/designWidth != 1){
-    
-        backButton->setPosition(ccp(lineHeader[0]->boundingBox().origin.x + backButton->getContentSize().width/3.8, lineHeader[0]->getPositionY()));
+        //backButton->setPosition(ccp(lineHeader[0]->boundingBox().origin.x + backButton->getContentSize().width/3.8, lineHeader[0]->getPositionY()));
+        
+        backButton->setPosition(ccp(lineHeader[0]->boundingBox().origin.x, lineHeader[0]->getPositionY()));
+        
     }else{
         backButton->setPosition(ccp(lineHeader[0]->boundingBox().origin.x, lineHeader[0]->getPositionY()));
     }
@@ -900,6 +914,9 @@ void OptionsButtonsLayer::boardBtnCallback(cocos2d::CCObject *pSender){
     MenuButton* pMenuItem = (MenuButton *)(pSender);
     int tag = (int)pMenuItem->getTag();
     
+    CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrames();
+    //CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("background.plist");
+    
     
     switch (tag) {
         case WOOD_SKIN_BTN_TAG:
@@ -1027,4 +1044,42 @@ void OptionsButtonsLayer::setOptionOffsets(){
     
     distOffBtn = visHeight/designHeight * optionOffBtn;
     distOffLabel = visHeight/designHeight * optionOffLabel;
+}
+
+void OptionsButtonsLayer::setItemsScale(){
+    
+    if (isHighIphone) {
+        float scale;
+        if (othelloIsEnabled) {
+            scale = 0.8;
+        }else{
+            scale = 0.9;
+        }
+        
+            
+            pvpButton->setScale(scale);
+            pvcButton->setScale(scale);
+            
+            easyButton->setScale(scale);
+            mediumButton->setScale(scale);
+            hardButton->setScale(scale);
+            veryHardButton->setScale(scale);
+            hardestButton->setScale(scale);
+            
+            crossButton->setScale(scale);
+            straightButton->setScale(scale);
+            
+            blackWhiteButton->setScale(scale);
+            redGreenButton->setScale(scale);
+            redBlueButton->setScale(scale);
+            
+            woodButton->setScale(scale);
+            othelloButton->setScale(scale);
+            
+            showMovesButton->setScale(scale);
+            liveScoreButton->setScale(scale);
+            
+            backButton->setScale(scale);
+       
+    }
 }

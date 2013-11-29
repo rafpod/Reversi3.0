@@ -36,19 +36,27 @@ bool BackgroundLayer::init(){
         TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
         CCLOG("platform %i", platform);
         
+                
+        //this->batchNode = CCSpriteBatchNode::create("background.pvr.ccz");
+        //this->addChild(batchNode);
+        
+        //CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("background.plist");
         
         if (CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height> 960 && othelloIsEnabled) {
             if (platform ==kTargetIphone || platform == kTargetIpad) {
-                //bgSprite = CCSprite::create("bg_android.jpg");
+                //bgSprite = CCSprite::createWithSpriteFrameName("bg.jpg");
                 bgSprite = CCSprite::create("bg.jpg");
             }else{
+                //bgSprite = CCSprite::createWithSpriteFrameName("bg_android.jpg");
                 bgSprite = CCSprite::create("bg_android.jpg");
             }
         }else{
+           //bgSprite = CCSprite::createWithSpriteFrameName("bg.jpg");
             bgSprite = CCSprite::create("bg.jpg");
         }
         
-        //bgSprite = CCSprite::create("bg.jpg");
+        //bgSprite = CCSprite::createWithSpriteFrameName("bg.jpg");
+        
                
         float scaleY = 1;
         float scaleX = 1;
@@ -86,29 +94,10 @@ bool BackgroundLayer::init(){
         //bgSprite->setAnchorPoint(CCPointMake(0.5, 0.5));
         
         bgSprite->setPosition(ccp(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-                
-        this->addChild(bgSprite);
         
+        //this->batchNode->addChild(bgSprite, 0);
+        this->addChild(bgSprite,0);
         
-        //CCPoint leftBottom = VisibleRect::leftBottom();
-        CCRect visRect = VisibleRect::getVisibleRect();
-        /*
-        CCLOG("(VisibleRect)LeftBottom x: %f and leftBottom y: %f",VisibleRect::leftBottom().x,VisibleRect::rightBottom().y);
-        CCLOG("(VisibleRect)rightBottom x: %f and rightBottom y: %f",VisibleRect::rightBottom().x,VisibleRect::rightBottom().y);
-        
-        CCLOG("(VisibleRect)leftTop x: %f and rightTop y: %f",VisibleRect::leftTop().x,VisibleRect::leftTop().y);
-        CCLOG("(VisibleRect)rightTop x: %f and rightTop y: %f",VisibleRect::rightTop().x,VisibleRect::rightTop().y);
-        
-        CCLOG("(VisibleRect)left x: %f and left y: %f",VisibleRect::left().x,VisibleRect::left().y);
-        CCLOG("(VisibleRect)right x: %f and right y: %f",VisibleRect::right().x,VisibleRect::right().y);
-        
-        CCLOG("(VisibleRect)bottom x: %f and bottom y: %f",VisibleRect::bottom().x,VisibleRect::bottom().y);
-        CCLOG("(VisibleRect)top x: %f and top y: %f",VisibleRect::top().x,VisibleRect::top().y);
-        
-        CCLOG("(VisibleRect)center x: %f and center y: %f",VisibleRect::center().x,VisibleRect::center().y);
-        
-        CCLOG("(VisRect)VisRect width: %f and VisRect height: %f and origin x: %f and origin y: %f",visRect.size.width, visRect.size.height, visRect.origin.x, visRect.origin.y);
-        */
         return true;
     }
 }
