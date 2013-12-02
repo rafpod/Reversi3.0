@@ -29,7 +29,7 @@ void get_scores(int *_red,int *_green,struct field *f,char my,char his);
 //=========================================
 
 //int move2(struct field *f,int x,int y);
-int move2(struct field *f,int x,int y, bool useHelper=false);
+int move2(struct field *f,int x=8,int y=8, bool useHelper=false);
 int mustpass2(struct field *f);
 int gameover2(struct field *f);
 

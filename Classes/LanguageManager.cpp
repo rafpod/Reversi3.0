@@ -66,6 +66,9 @@ LanguageManager::LanguageManager(){
     ccLanguageType currentLanguageType = CCApplication::sharedApplication()->getCurrentLanguage();
     switch (currentLanguageType)
     {
+        case kLanguageEnglish:
+            lang = enGB;
+            break;
         case kLanguageFrench:
             lang=frFR;
             break;

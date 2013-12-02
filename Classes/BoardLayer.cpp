@@ -239,12 +239,20 @@ void BoardLayer::setCoordToResolution(){
     float offToBoard = designSize.height <=960 ? 50 : 80;
     if (visibleSize.width <= boardSprite->getContentSize().width + offToBoard)
     {
+        TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
         float scale = 0.8;
+        
+        if (platform ==kTargetIphone && visibleSize.height > 960) {
+            scale = 0.8;
+        }else{
+            scale = 0.8;
+        }
+        
             //iphone 1136
             boardSprite->setScaleX(scale);
             boardSprite->setScaleY(scale);
             
-            shadowSprite->setScaleY(0.79);
+            shadowSprite->setScaleY(scale - 0.01);
             shadowSprite->setScaleX(scale);
         
             scaleSprite = scale;
@@ -256,7 +264,7 @@ void BoardLayer::setCoordToResolution(){
             //anchorPointSprite = ccp(0.03, 0.06);
         
         
-        int offForLastItem = (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 40 : designSize.width/visSize.width * 30); //for 0.9 =60
+        int offForLastItem = (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 40 : 45); //for 0.9 =60 //designSize.width/visSize.width * 30
         diffXForLastItem = visSize.width/designSize.width * offForLastItem;
         
         if (othelloIsEnabled) {
@@ -630,8 +638,8 @@ void BoardLayer::createBeginningPawnsPosition(){
     for (int x=7; x>=0; x--) {
         for(int y=0;y<8;y++){
             if(uiv[x][y]!=NULL){
-                //this->removeChild(uiv[x][y]);
-                batchNodeSprites->removeChild(uiv[x][y], true);
+                this->removeChild(uiv[x][y]);
+                //batchNodeSprites->removeChild(uiv[x][y], true);
             }
             
             if (helperUIV[x][y] !=NULL) {
@@ -657,8 +665,8 @@ void BoardLayer::createBeginningPawnsPosition(){
             {
                 //in original should be white
                 try {
-                    //uiv[x][y] = CCSprite::create(colorFileNameFirst);
-                    uiv[x][y] = CCSprite::createWithSpriteFrameName(colorFileNameFirst);
+                    uiv[x][y] = CCSprite::create(colorFileNameFirst);
+                    //uiv[x][y] = CCSprite::createWithSpriteFrameName(colorFileNameFirst);
                     //CCLOG("White: uiv[x][y] uiv:[%i] [%i]",x,y);
                     
                     uiv[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + distFromOriginOnX,boardSprite->boundingBox().origin.y +distFromOriginOnY));
@@ -677,8 +685,8 @@ void BoardLayer::createBeginningPawnsPosition(){
                 
                 try
                 {
-                    //uiv[x][y] = CCSprite::create(colorFileNameSecond);
-                    uiv[x][y] = CCSprite::createWithSpriteFrameName(colorFileNameSecond);
+                    uiv[x][y] = CCSprite::create(colorFileNameSecond);
+                    //uiv[x][y] = CCSprite::createWithSpriteFrameName(colorFileNameSecond);
                     //CCLOG("Black: uiv[x][y] uiv:[%i] [%i]",x,y);
                 
                     uiv[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + distFromOriginOnX,boardSprite->boundingBox().origin.y +distFromOriginOnY));
@@ -692,8 +700,8 @@ void BoardLayer::createBeginningPawnsPosition(){
 			else {
                 try
                 {
-                    //uiv[x][y] = CCSprite::create(colorFileNameFirst);
-                    uiv[x][y] = CCSprite::createWithSpriteFrameName(colorFileNameFirst);
+                    uiv[x][y] = CCSprite::create(colorFileNameFirst);
+                    //uiv[x][y] = CCSprite::createWithSpriteFrameName(colorFileNameFirst);
                     uiv[x][y]->setVisible(false);
                 
                     uiv[x][y]->setPosition(ccp(boardSprite->boundingBox().origin.x + distFromOriginOnX,boardSprite->boundingBox().origin.y +distFromOriginOnY));
@@ -706,8 +714,8 @@ void BoardLayer::createBeginningPawnsPosition(){
             uiv[x][y]->setAnchorPoint(anchorPointSprite);
             uiv[x][y]->setScale(scaleSprite);
             
-            //this->addChild(uiv[x][y]);
-            this->batchNodeSprites->addChild(uiv[x][y]);
+            this->addChild(uiv[x][y]);
+            //this->batchNodeSprites->addChild(uiv[x][y]);
             
             //HELPER SPRITE
             
@@ -811,8 +819,8 @@ void BoardLayer::undoUpdatePositions(){
             if (curpos.pos[x][y]=='X')
             {
                 //uiv[x][y] = CCSprite::create("stone_white.png");
-                uiv[x][y]->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(colorFileNameFirst));
-                //uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameFirst));
+                //uiv[x][y]->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(colorFileNameFirst));
+                uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameFirst));
                 uiv[x][y]->setVisible(true);
                 //this->addChild(uiv[x][y]);
                 //this->batchNodeSprites->addChild(uiv[x][y]);
@@ -822,8 +830,8 @@ void BoardLayer::undoUpdatePositions(){
             else if (curpos.pos[x][y]=='O')
             {
                 //uiv[x][y] = CCSprite::create("stone_black.png");
-                uiv[x][y]->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(colorFileNameSecond));
-                //uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameSecond));
+                //uiv[x][y]->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(colorFileNameSecond));
+                uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameSecond));
                 uiv[x][y]->setVisible(true);
                 //this->addChild(uiv[x][y]);
                 //this->batchNodeSprites->addChild(uiv[x][y]);
@@ -888,7 +896,7 @@ void BoardLayer::update_pos(int x,int y) {
     //=======================================================================
     
 	if (curpos.pos[x][y]==viewpos.pos[x][y]){
-        CCLOG("Rowne");
+        //CCLOG("Rowne");
         return;
     }
     
@@ -912,8 +920,8 @@ void BoardLayer::update_pos(int x,int y) {
         try
         {
         //uiv[x][y] = CCSprite::create("stone_white.png");
-        uiv[x][y]->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(colorFileNameFirst));
-        //uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameFirst));
+        //uiv[x][y]->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(colorFileNameFirst));
+        uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameFirst));
         uiv[x][y]->setVisible(true);
         //uiv[x][y]->addChild(uiv[x][y]);
         //this->batchNodeSprites->addChild(uiv[x][y]);
@@ -926,8 +934,8 @@ void BoardLayer::update_pos(int x,int y) {
         try
         {
         //uiv[x][y] = CCSprite::create("stone_black.png");
-        uiv[x][y]->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(colorFileNameSecond));
-        //uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameSecond));
+        //uiv[x][y]->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(colorFileNameSecond));
+        uiv[x][y]->setTexture(CCTextureCache::sharedTextureCache()->addImage(colorFileNameSecond));
         uiv[x][y]->setVisible(true);
         //uiv[x][y]->addChild(uiv[x][y]);
         //this->batchNodeSprites->addChild(uiv[x][y]);
@@ -1279,7 +1287,9 @@ void BoardLayer::ccTouchEnded(cocos2d::CCTouch *touch, cocos2d::CCEvent *event){
         //x,y to indeksy tablicy gry, ktory kafelek inaczej mowiac
         if(boardSprite->boundingBox().containsPoint(location)){
             
-            int Xx, Yy;
+            int touchedX = 8;
+            int touchedY = 8;
+            
             float currentStartingPoint  = boardSprite->boundingBox().origin.x;
             
             float currentEndingPoint = currentStartingPoint + tileSize;
@@ -1299,9 +1309,9 @@ void BoardLayer::ccTouchEnded(cocos2d::CCTouch *touch, cocos2d::CCEvent *event){
                     //===========================================
                     if ((location.x > currentStartingPoint && location.x < currentEndingPoint) && (location.y >currentStartingPointY && location.y < currentEndingPointY)) {
                         
-                        Xx = x;
-                        Yy = y;
-                        CCLOG("Xx: %i i Yy: %i", Xx,Yy);
+                        touchedX = x;
+                        touchedY = y;
+                        CCLOG("Xx: %i i Yy: %i", touchedX,touchedY);
                         //===========
                         // In future i must apply  y, x coordinates instead of pawnX, pawnY because I deliver these coordinates to viewpos or curpos(i suppose this) for example: viewpos[y][x] = 'X' or '0'. Next i have to updatePawnPositions
                         //===========
@@ -1322,9 +1332,9 @@ void BoardLayer::ccTouchEnded(cocos2d::CCTouch *touch, cocos2d::CCEvent *event){
             }
             
             history[histpos]=curpos;
-            if (move2(&curpos,Xx,Yy)) {
+            if (move2(&curpos,touchedX,touchedY)) {
                 histpos++;
-                lastx=Xx; lasty=Yy; dist=0;
+                lastx=touchedX; lasty=touchedY; dist=0;
                 CCLOG("You can place the pawn");
             }else{
                 CCLOG("You can't place the pawn");

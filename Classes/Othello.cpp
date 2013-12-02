@@ -63,6 +63,7 @@ int move(struct field *f,int x,int y)
     //my='X';
     //his='O';
     
+    
     if (f->pos[y][x]!=empty) return 0; //field on the board is not empty, then return 0, if is, check 8 direction of move
     cnt+=turner(f,x,y, 1, 0,my,his);
     cnt+=turner(f,x,y,-1, 0,my,his);
@@ -100,7 +101,11 @@ static int turner2(struct field *f,int sx,int sy,int dx,int dy,char my,char his)
         if (f->pos[x][y]!=his) break; //if new position is not the same as pos of opponent(so empty or my) then break(end loop)
         cnt++; //if yes then means that opponent's pawn is adjacent to my pawn on new position, so increase cnt
     }
+    
+    
+    
     if (f->pos[x][y]!=my) return 0; //if my pawn is not located on new position during the last iteration then return 0, when my pawn is not at the end, exit
+    
     if (!cnt) return 0; //if cnt == 0 then return 0
     
     x=sx; y=sy;
@@ -109,8 +114,7 @@ static int turner2(struct field *f,int sx,int sy,int dx,int dy,char my,char his)
         y+=dy;
         if (f->pos[x][y]!=his) break;
         f->pos[x][y]=my; //assign my pawn on the board
-    }
-
+    }  
     
     return cnt;
 }
@@ -122,6 +126,12 @@ int move2(struct field *f,int x,int y, bool useHelper)
 {
     int cnt=0;
     char my,his,empty='.'; //pawns
+    
+    //CCLOG("From Move2: x: %i and y: %i", x,y);
+    
+    if (x<0 || x>7 || y<0 || y>7) {
+        return 0;
+    }
     
     //=========
     //Change Player

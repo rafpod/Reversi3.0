@@ -206,7 +206,7 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/StatsScene.o: \
  jni/../../Classes/BackgroundLayer.h \
  jni/../../Classes/StatsResultsLayer.h \
  jni/../../Classes/LanguageManager.h jni/../../Classes/LangDefinitions.h \
- jni/../../Classes/MenuButton.h
+ jni/../../Classes/MenuButton.h jni/../../Classes/StatsDetailsLayer.h
 
 jni/../../Classes/StatsScene.h:
 
@@ -625,3 +625,5 @@ jni/../../Classes/LanguageManager.h:
 jni/../../Classes/LangDefinitions.h:
 
 jni/../../Classes/MenuButton.h:
+
+jni/../../Classes/StatsDetailsLayer.h:

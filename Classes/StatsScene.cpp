@@ -25,8 +25,8 @@ bool StatsScene::init(){
         StatsDetailsLayer *details = StatsDetailsLayer::create();
         
         this->addChild(bg, 0);
-        //this->addChild(stats,1);
-        this->addChild(details,1);
+        this->addChild(stats,1);
+        //this->addChild(details,1);
         
         
         return true;
