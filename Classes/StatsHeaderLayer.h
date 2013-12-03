@@ -22,11 +22,15 @@ private:
     
     LanguageManager* langManager;
     
-    CCLabelTTF *statsTitleLabel;
+    CCLabelTTF* headerLabel;
+    
+    CCSprite *lineHeader;
     
     CCMenuItemImage *backButton;
     
     CCMenu *statsHeaderMenu;
+    
+    int labelOffFromTop;
     
     bool init();
     

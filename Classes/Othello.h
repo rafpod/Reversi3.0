@@ -14,6 +14,14 @@ struct field {
 	int turn;
 };
 
+struct diffStorage{
+    int allGames;
+    int wonGames;
+    int lostGames;
+    int tiedGames;
+    
+};
+
 int move(struct field *f,int x,int y);
 double eval(struct field *f,int noop,int depth);
 double eval_pos(struct field *f,char my,char his);

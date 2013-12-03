@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "LanguageManager.h"
+#include "Othello.h"
 
 using namespace cocos2d;
 
@@ -25,15 +26,16 @@ private:
     CCLabelTTF* tiedLabel;
     CCLabelTTF* allLabelH;
     
-    CCLabelTTF* tabResult[4][6];
-    CCLabelTTF* tabPercent[4][6];
+    CCLabelTTF* tabResult[6][4];
+    CCLabelTTF* tabPercent[6][4];
     
-    int tabResultValue[4][6];
-    float tabPercentValue[4][6];
+    int tabResultValue[6][4];
+    float tabPercentValue[6][4];
+        
     
     CCLabelTTF* allLabelV;
     CCLabelTTF* hardestLabel;
-    CCLabelTTF* veryHard;
+    CCLabelTTF* veryHardLabel;
     CCLabelTTF* hardLabel;
     CCLabelTTF* mediumLabel;
     CCLabelTTF* easyLabel;
@@ -41,6 +43,9 @@ private:
     CCLabelTTF* headerLabel;
     
     CCSprite *lineHeader;
+    
+    CCString *blackColor;
+    CCString *whiteColor;    
     
     int labelOffFromTop;
     int labelOffFromHeader;
@@ -67,7 +72,14 @@ private:
     
     void setDetailsOffsets();
     
-    void countStats();    
+    void countStats();
+    void getStats();
+    void setStats();
+    
+    void createLabelStats();
+    
+    void createPawnsRow(int number);    
+    void createPawnsImages();
 
     
 public:

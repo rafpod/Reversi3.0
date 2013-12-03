@@ -47,6 +47,8 @@ private:
     bool othelloIsEnabled;
     
     int whoseMove;
+    
+    struct diffStorage diffResultStorage;
         
     
     CCSprite *uiv[8][8],*uivx,*uiback;
@@ -157,6 +159,9 @@ private:
     ~BoardLayer();
     
     void setCoordToResolution();
+    
+    void getDetailsStats();
+    void setDetailsStats();
     
     
 public:

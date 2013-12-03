@@ -7,8 +7,8 @@ using namespace cocos2d;
 
 class CCAlertView : public CCLayer {
 public:
-    static CCAlertView *create(const char *_title, const char *_message, const char *_cancel, const char *_ok, CCObject *_object, SEL_CallFuncO _selector1, SEL_CallFuncO _selector2);
-    bool init(const char *_title, const char *_message, const char *_cancel, const char *_ok, CCObject *_object, SEL_CallFuncO _selector1, SEL_CallFuncO _selector2);
+    static CCAlertView *create(const char *_title, const char *_message, const char *_cancel, const char *_ok, CCObject *_object, SEL_CallFuncO _selector1, SEL_CallFuncO _selector2, CCSize designSize);
+    bool init(const char *_title, const char *_message, const char *_cancel, const char *_ok, CCObject *_object, SEL_CallFuncO _selector1, SEL_CallFuncO _selector2, CCSize designSize);
     
     static CCAlertView *create(const char *_title, const char *_message, const char *_ok, CCObject *_object, SEL_CallFuncO _selector1);
     bool init(const char *_title, const char *_message, const char *_ok, CCObject *_object, SEL_CallFuncO _selector1);

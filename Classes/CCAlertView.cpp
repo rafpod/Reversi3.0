@@ -1,4 +1,5 @@
 #include "CCAlertView.h"
+#include "VisibleRect.h"
 
 //==============================
 //CREATE METHODS
@@ -6,9 +7,9 @@
 /**
  Create AlertView with 2 buttons.
  */
-CCAlertView *CCAlertView::create(const char *_title, const char *_message, const char *_cancel, const char *_ok, CCObject *_object, SEL_CallFuncO _selector1, SEL_CallFuncO _selector2) {
+CCAlertView *CCAlertView::create(const char *_title, const char *_message, const char *_cancel, const char *_ok, CCObject *_object, SEL_CallFuncO _selector1, SEL_CallFuncO _selector2, CCSize designSize) {
     CCAlertView *pRet = new CCAlertView();
-    if(pRet && pRet->init(_title, _message, _cancel, _ok, _object, _selector1, _selector2)) {
+    if(pRet && pRet->init(_title, _message, _cancel, _ok, _object, _selector1, _selector2, designSize)) {
 		pRet->autorelease();
 		return pRet;
 	}
@@ -39,17 +40,31 @@ CCAlertView *CCAlertView::create(const char *_title, const char *_message,const 
 /**
  Constructor for AlertView with 2 buttons
  */
-bool CCAlertView::init(const char *_title, const char *_message, const char *_cancel, const char *_ok, CCObject *_object, SEL_CallFuncO _selector1, SEL_CallFuncO _selector2) {
+bool CCAlertView::init(const char *_title, const char *_message, const char *_cancel, const char *_ok, CCObject *_object, SEL_CallFuncO _selector1, SEL_CallFuncO _selector2, CCSize designSize) {
     object    = _object;
     selector1 = _selector1;
     selector2 = _selector2;
+    
+    
 
     CCSize size = CCDirector::sharedDirector()->getWinSize();
+    CCSize visSize = VisibleRect::getVisibleRect().size;
+    
+    /*
+    CCSize resourceSize = CCSizeMake(320, 480);
+    
+    CCDirector::sharedDirector()->setContentScaleFactor(resourceSize.width/designSize.width);
+    
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionExactFit);
+    */
+    
     this->setTouchEnabled(true);
-    this->setPosition(ccp(size.width / 2.0f, size.height / 2.0f));
+    //this->setPosition(ccp(size.width / 2.0f, size.height / 2.0f));
+    this->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y));
 
     CCSprite *bgSprite = CCSprite::create("blank.png");
-    bgSprite->setTextureRect(CCRect(0, 0, size.width, size.height));
+    //bgSprite->setTextureRect(CCRect(0, 0, size.width, size.height));
+    bgSprite->setTextureRect(CCRect(0, 0, visSize.width, visSize.height));
     bgSprite->setColor(ccc3(0, 0, 0));
 	bgSprite->setOpacity(0);
     this->addChild(bgSprite, 1000);

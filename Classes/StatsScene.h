@@ -19,10 +19,21 @@ private:
     // StatsScene(){}
     // ~StatsScene(){}
     
+    /*
+    void createHeader();
+    void setHeaderPosition();
+    
+    void backBtnCallback(CCObject* pSender);
+    void keyBackClicked();*/
+    
+    bool init(CCLayer* layer);
+    
 public:
     virtual bool init();
     CREATE_FUNC(StatsScene);
-    // there's no 'id' in cpp, so we recommend returning the class instance pointer
+    
+    static StatsScene* create(CCLayer* layer);
+
     
 };
 

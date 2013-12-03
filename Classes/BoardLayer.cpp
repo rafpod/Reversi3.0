@@ -191,6 +191,8 @@ void BoardLayer::setOptionsPreferences(){
             
             break;
     }
+    
+    this->getDetailsStats();
 }
 
 
@@ -242,11 +244,17 @@ void BoardLayer::setCoordToResolution(){
         TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
         float scale = 0.8;
         
+        int offForLastItem = (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 40 : 45); //for 0.9 =60 //designSize.width/visSize.width * 30;
+        
         if (platform ==kTargetIphone && visibleSize.height > 960) {
             scale = 0.8;
+             offForLastItem = (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 40 : 45);
         }else{
-            scale = 0.8;
+            scale = 0.9;
+            offForLastItem = (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? visSize.width/designSize.width * 20 : 60);
         }
+        
+         diffXForLastItem = visSize.width/designSize.width * offForLastItem;
         
             //iphone 1136
             boardSprite->setScaleX(scale);
@@ -258,14 +266,14 @@ void BoardLayer::setCoordToResolution(){
             scaleSprite = scale;
         
             tileSize = boardSprite->getContentSize().width* scale/8;
-            tileSize-=1.7f;
+            CCLOG("TILESIZE FLOOR %f", tileSize);
+            //tileSize-=1.7f;
             CCLOG("TILESIZE FLOOR %f", tileSize);
             //anchorPointSprite = ccp(0.09, 0.1);
             //anchorPointSprite = ccp(0.03, 0.06);
         
         
-        int offForLastItem = (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height <= 960 ? 40 : 45); //for 0.9 =60 //designSize.width/visSize.width * 30
-        diffXForLastItem = visSize.width/designSize.width * offForLastItem;
+       
         
         if (othelloIsEnabled) {
             
@@ -274,21 +282,32 @@ void BoardLayer::setCoordToResolution(){
             undoButton->setScale(scale);
             menuButton->setScale(scale);
             newButton->setScale(scale);
-            anchorPointSprite = ccp(0.03, 0.03);
+            if (scale == 0.8) {
+                tileSize-=1.7f;
+                anchorPointSprite = ccp(0.03, 0.03);
+            }else{
+                tileSize = floorf(tileSize);
+                tileSize-=1.6f;
+                //anchorPointSprite = ccp(0.039,0.041);
+                anchorPointSprite = ccp(0.025,0.03);
+                
+            }
+            
         }else{
-            anchorPointSprite = ccp(0.02, 0.01);
+            tileSize-=1.7f;
+            anchorPointSprite = ccp(0.02, 0.02);
         }
         
     }
     else
     {
-        
-            //Scale 0.9
-            //boardSprite->setScaleX(0.9);
-            //boardSprite->setScaleY(0.9);
+        //float scale = 0.9;
+            //ios
+            //boardSprite->setScaleX(scale);
+            //boardSprite->setScaleY(scale);
             
-            //shadowSprite->setScaleY(0.89);
-            //shadowSprite->setScaleX(0.9);
+            //shadowSprite->setScaleY(scale - 0.01);
+            //shadowSprite->setScaleX(scale);
         
         
             //scaleSprite = visSize.height/designSize.height* 0.9f;
@@ -341,7 +360,7 @@ void BoardLayer::newBtnCallback(CCObject *pSender){
     
     if (dialogStatus == DIALOG_OFF)
     {
-        CCAlertView *alertQuestion = CCAlertView::create(langManager->Translate(STRING_ATTENTION)->getCString(), langManager->Translate(STRING_QUESTION)->getCString(), langManager->Translate(STRING_RATENO)->getCString(), langManager->Translate(STRING_RATEYES)->getCString(), this, callfuncO_selector(BoardLayer::dialogBackButton), callfuncO_selector(BoardLayer::newGame));
+        CCAlertView *alertQuestion = CCAlertView::create(langManager->Translate(STRING_ATTENTION)->getCString(), langManager->Translate(STRING_QUESTION)->getCString(), langManager->Translate(STRING_RATENO)->getCString(), langManager->Translate(STRING_RATEYES)->getCString(), this, callfuncO_selector(BoardLayer::dialogBackButton), callfuncO_selector(BoardLayer::newGame), designSize);
         this->addChild(alertQuestion, 100);
         dialogStatus = DIALOG_ON;
     }
@@ -518,6 +537,8 @@ void BoardLayer::gameOverTest(){
             games +=1;
             CCUserDefault::sharedUserDefault()->setIntegerForKey("total_games", games);
             
+            diffResultStorage.allGames++;
+            
             
             if(counterBlack == counterWhite)
             {
@@ -526,6 +547,8 @@ void BoardLayer::gameOverTest(){
                 int draw = CCUserDefault::sharedUserDefault()->getIntegerForKey("draw_games");
                 draw+=1;
                 CCUserDefault::sharedUserDefault()->setIntegerForKey("draw_games", draw);
+                
+                diffResultStorage.tiedGames++;
                 
             }
             else
@@ -540,6 +563,8 @@ void BoardLayer::gameOverTest(){
                         won +=1;
                         CCUserDefault::sharedUserDefault()->setIntegerForKey("won_games", won);
                         
+                        diffResultStorage.wonGames++;
+                        
                         
                     }else{
                         results = CCString::createWithFormat("%s \n %i : %i", langManager->Translate(STRING_LOST)->getCString(), leftScoreBoard->getResult(), rightScoreBoard->getResult());
@@ -547,6 +572,8 @@ void BoardLayer::gameOverTest(){
                         int lost = CCUserDefault::sharedUserDefault()->getIntegerForKey("lost_games");
                         lost +=1;
                         CCUserDefault::sharedUserDefault()->setIntegerForKey("lost_games", lost);
+                        
+                        diffResultStorage.lostGames++;
                         
                     }
                     
@@ -559,12 +586,16 @@ void BoardLayer::gameOverTest(){
                         lost +=1;
                         CCUserDefault::sharedUserDefault()->setIntegerForKey("lost_games", lost);
                         
+                        diffResultStorage.lostGames++;
+                        
                     }else{
                         results = CCString::createWithFormat("%s \n %i : %i", langManager->Translate(STRING_WON)->getCString(), leftScoreBoard->getResult(), rightScoreBoard->getResult());
                         
                         int won = CCUserDefault::sharedUserDefault()->getIntegerForKey("won_games");
                         won +=1;
                         CCUserDefault::sharedUserDefault()->setIntegerForKey("won_games", won);
+                        
+                        diffResultStorage.wonGames++;
                         
                     }
                     
@@ -573,11 +604,13 @@ void BoardLayer::gameOverTest(){
                 
             }
             
+            this->setDetailsStats();
+            
             CCUserDefault::sharedUserDefault()->flush();
             
         }
         
-        CCAlertView *alertEnding = CCAlertView::create(langManager->Translate(STRING_END)->getCString(), results->getCString(), langManager->Translate(STRING_BACK)->getCString(), langManager->Translate(STRING_NEW)->getCString(), this, callfuncO_selector(BoardLayer::dialogBackButton), callfuncO_selector(BoardLayer::newGame));
+        CCAlertView *alertEnding = CCAlertView::create(langManager->Translate(STRING_END)->getCString(), results->getCString(), langManager->Translate(STRING_BACK)->getCString(), langManager->Translate(STRING_NEW)->getCString(), this, callfuncO_selector(BoardLayer::dialogBackButton), callfuncO_selector(BoardLayer::newGame), designSize);
         this->addChild(alertEnding, 100);
         dialogStatus = DIALOG_ON;
         
@@ -1133,6 +1166,106 @@ int BoardLayer::cpuTurn(){
     
     if (!playeris) return curpos.turn&1;
 	else return !(curpos.turn&1);
+}
+
+
+void BoardLayer::getDetailsStats(){
+    
+    int gamesDiff = 0;
+    int wonDiff = 0;
+    int lostDiff = 0;
+    int tiedDiff = 0;
+    
+    switch (diff) {
+        case MEDIUM_BTN_TAG:
+            gamesDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("medium_total_games");
+            wonDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("medium_won_games");
+            lostDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("medium_lost_games");
+            tiedDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("medium_draw_games");
+            
+            break;
+            
+        case HARD_BTN_TAG:
+            gamesDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("hard_total_games");
+            wonDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("hard_won_games");
+            lostDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("hard_lost_games");
+            tiedDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("hard_draw_games");
+            
+            break;
+            
+        case VERY_HARD_BTN_TAG:
+            gamesDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("veryHard_total_games");
+            wonDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("veryHard_won_games");
+            lostDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("veryHard_lost_games");
+            tiedDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("veryHard_draw_games");
+            
+            break;
+            
+        case HARDEST_BTN_TAG:
+            gamesDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("hardest_total_games");
+            wonDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("hardest_won_games");
+            lostDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("hardest_lost_games");
+            tiedDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("hardest_draw_games");
+            
+            break;
+            
+        default:
+            gamesDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("easy_total_games");
+            wonDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("easy_won_games");
+            lostDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("easy_lost_games");
+            tiedDiff = CCUserDefault::sharedUserDefault()->getIntegerForKey("easy_draw_games");
+            
+            break;
+    }
+    
+    diffResultStorage.allGames = gamesDiff;
+    diffResultStorage.wonGames = wonDiff;
+    diffResultStorage.lostGames = lostDiff;
+    diffResultStorage.tiedGames = tiedDiff;
+
+}
+
+void BoardLayer::setDetailsStats(){
+    
+    switch (diff) {
+        case MEDIUM_BTN_TAG:
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("medium_total_games", diffResultStorage.allGames);
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("medium_won_games", diffResultStorage.wonGames);
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("medium_lost_games", diffResultStorage.lostGames);
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("medium_draw_games", diffResultStorage.tiedGames);
+            
+            break;
+        case HARD_BTN_TAG:
+            
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("hard_total_games", diffResultStorage.allGames);
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("hard_won_games", diffResultStorage.wonGames);
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("hard_lost_games", diffResultStorage.lostGames);
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("hard_draw_games", diffResultStorage.tiedGames);
+            
+            break;
+        case VERY_HARD_BTN_TAG:
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("veryHard_total_games", diffResultStorage.allGames);
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("veryHard_won_games", diffResultStorage.wonGames);
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("veryHard_lost_games", diffResultStorage.lostGames);
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("veryHard_draw_games", diffResultStorage.tiedGames);
+            
+            break;
+        case HARDEST_BTN_TAG:
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("hardest_total_games", diffResultStorage.allGames);
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("hardest_won_games", diffResultStorage.wonGames);
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("hardest_lost_games", diffResultStorage.lostGames);
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("hardest_draw_games", diffResultStorage.tiedGames);
+            
+            break;
+        default:
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("easy_total_games", diffResultStorage.allGames);
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("easy_won_games", diffResultStorage.wonGames);
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("easy_lost_games", diffResultStorage.lostGames);
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("easy_draw_games", diffResultStorage.tiedGames);
+            
+            break;
+    }
+
 }
 
 void BoardLayer::createBoard(){

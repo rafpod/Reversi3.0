@@ -202,7 +202,8 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/CCAlertView.o: \
  /Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../cocos2dx/CCScheduler.h \
  /Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../cocos2dx/support/data_support/uthash.h \
  /Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../cocos2dx/support/component/CCComponent.h \
- /Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../cocos2dx/support/component/CCComponentContainer.h
+ /Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../cocos2dx/support/component/CCComponentContainer.h \
+ jni/../../Classes/VisibleRect.h
 
 jni/../../Classes/CCAlertView.h:
 
@@ -611,3 +612,5 @@ jni/../../Classes/CCAlertView.h:
 /Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../cocos2dx/support/component/CCComponent.h:
 
 /Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../cocos2dx/support/component/CCComponentContainer.h:
+
+jni/../../Classes/VisibleRect.h:

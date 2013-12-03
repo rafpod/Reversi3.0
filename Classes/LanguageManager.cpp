@@ -146,7 +146,7 @@ CCString* LanguageManager::Translate(int stringID){
                 case STRING_MEDIUM:         return ccs("MEDIUM");
                 case STRING_HARD:           return ccs("HARD");
                 case STRING_VERY_HARD:      return ccs("VERY HARD");
-                case STRING_THE_HARDEST:    return ccs("THE HARDEST");
+                case STRING_THE_HARDEST:    return ccs("HARDEST");
                 case STRING_CROSS:          return ccs("CROSS");
                 case STRING_STRAIGHT:       return ccs("STRAIGHT");
                 case STRING_BLACK_WHITE:    return ccs("BLACK/WHITE");

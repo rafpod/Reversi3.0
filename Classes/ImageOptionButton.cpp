@@ -20,7 +20,7 @@ bool ImageOptionButton::init(const char *normalImage, const char *selectedImage,
         return false;
     }
     else
-    {
+    { 
         this->setOpacityModifyRGB(true);
         this->selectedBtn = true;
         
