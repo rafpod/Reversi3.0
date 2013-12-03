@@ -62,7 +62,7 @@ private:
     CCSize designSize;
     CCSize visSize;    
     
-    CCSpriteBatchNode *batchNodeSprites;
+    //CCSpriteBatchNode *batchNodeSprites;
     
     LanguageManager* langManager;
     int counterBlack;

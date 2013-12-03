@@ -198,8 +198,8 @@ void BoardLayer::createItems(){
     
     try
     {
-        this->batchNodeSprites = CCSpriteBatchNode::create("pawns.pvr.ccz");
-        this->addChild(batchNodeSprites,1);
+        //this->batchNodeSprites = CCSpriteBatchNode::create("pawns.pvr.ccz");
+        //this->addChild(batchNodeSprites,1);
         
         //CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("sprites.plist");
     }catch(exception& e){
@@ -950,24 +950,24 @@ void BoardLayer::update_pos(int x,int y) {
     }
     
     
-    CCArray* animFrames = CCArray::createWithCapacity(9);
-    //CCAnimation* animationOfChangingPawn = CCAnimation::create();
+    //CCArray* animFrames = CCArray::createWithCapacity(9);
+    CCAnimation* animationOfChangingPawn = CCAnimation::create();
     CCString *name;
     try
     {
         for (int i=1; i<=9; i++) {
             name = CCString::createWithFormat("anim_stone_%s%i.png",postfixColor,i);
         
-            CCSpriteFrame* frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(name->getCString());
-            animFrames->addObject(frame);
+            //CCSpriteFrame* frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(name->getCString());
+            //animFrames->addObject(frame);
         
-            // animationOfChangingPawn->addSpriteFrameWithFileName(name->getCString());
+             animationOfChangingPawn->addSpriteFrameWithFileName(name->getCString());
         }
     }catch(exception& e){
         CCMessageBox(e.what(), "Error");
     }
     
-    CCAnimation* animationOfChangingPawn = CCAnimation::createWithSpriteFrames(animFrames, 0.25f/9.0f);
+   // CCAnimation* animationOfChangingPawn = CCAnimation::createWithSpriteFrames(animFrames, 0.25f/9.0f);
     animationOfChangingPawn->setDelayPerUnit(0.25f/9.0f);
     animationOfChangingPawn->setRestoreOriginalFrame(true);
     //CCAnimate* action = CCAnimate::create(animationOfChangingPawn);
