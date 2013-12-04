@@ -246,6 +246,7 @@
 		ABED8844183370FD000952A6 /* OptionsButtonsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABED8842183370FD000952A6 /* OptionsButtonsLayer.cpp */; };
 		ABEDBFAF184DBCFB00BDC2F9 /* Test_Res in Resources */ = {isa = PBXBuildFile; fileRef = ABEDBFAE184DBCFB00BDC2F9 /* Test_Res */; };
 		ABF10502182BDF13006F5BE2 /* MenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABF10500182BDF13006F5BE2 /* MenuScene.cpp */; };
+		ABF12361184F0E2F00D9B69A /* StatsDetailsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABF1235F184F0E2F00D9B69A /* StatsDetailsScene.cpp */; };
 		ABF2E0221828F71B00E209AC /* CCAlertView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABF2E0201828F71B00E209AC /* CCAlertView.cpp */; };
 		ABF2E02A182928BF00E209AC /* LanguageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABF2E028182928BF00E209AC /* LanguageManager.cpp */; };
 		ABF8DE291834C3CC0086E96E /* AI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABF8DE271834C3CC0086E96E /* AI.cpp */; };
@@ -775,6 +776,8 @@
 		ABEDBFAE184DBCFB00BDC2F9 /* Test_Res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Test_Res; path = ../Test_Res; sourceTree = "<group>"; };
 		ABF10500182BDF13006F5BE2 /* MenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MenuScene.cpp; path = ../Classes/MenuScene.cpp; sourceTree = "<group>"; };
 		ABF10501182BDF13006F5BE2 /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuScene.h; path = ../Classes/MenuScene.h; sourceTree = "<group>"; };
+		ABF1235F184F0E2F00D9B69A /* StatsDetailsScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StatsDetailsScene.cpp; path = ../Classes/StatsDetailsScene.cpp; sourceTree = "<group>"; };
+		ABF12360184F0E2F00D9B69A /* StatsDetailsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatsDetailsScene.h; path = ../Classes/StatsDetailsScene.h; sourceTree = "<group>"; };
 		ABF2E0201828F71B00E209AC /* CCAlertView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAlertView.cpp; sourceTree = "<group>"; };
 		ABF2E0211828F71B00E209AC /* CCAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAlertView.h; sourceTree = "<group>"; };
 		ABF2E028182928BF00E209AC /* LanguageManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LanguageManager.cpp; path = ../Classes/LanguageManager.cpp; sourceTree = "<group>"; };
@@ -1326,6 +1329,7 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				ABF1235E184F0E0D00D9B69A /* StatsDetailsScene */,
 				ABE935BE183E01B000746416 /* StatsScene */,
 				ABED883E18336C48000952A6 /* OptionsScene */,
 				ABF104FF182BDEB7006F5BE2 /* MainMenuScene */,
@@ -1826,8 +1830,6 @@
 			children = (
 				ABE935C1183E020400746416 /* StatsResultsLayer.cpp */,
 				ABE935C2183E020400746416 /* StatsResultsLayer.h */,
-				ABE91A4618463B2C0076C280 /* StatsDetailsLayer.cpp */,
-				ABE91A4718463B2C0076C280 /* StatsDetailsLayer.h */,
 				ABE91A4C18463D350076C280 /* StatsHeaderLayer.cpp */,
 				ABE91A4D18463D350076C280 /* StatsHeaderLayer.h */,
 			);
@@ -1862,6 +1864,25 @@
 				ABFF3DBF182CC5B30030392C /* MainMenuLayers */,
 			);
 			name = MainMenuScene;
+			sourceTree = "<group>";
+		};
+		ABF1235E184F0E0D00D9B69A /* StatsDetailsScene */ = {
+			isa = PBXGroup;
+			children = (
+				ABF1235F184F0E2F00D9B69A /* StatsDetailsScene.cpp */,
+				ABF12360184F0E2F00D9B69A /* StatsDetailsScene.h */,
+				ABF12362184F0EFB00D9B69A /* DetailsLayers */,
+			);
+			name = StatsDetailsScene;
+			sourceTree = "<group>";
+		};
+		ABF12362184F0EFB00D9B69A /* DetailsLayers */ = {
+			isa = PBXGroup;
+			children = (
+				ABE91A4618463B2C0076C280 /* StatsDetailsLayer.cpp */,
+				ABE91A4718463B2C0076C280 /* StatsDetailsLayer.h */,
+			);
+			name = DetailsLayers;
 			sourceTree = "<group>";
 		};
 		ABFD0B8C181A503F0039DB5C /* GameScene */ = {
@@ -2186,6 +2207,7 @@
 				1A8F3B7D175E05DA00049216 /* SkeletonData.cpp in Sources */,
 				1A8F3B7E175E05DA00049216 /* SkeletonJson.cpp in Sources */,
 				1A8F3B7F175E05DA00049216 /* Skin.cpp in Sources */,
+				ABF12361184F0E2F00D9B69A /* StatsDetailsScene.cpp in Sources */,
 				1A8F3B80175E05DA00049216 /* Slot.cpp in Sources */,
 				1A8F3B81175E05DA00049216 /* SlotData.cpp in Sources */,
 				1A8F3B82175E05DA00049216 /* spine-cocos2dx.cpp in Sources */,

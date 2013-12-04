@@ -205,7 +205,9 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/StatsDetailsLayer.o: \
  /Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../cocos2dx/support/component/CCComponent.h \
  /Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../cocos2dx/support/component/CCComponentContainer.h \
  jni/../../Classes/LanguageManager.h jni/../../Classes/LangDefinitions.h \
- jni/../../Classes/VisibleRect.h
+ jni/../../Classes/VisibleRect.h jni/../../Classes/MenuScene.h \
+ jni/../../Classes/StatsScene.h jni/../../Classes/StatsResultsLayer.h \
+ jni/../../Classes/MenuButton.h
 
 jni/../../Classes/StatsDetailsLayer.h:
 
@@ -620,3 +622,11 @@ jni/../../Classes/LanguageManager.h:
 jni/../../Classes/LangDefinitions.h:
 
 jni/../../Classes/VisibleRect.h:
+
+jni/../../Classes/MenuScene.h:
+
+jni/../../Classes/StatsScene.h:
+
+jni/../../Classes/StatsResultsLayer.h:
+
+jni/../../Classes/MenuButton.h:

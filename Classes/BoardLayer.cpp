@@ -652,6 +652,22 @@ void BoardLayer::mustPassTest(){
 
 void BoardLayer::updateBoard(float dt){
     
+    CCSize frameSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+    
+    CCLOG("frame width: %f, frame height: %f ", frameSize.width, frameSize.height);
+    
+    if (frameSize.width / frameSize.height > 1) {
+        CCLOG("Landscape");
+        //CCEGLView::sharedOpenGLView()->setFrameSize(1200,700);
+        
+        CCLOG("visible height2: %f, %f, %f", visSize.height, VisibleRect::getVisibleRect().size.height, CCEGLView::sharedOpenGLView()->getVisibleSize().height);
+        
+    }else{
+        CCLOG("Portrait");
+        //CCEGLView::sharedOpenGLView()->setFrameSize(700,1200);
+         CCLOG("visible height1: %f, %f, %f", visSize.height, VisibleRect::getVisibleRect().size.height, CCEGLView::sharedOpenGLView()->getVisibleSize().height);
+    }
+    
     //=======
     //REMEMBER TO CHECK
     //=======

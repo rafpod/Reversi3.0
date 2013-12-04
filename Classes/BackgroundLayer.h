@@ -20,6 +20,7 @@ private:
     CCSprite *bgSprite;
     
     bool init();
+        
     
 public:
     CREATE_FUNC(BackgroundLayer);

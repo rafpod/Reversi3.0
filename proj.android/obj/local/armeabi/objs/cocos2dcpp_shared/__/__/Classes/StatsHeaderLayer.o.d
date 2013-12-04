@@ -204,7 +204,8 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/StatsHeaderLayer.o: \
  /Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../cocos2dx/support/data_support/uthash.h \
  /Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../cocos2dx/support/component/CCComponent.h \
  /Users/rafalP/Documents/cocos2d-x-2.2/projects/ReversiGL/proj.android/../../../cocos2dx/support/component/CCComponentContainer.h \
- jni/../../Classes/LanguageManager.h jni/../../Classes/LangDefinitions.h
+ jni/../../Classes/LanguageManager.h jni/../../Classes/LangDefinitions.h \
+ jni/../../Classes/VisibleRect.h
 
 jni/../../Classes/StatsHeaderLayer.h:
 
@@ -617,3 +618,5 @@ jni/../../Classes/StatsHeaderLayer.h:
 jni/../../Classes/LanguageManager.h:
 
 jni/../../Classes/LangDefinitions.h:
+
+jni/../../Classes/VisibleRect.h:

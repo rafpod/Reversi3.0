@@ -26,9 +26,14 @@ package com.geckolab.reversi;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class ReversiGL extends Cocos2dxActivity{
+	
+	//JNI
+	private static native void orientationChanged(int orientation);
 	
     protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);	
@@ -44,5 +49,23 @@ public class ReversiGL extends Cocos2dxActivity{
 
     static {
         System.loadLibrary("cocos2dcpp");
-    }     
+    }
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		   super.onConfigurationChanged(newConfig);
+
+		    // Checks the orientation of the screen
+		    if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+		        //orientationChanged(1);
+		    	System.out.println("orient java1");
+		    } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+		        //orientationChanged(0);
+		    	System.out.println("orient java2");
+		    	
+		    }
+	}     
+    
+    
+    
 }

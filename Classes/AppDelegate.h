@@ -33,6 +33,8 @@ public:
     */
     virtual void applicationWillEnterForeground();
     
+    static void onOrientationChange(bool isLandscape, int w, int h);
+    
     std::vector<std::string> setGameResources(const char* resWood, const char* resOthello, const char* resMain, bool othelloIsEnabled);
 };
 

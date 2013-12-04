@@ -19,12 +19,22 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved)
 
     return JNI_VERSION_1_4;
 }
-
+/*
+void Java_com_geckolab_reversi_orientationChanged(JNIEnv*  env, jobject thiz, jint orientation)
+{
+//	CCRect rect = CCRectMake(x, y, w, h);
+//		GameScene *gameScene = dynamic_cast<GameScene*>(cocos2d::CCDirector::sharedDirector()->getRunningScene()->getChildByTag(1));
+//		gameScene->notifyShowFramesForRect(rect);
+	CCLOG("orientation change new method");
+}
+*/
 void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thiz, jint w, jint h)
 {
     if (!CCDirector::sharedDirector()->getOpenGLView())
     {
         CCEGLView *view = CCEGLView::sharedOpenGLView();
+
+        CCLOG("orientation changed1");
 
     	/*
     	//nowy kod
@@ -53,6 +63,9 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
         CCTextureCache::reloadAllTextures();
         CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_FOREGROUND, NULL);
         CCDirector::sharedDirector()->setGLDefaultValues(); 
+
+        CCLOG("orientation changed2");
+
     }
 }
 

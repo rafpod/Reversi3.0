@@ -1,0 +1,13 @@
+# OSX
+.DS_Store
+profile
+
+# eclipse
+proj.android/obj/
+proj.android/bin/
+proj.android/gen/
+proj.android/.classpath
+#android/.project
+
+# XCode
+xcuserdata/

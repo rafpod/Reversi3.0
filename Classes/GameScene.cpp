@@ -21,9 +21,8 @@ bool GameScene::init(){
        BoardLayer *board = BoardLayer::create();
         
         this->addChild(bg, 0);
-        this->addChild(board,1);        
-        
-        
+        this->addChild(board,1);
+             
         return true;
     }
 }

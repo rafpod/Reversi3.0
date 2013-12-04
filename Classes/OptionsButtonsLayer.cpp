@@ -914,7 +914,7 @@ void OptionsButtonsLayer::boardBtnCallback(cocos2d::CCObject *pSender){
     MenuButton* pMenuItem = (MenuButton *)(pSender);
     int tag = (int)pMenuItem->getTag();
     
-    CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrames();
+    //CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrames();
     //CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("background.plist");
     
     
@@ -951,7 +951,7 @@ void OptionsButtonsLayer::boardBtnCallback(cocos2d::CCObject *pSender){
     
     CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
     
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("pawns.plist");
+    //CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("pawns.plist");
     
     CCScene *optionsScene = OptionsScene::create();
     CCDirector::sharedDirector()->setDepthTest(true);

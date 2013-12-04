@@ -51,44 +51,67 @@ static AppDelegate s_sharedApplication;
     
     cocos2d::CCApplication::sharedApplication()->run();
     
-    /*
+    
     //NOWA
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChanged:) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
-    */
+    
+    /*//2 NOWA
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDidChangeStatusBarOrientationNotification:)
+        name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];*/
+    
 
     return YES;
 }
-/*
+
 //NOWA
 -(void) orientationDidChanged:(NSNotification*)notification
 {
+    
     UIDeviceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     if (orientation == UIDeviceOrientationPortrait || orientation == UIDeviceOrientationPortraitUpsideDown)
     {
+        
         cocos2d::CCSize s = cocos2d::CCEGLView::sharedOpenGLView()->getFrameSize();
+        NSLog(@"TEST ORIENT %d ii %f x %f",[[UIDevice currentDevice] orientation], s.width, s.height);
+
         if (s.width < s.height)
             cocos2d::CCEGLView::sharedOpenGLView()->setFrameSize(s.width, s.height);
         else
             cocos2d::CCEGLView::sharedOpenGLView()->setFrameSize(s.height, s.width);
-        cocos2d::CCEGLView::sharedOpenGLView()->setDesignResolutionSize(640, 960, kResolutionNoBorder);
+        
+        //cocos2d::CCEGLView::sharedOpenGLView()->setDesignResolutionSize(640, 960, kResolutionNoBorder);
     }
     else if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight)
     {
         cocos2d::CCSize s = cocos2d::CCEGLView::sharedOpenGLView()->getFrameSize();
+        NSLog(@"TEST ORIENT2 %d ii %f x %f",[[UIDevice currentDevice] orientation], s.width, s.height);
+
         if (s.width > s.height)
             cocos2d::CCEGLView::sharedOpenGLView()->setFrameSize(s.width, s.height);
         else
             cocos2d::CCEGLView::sharedOpenGLView()->setFrameSize(s.height, s.width);
-        cocos2d::CCEGLView::sharedOpenGLView()->setDesignResolutionSize(640, 960, kResolutionNoBorder);
+        //cocos2d::CCEGLView::sharedOpenGLView()->setDesignResolutionSize(640, 960, kResolutionNoBorder);
     }
     
     
-   // cocos2d::CCEGLView::sharedOpenGLView()->setFrameSize(700,1200);
+    //cocos2d::CCEGLView::sharedOpenGLView()->setFrameSize(700,1200);
     
-//NSLog(@"current orientation %d ii %f",[[UIDevice currentDevice] orientation], cocos2d::CCEGLView::sharedOpenGLView()->getFrameSize().width);
+NSLog(@"current orientation %d ii %f",[[UIDevice currentDevice] orientation], cocos2d::CCEGLView::sharedOpenGLView()->getFrameSize().width);
+    
 }
 //KONIEC NOWEJ
-*/
+
+//DRUGA NOWA
+- (void)handleDidChangeStatusBarOrientationNotification:(NSNotification *)notification; {
+    //NSLog("The orientation is %", [notification.userInfo objectForKey: UIApplicationStatusBarOrientationUserInfoKey]);
+    cocos2d::CCDirector* director = cocos2d::CCDirector::sharedDirector();
+    cocos2d::CCEGLView* eglView = director->getOpenGLView();
+    
+    AppDelegate::onOrientationChange(UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation), eglView->getFrameSize().width, eglView->getFrameSize().height);
+    
+}
+//KONIEC NOWEJ
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     /*
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

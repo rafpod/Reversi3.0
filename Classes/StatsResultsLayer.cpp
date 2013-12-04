@@ -7,11 +7,12 @@
 //
 
 #include "StatsResultsLayer.h"
-#include "MenuScene.h"
 #include "VisibleRect.h"
 #include "cocos2d.h"
+#include "MenuScene.h"
+#include "StatsDetailsScene.h"
 #include "StatsDetailsLayer.h"
-#include "StatsScene.h"
+
 
 USING_NS_CC;
 
@@ -295,18 +296,16 @@ void StatsResultsLayer::keyBackClicked(){
 }
 
 void StatsResultsLayer::detailsBtnCallback(cocos2d::CCObject *pSender){
-    /*
-    StatsDetailsLayer *details;
-    details->setTag(1);
-    CCScene *detailsScene = StatsScene::create(details);
+    
+    CCScene *detailsScene = StatsDetailsScene::create();
     
     CCDirector::sharedDirector()->setDepthTest(true);
-    CCDirector::sharedDirector()->replaceScene(CCTransitionPageTurn::create(0.5f, detailsScene,false));*/
-    
+    CCDirector::sharedDirector()->replaceScene(CCTransitionPageTurn::create(0.5f, detailsScene,false));
+    /*
      StatsDetailsLayer *details= StatsDetailsLayer::create();
     
     this->getParent()->addChild(details,2);
-    this->removeFromParent();
+    this->removeFromParent();*/
 }
 
 void StatsResultsLayer::setStatsOffsets(){

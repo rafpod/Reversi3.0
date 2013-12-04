@@ -9,8 +9,9 @@
 #include "StatsDetailsLayer.h"
 #include "VisibleRect.h"
 #include "MenuScene.h"
-#include "StatsResultsLayer.h"
 #include "StatsScene.h"
+#include "StatsResultsLayer.h"
+
 
 bool StatsDetailsLayer::init(){
     
@@ -152,14 +153,15 @@ void StatsDetailsLayer::setHeaderPosition(){
 }
 
 void StatsDetailsLayer::keyBackClicked(){
-   /* CCScene *backScene = MenuScene::create();
+    CCScene *statsResultScene = StatsScene::create();
     
     CCDirector::sharedDirector()->setDepthTest(true);
-    CCDirector::sharedDirector()->replaceScene(CCTransitionPageTurn::create(0.5f, backScene,true));*/
+    CCDirector::sharedDirector()->replaceScene(CCTransitionPageTurn::create(0.5f, statsResultScene,true));
     
+    /*
     StatsResultsLayer* resLayer = StatsResultsLayer::create();
     this->getParent()->addChild(resLayer,1);
-    this->removeFromParent();
+    this->removeFromParent();*/
     
     /*
     StatsResultsLayer *resLayer;

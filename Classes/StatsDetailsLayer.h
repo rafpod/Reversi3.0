@@ -11,7 +11,6 @@
 
 #include "cocos2d.h"
 #include "LanguageManager.h"
-#include "Othello.h"
 
 using namespace cocos2d;
 

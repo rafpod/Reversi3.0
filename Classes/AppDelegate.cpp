@@ -152,8 +152,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
     //CCLOG("SKIN1: %i", othelloIsEnabled);
     CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
- */
-    
+ */    
     
     //FOURTH OPTION PORTRAIT
     if (screenSize.height > 1500) {
@@ -191,7 +190,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     //CCLOG("SKIN1: %i", othelloIsEnabled);
     CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
     
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("pawns.plist");
+    //CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("pawns.plist");
     
     //pDirector->setContentScaleFactor(MIN(resourceSize.width/designSize.width,resourceSize.height/designSize.height));
     pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
@@ -245,4 +244,24 @@ std::vector<std::string> AppDelegate::setGameResources(const char *resWood, cons
     resDirOrders.push_back(resMain);
     
     return resDirOrders;
+}
+
+void AppDelegate::onOrientationChange(bool isLandscape, int w, int h) {
+    CCSize sSystem(w, h); // size that OS tells us
+    CCSize sActual(0, 0); // size that we need to use in cocos2dx
+    if (isLandscape) {
+        sActual.width = std::max(sSystem.width, sSystem.height);
+        sActual.height = std::min(sSystem.width, sSystem.height);
+    } else {
+        sActual.width = std::min(sSystem.width, sSystem.height);
+        sActual.height = std::max(sSystem.width, sSystem.height);
+    }
+    cocos2d::CCDirector* director = cocos2d::CCDirector::sharedDirector();
+    CCEGLView* eglView = director->getOpenGLView();
+    eglView->setFrameSize(sActual.width, sActual.height);
+    eglView->setDesignResolutionSize(sActual.width, sActual.height, kResolutionNoBorder);
+    
+    //Need to compare running scene with kind of scenes and run new scene
+    //director->replaceScene(director->getRunningScene()); //reload current scene to redraw it for new screen size, or an app might choose to do something different
+    
 }
